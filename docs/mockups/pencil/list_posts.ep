@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<Document xmlns="http://www.evolus.vn/Namespace/Pencil"><Properties/><Pages><Page><Properties><Property name="name">Untitled Page</Property><Property name="id">1289236742735_7750</Property><Property name="width">897</Property><Property name="height">559</Property><Property name="dimBackground">false</Property></Properties><Content/></Page><Page><Properties><Property name="name">List Posts</Property><Property name="id">1289237114883_9126</Property><Property name="width">1024</Property><Property name="height">768</Property><Property name="dimBackground">false</Property></Properties><Content><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:RoundedRect" transform="matrix(1, 0, 0, 1, 45, 100)"><p:metadata><p:property name="box"><![CDATA[925,640]]></p:property><p:property name="withBlur"><![CDATA[true]]></p:property><p:property name="radius"><![CDATA[7,0]]></p:property><p:property name="textPadding"><![CDATA[0,10]]></p:property><p:property name="fillColor"><![CDATA[#FFFAFEFF]]></p:property><p:property name="strokeColor"><![CDATA[#000000FF]]></p:property><p:property name="strokeStyle"><![CDATA[1|]]></p:property><p:property name="textContent"><![CDATA[]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|12px|none]]></p:property><p:property name="textColor"><![CDATA[#FFFFFFFF]]></p:property><p:property name="textAlign"><![CDATA[1,1]]></p:property></p:metadata>
+
+            <defs>
+                <rect width="924" height="639" rx="7" ry="7" x="0" y="0" style="stroke-width: 1; fill: rgb(255, 250, 254); fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-opacity: 1;" p:name="rrRect" id="rrRect11289237137049" transform="translate(0.5, 0.5)"/>
+                <filter height="1.2558399" y="-0.12792" width="1.06396" x="-0.03198" p:name="shadingFilter" id="shadingFilter11289237137049">
+                    <feGaussianBlur stdDeviation="1" in="SourceAlpha"/>
+                </filter>
+            </defs>
+            <use xlink:href="#rrRect11289237137049" xmlns:xlink="http://www.w3.org/1999/xlink" transform="translate(2, 2)" p:filter="url(#shadingFilter11289237137049)" style="opacity: 0.5; visibility: visible;" p:heavy="true" p:name="bgCopy" id="bgCopy11289237137049" filter="url(#shadingFilter11289237137049)"/>
+            <use xlink:href="#rrRect11289237137049" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+            <foreignObject x="10" y="320" width="905" height="0" p:name="text" id="text11289237137049" style="font-family: Arial; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(255, 255, 255); fill-opacity: 1; color: rgb(255, 255, 255); opacity: 1; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml"></div></foreignObject><path id="text11289237137049_underline" style="fill: none; stroke-width: 1px; visibility: hidden;"/>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:PlainText" transform="matrix(1, 0, 0, 1, 60, 45)"><p:metadata><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="label"><![CDATA[My Fancy Blog]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|33px|none]]></p:property></p:metadata>
+            <text y="18" x="0" style="font-size: 33px; font-style: normal; font-weight: normal; text-align: left; text-anchor: start; dominant-baseline: auto; fill: rgb(0, 0, 0); font-family: Arial; fill-opacity: 1; text-decoration: none;" xml:space="preserve" p:name="text" id="text21289237250001">My Fancy Blog</text><path id="text21289237250001_underline" style="fill: none; stroke-width: 1px; visibility: hidden;"/>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:PlainText" transform="matrix(1, 0, 0, 1, 70, 125)"><p:metadata><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="label"><![CDATA[How to make best coffe ever!]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|18px|none]]></p:property></p:metadata>
+            <text y="13" x="0" style="font-size: 18px; font-style: normal; font-weight: normal; text-align: left; text-anchor: start; dominant-baseline: auto; fill: rgb(0, 0, 0); font-family: Arial; fill-opacity: 1; text-decoration: none;" xml:space="preserve" p:name="text" id="text31289237317378">How to make best coffe ever!</text><path id="text31289237317378_underline" style="fill: none; stroke-width: 1px; visibility: hidden;"/>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:PlainText" transform="matrix(1, 0, 0, 1, 70, 150)"><p:metadata><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="label"><![CDATA[Added 5.11.2010]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|12px|none]]></p:property></p:metadata>
+            <text y="10" x="0" style="font-size: 12px; font-style: normal; font-weight: normal; text-align: left; text-anchor: start; dominant-baseline: auto; fill: rgb(0, 0, 0); font-family: Arial; fill-opacity: 1; text-decoration: none;" xml:space="preserve" p:name="text" id="text41289237428868">Added 5.11.2010</text><path id="text41289237428868_underline" style="fill: none; stroke-width: 1px; visibility: hidden;"/>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:RichTextBox" transform="matrix(1, 0, 0, 1, 1895, 215)"><p:metadata><p:property name="width"><![CDATA[200,0]]></p:property><p:property name="textContent"><![CDATA[Text pane]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|12px|none]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property></p:metadata>
+
+            <foreignObject x="0" y="0" width="200" height="14" p:name="text" id="text61289237516039" style="font-family: Arial; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 0, 0); opacity: 1;"><div xmlns="http://www.w3.org/1999/xhtml">Text pane</div></foreignObject><path id="text61289237516039_underline" style="fill: none; stroke-width: 1px; visibility: hidden;"/>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:RichTextBox" transform="matrix(1, 0, 0, 1, 70, 175)"><p:metadata><p:property name="width"><![CDATA[835,0]]></p:property><p:property name="textContent"><![CDATA[Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam 
+nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat 
+volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation 
+ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse 
+molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero 
+eros et accumsan et iusto odio dignissim qui blandit praesent luptatum 
+zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber 
+tempor cum soluta nobis eleifend option congue nihil imperdiet doming id
+ quod mazim placerat facer possim assum. Typi non habent claritatem 
+insitam; est usus legentis in iis qui facit eorum claritatem. 
+Investigationes demonstraverunt lectores legere me lius quod ii legunt 
+saepius.]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|12px|none]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property></p:metadata>
+
+            <foreignObject x="0" y="0" width="835" height="86" p:name="text" id="text71289237526455" style="font-family: Arial; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 0, 0); opacity: 1;"><div xmlns="http://www.w3.org/1999/xhtml">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam 
+nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat 
+volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation 
+ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse 
+molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero 
+eros et accumsan et iusto odio dignissim qui blandit praesent luptatum 
+zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber 
+tempor cum soluta nobis eleifend option congue nihil imperdiet doming id
+ quod mazim placerat facer possim assum. Typi non habent claritatem 
+insitam; est usus legentis in iis qui facit eorum claritatem. 
+Investigationes demonstraverunt lectores legere me lius quod ii legunt 
+saepius.</div></foreignObject><path id="text71289237526455_underline" style="fill: none; stroke-width: 1px; visibility: hidden;"/>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:PlainText" transform="matrix(1, 0, 0, 1, 70, 320)"><p:metadata><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="label"><![CDATA[Healthy potato diet]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|19px|none]]></p:property></p:metadata>
+            <text y="13" x="0" style="font-size: 19px; font-style: normal; font-weight: normal; text-align: left; text-anchor: start; dominant-baseline: auto; fill: rgb(0, 0, 0); font-family: Arial; fill-opacity: 1; text-decoration: none;" xml:space="preserve" p:name="text" id="text81289237696226">Healthy potato diet</text><path id="text81289237696226_underline" style="fill: none; stroke-width: 1px; visibility: hidden;"/>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:Line" transform="matrix(1, 0, 0, 1, 70, 285)"><p:metadata><p:property name="box"><![CDATA[880,10]]></p:property><p:property name="strokeColor"><![CDATA[#000000FF]]></p:property><p:property name="strokeStyle"><![CDATA[1|]]></p:property></p:metadata>
+            <rect style="fill: rgb(0, 0, 0); fill-opacity: 0; stroke: none;" x="0" y="0" p:name="bgRect" id="bgRect91289237741427" width="880" height="10"/>
+            <path style="fill: none; stroke: rgb(0, 0, 0); stroke-width: 1; stroke-opacity: 1;" d="M 0 5 L 880 5" p:name="line1" id="line191289237741427" transform="translate(0.5, 0.5)"/>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:RichTextBox" transform="matrix(1, 0, 0, 1, 70, 375)"><p:metadata><p:property name="width"><![CDATA[835,0]]></p:property><p:property name="textContent"><![CDATA[Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam 
+nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat 
+volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation 
+ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse 
+molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero 
+eros et accumsan et iusto odio dignissim qui blandit praesent luptatum 
+zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber 
+tempor cum soluta nobis eleifend option congue nihil imperdiet doming id
+ quod mazim placerat facer possim assum. Typi non habent claritatem 
+insitam; est usus legentis in iis qui facit eorum claritatem. 
+Investigationes demonstraverunt lectores legere me lius quod ii legunt 
+saepius.]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|12px|none]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property></p:metadata>
+
+            <foreignObject x="0" y="0" width="835" height="86" p:name="text" id="text71289237526455754" style="font-family: Arial; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 0, 0); opacity: 1;"><div xmlns="http://www.w3.org/1999/xhtml">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam 
+nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat 
+volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation 
+ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse 
+molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero 
+eros et accumsan et iusto odio dignissim qui blandit praesent luptatum 
+zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber 
+tempor cum soluta nobis eleifend option congue nihil imperdiet doming id
+ quod mazim placerat facer possim assum. Typi non habent claritatem 
+insitam; est usus legentis in iis qui facit eorum claritatem. 
+Investigationes demonstraverunt lectores legere me lius quod ii legunt 
+saepius.</div></foreignObject><path id="text71289237526455_underline754" style="fill: none; stroke-width: 1px; visibility: hidden;"/>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:RichTextBox" transform="matrix(1, 0, 0, 1, 70, 465)"><p:metadata><p:property name="width"><![CDATA[835,0]]></p:property><p:property name="textContent"><![CDATA[Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam 
+nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat 
+volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation 
+ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse 
+molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero 
+eros et accumsan et iusto odio dignissim qui blandit praesent luptatum 
+zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber 
+tempor cum soluta nobis eleifend option congue nihil imperdiet doming id
+ quod mazim placerat facer possim assum. Typi non habent claritatem 
+insitam; est usus legentis in iis qui facit eorum claritatem. 
+Investigationes demonstraverunt lectores legere me lius quod ii legunt 
+saepius.]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|12px|none]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property></p:metadata>
+
+            <foreignObject x="0" y="0" width="835" height="86" p:name="text" id="text7128923752645551" style="font-family: Arial; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 0, 0); opacity: 1;"><div xmlns="http://www.w3.org/1999/xhtml">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam 
+nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat 
+volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation 
+ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse 
+molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero 
+eros et accumsan et iusto odio dignissim qui blandit praesent luptatum 
+zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber 
+tempor cum soluta nobis eleifend option congue nihil imperdiet doming id
+ quod mazim placerat facer possim assum. Typi non habent claritatem 
+insitam; est usus legentis in iis qui facit eorum claritatem. 
+Investigationes demonstraverunt lectores legere me lius quod ii legunt 
+saepius.</div></foreignObject><path id="text71289237526455_underline51" style="fill: none; stroke-width: 1px; visibility: hidden;"/>
+        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.Common:PlainText" transform="matrix(1, 0, 0, 1, 70, 345)"><p:metadata><p:property name="disabled"><![CDATA[false]]></p:property><p:property name="label"><![CDATA[Added 2.11.2010]]></p:property><p:property name="textColor"><![CDATA[#000000FF]]></p:property><p:property name="textFont"><![CDATA[Arial|normal|normal|12px|none]]></p:property></p:metadata>
+            <text y="10" x="0" style="font-size: 12px; font-style: normal; font-weight: normal; text-align: left; text-anchor: start; dominant-baseline: auto; fill: rgb(0, 0, 0); font-family: Arial; fill-opacity: 1; text-decoration: none;" xml:space="preserve" p:name="text" id="text41289237428868222">Added 2.11.2010</text><path id="text41289237428868222_underline" style="fill: none; stroke-width: 1px; visibility: hidden;"/><path id="text41289237428868_underline222" style="fill: none; stroke-width: 1px; visibility: hidden;"/>
+        </g></Content></Page></Pages></Document>
