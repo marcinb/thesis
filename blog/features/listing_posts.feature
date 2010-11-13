@@ -8,7 +8,7 @@ Feature: Listing Posts
       | title                   | body                      |
       | How to raise your kid   | You should be good parent |
       | How to make great coffe | Add whipped cream to it   |
-    When I am on home page
+    When I am on the home page
     Then I should see "How to raise your kid"
     And I should see "You should be good parent"
     And I should see "How to make great coffe"
