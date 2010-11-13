@@ -7,6 +7,7 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'haml'
 
 group :test do
+  gem 'autotest'
   gem 'factory_girl'
   gem 'rspec-rails', '>= 2.1.0'
   gem 'cucumber'
