@@ -56,3 +56,7 @@ if defined?(ActiveRecord::Base)
   rescue LoadError => ignore_if_database_cleaner_not_present
   end
 end
+
+# factory_girl setup
+require 'factory_girl'
+Dir["#{File.dirname(__FILE__)}/../../spec/factories/*.rb"].each {|f| require f}
