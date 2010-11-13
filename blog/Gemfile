@@ -12,4 +12,7 @@ group :test do
   gem 'rspec-rails', '>= 2.1.0'
   gem 'cucumber'
   gem 'cucumber-rails'
+  gem 'nokogiri'
+  gem "capybara"
+  gem "launchy"
 end
