@@ -48,12 +48,6 @@ describe PostsController do
         post :create, :post => {'these' => 'params'}
         assigns(:post).should be(mock_post)
       end
-
-      it "redirects to the created post" do
-        Post.stub(:new) { mock_post(:save => true) }
-        post :create, :post => {}
-        response.should redirect_to(post_url(mock_post))
-      end
     end
 
     describe "with invalid params" do
