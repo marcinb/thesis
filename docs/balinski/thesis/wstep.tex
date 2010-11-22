@@ -1,3 +1,54 @@
 \chapter[Wstęp]{Wstęp}
-	\section{TDD}
-	Test Driven Development
+	\section{Problemy napotykane w procesie wytwarzania oprogramowania}
+	
+	  TBD
+	  
+	\section{Testowanie oprogramowania}
+	  \subsection{Wady manualnego testowania}
+  	  Testowanie oprogramowania może odbywać się w sposób manualny lub automatyczny. Testy manualne przeprowadzane są przez żywego testera, który korzystając z oprogramowania, krok po kroku sprawdza jego zgodność ze specyfikacją, następnie wskazuje i opisuje ewentualne braki lub błędy. Każda nowa funkcjonalność lub poprawka wprowadzona do oprogramowania wymaga osobnej sesji z udziałem testera. 
+	  
+  	  Podejście manualne ma wiele wad, wśród których do najważniejszych należą:
+	  
+  	  \begin{itemize}
+  	    \item Konieczność dogłębnego zrozumienia założeń projektu przez osobę odpowiedzialną za testowanie
+  	    \item Trudność związana z koniecznością zidentyfikowania i przetestowania jak największej liczby możliwych przypadków użycia oprogramowania
+  	    \item Czasochłonność: każda nowa funkcjonalność lub poprawka wymaga osobnej sesji testowania
+  	   	\item Wysokie koszty pracy testera
+  	   	\item Ogromna trudność zastosowania w wysoce specjalistycznych projektach
+  	   	\item Brak możliwości dokładnego przetestowania szczegółów implementacji danej funkcjonalności
+  	  \end{itemize}
+	  
+  	  Waga powyższych niedogodności rośnie wykładniczo wraz ze wzrostem poziomu skomplikowania oprogramowania, dlatego też manualne testowanie sprawdza się w zasadzie tylko w projektach o małej złożoności, w innych przypadkach istnieje potrzeba uzupełnienia lub zastąpienia go przez testy automatyczne.
+	  
+	  \subsection{Testy automatyczne}
+	    Automatyzacja procesu testowania odbywa się poprzez zastąpienie testera oprogramowaniem, które przejmie jego rolę. Automatyczne metody testowania umożliwiają sprawdzenie działania kodu programu, jak również graficznego interfejsu użytkownika.
+	    \subsubsection{Testowanie kodu}
+	    
+	      W procesie tym testujemy szczegóły implementacji systemu. Oprócz kodu potrzebnego do zrealizowania danej funkcjonalności programiści piszą również testy weryfikujące jej implementację. Testy takie mogą mieć różne funkcje, wymienię tylko niektóre z nich:
+	      
+	      \begin{description}
+	        \item[Testy jednostkowe] Sprawdzają pojedynczy, niepodzielny element implementacji taki jak metoda lub funkcja
+	        \item[Testu integracyjne] Sprawdzają interakcję między składowymi elementami systemu
+        \end{description}
+        
+        Celem testu może być wynik działania danej części kodu, może być nim również chęć upewnienia się, że wynik działania osiągnięty jest w konkretny sposób. Dla przykładu testując funkcję, której zadaniem jest wyświetlić na ekranie monitora napis "Witaj Świecie!", możliwe jest, że prócz samego faktu pojawienia się treści na ekranie, chcemy również upewnić się, że do jej wyświetlenia użyta została jakaś konkretna metoda pochodząca z biblioteki standardowej. Jest to duża przewaga w stosunku to manualnego testowania oprogramowania, które nie daje nam takiej możliwości kontrolowania procesów prowadzących do widzialnych rezultatów.
+
+        W chwili obecnej istnieją dziesiątki gotowych narzędzi pozwalających testować kod napisany w każdym szerzej używanym języku programowania. Ich używanie należy do podstaw każdej nowoczesnej metodyki prowadzenia projektów informatycznych.
+        
+      \subsubsection{Testowanie interfejsu użytkownika}
+        
+        Istnieje szereg narzędzi pozwalających testować zachowanie, oraz wygląd interfejsów użytkownika, ich działanie opiera się najczęściej na "nagrywaniu" i późniejszym "odtwarzaniu" testowanych interakcji oraz porównywaniu ich rezultatów z oczekiwanymi. W taki sposób można testować tradycyjne aplikacje, jak również aplikacje www, działające w przeglądarce\footnote{w tym  przypadku szczegóły działania narzędzi testujących są inne, interfejs użytkownika jest bowiem najczęściej zdefiniowany przez znaczniki HTML.}
+        
+        W kwestii testowania interfejsu użytkownika przewaga automatycznych testów nie jest już tak druzgocąca jak w przypadku testowania kodu, jednak i tutaj jesteśmy w stanie znacząco skorzystać na automatyzacji, zyskiem jest przede wszystkim czas oraz zerowy koszt powtórzenia testu.
+        
+      \subsubsection{}
+
+        Decydując się na automatyzacje procesu testowania oprogramowania należy pamiętać, że nadal kluczowym elementem jest konieczność dogłębnego zrozumienia specyfikacji oprogramowania przez osobę odpowiedzialną za pisanie testów. Równie ważnym wymogiem jest to, że pakiet testów powinien być kompletny, to znaczy pokrywać wszystkie kluczowe elementy systemu. Im większy procent kodu pokryty jest testami, tym lepiej, oznacza to również, że każdy nowy kod musi być dostarczony wraz z odpowiednimi testami.
+        
+        Jeśli spełnimy te warunki proces utrzymania oprogramowania stanie się dużo łatwiejszy, oto niektóre z korzyści:
+        
+         \begin{itemize}
+     	    \item Mamy pewność, że system działa zgodnie z założeniami
+     	    \item Proces modyfikacji oprogramowania staje się łatwiejszy i bezpieczniejszy: jeśli nowy kod wywoła defekt w którejś z bieżących funkcjonalności zostaniemy o tym niezwłocznie poinformowani przez nie przechodzący test
+     	  \end{itemize}
+        
