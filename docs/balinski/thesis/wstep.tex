@@ -1,7 +1,27 @@
 \chapter[Wstęp]{Wstęp}
 	\section{Problemy napotykane w procesie wytwarzania oprogramowania}
+	  Na każdy projekt informatyczny można patrzeć z różnych perspektyw, w tej pracy chciałby jednak skupić się na technicznym aspekcie, jakim jest faza jego rozwoju w wybranym języku programowania, zaczynając od opisania częstych problemów podczas tej fazy.
+	  
+	  Rozwój oprogramowania nie jest rzeczą trywialną, po dogłębnej analizie potrzeb, wybraniu narzędzi, które posłużą do budowy systemu następuje faza implementacji. Jej trudność zależy od wielu czynników takich jak:
+	  
+	  \begin{description}
+	    \item[Rodzaj wybranych narzędzi] Czy wybrane środki techniczne takie jak język programowania lub zestaw zewnętrznych bibliotek nadają się do rozwiązania tego typu problemu?
+	    \item[Stopień skomplikowania systemu]
+	    \item[Stopień integracji systemu] Czy łatwo oddzielić od siebie poszczególne wewnętrzne funkcje systemu, czy konieczna jest integracja z zewnętrznym oprogramowaniem?
+	    \item[Wielkość zespołu programistów]
+	    \item[Stopień technicznej świadomości ludzi odpowiedzialnych za prowadzenie projektu] Wpływa na jakość komunikacji z programistami
+	  \end{description}
+	  
+	  Powyższe czynniki wpływają bezpośrednio na konkretne problemy, jakie pojawiają się podczas implementacji systemu. Rozwojowi oprogramowania najczęściej towarzyszą problemy takie jak:
+	  
+	  \paragraph{Wzrost stopnia skomplikowania bazy kodu}
+	    Kod staje się coraz bardziej skomplikowany i trudniejszy w utrzymaniu, wynika to często z braku ustalonych konwencji, polityki włączania do projektu zewnętrznych rozwiązań lub słabej komunikacji w zespole programistów.
+	  \paragraph{Niepotrzebny wzrost stopnia integracji}
+	    Łamanie zasady modułowego tworzenia oprogramowania, poszczególne części systemu są ze sobą coraz bardziej związane i znacząco na siebie wpływają, powoduje to sytuację, w której usterka w jednym module powoduję awarię w kilku innych częściach systemu.
+	  \paragraph{Trudność w utrzymaniu systemu zgodnie z dostarczoną specyfikacją}
+	    Wynikająca z niewłaściwej komunikacji lub z wcześniejszych błędów.
 	
-	  TBD
+	Te i wiele innych problemów sprawiają, że koniecznym staję się wprowadzenie narzędzia kontroli, dzięki któremu można by upewnić się co do jakości dostarczonych rozwiązań a także zminimalizować ryzyko pojawienia się podobnych problemów w przyszłości. Jednym z takich narzędzi są testy oprogramowania.
 	  
 	\section{Testowanie oprogramowania}
 	  \subsection{Wady manualnego testowania}
