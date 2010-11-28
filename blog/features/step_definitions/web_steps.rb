@@ -217,3 +217,14 @@ end
 Then /^show me the page$/ do
   save_and_open_page
 end
+
+Then /^(?:|I )press "([^"]*)" and confirm$/ do |button|    
+  page.evaluate_script("window.confirm = function(msg) { return true; }")
+  When %{I press "#{button}"}
+end
+
+Then /^(?:|I )press "([^"]*)" and not confirm$/ do |button|    
+  page.evaluate_script("window.confirm = function(msg) { return false; }")
+  When %{I press "#{button}"}
+end
+

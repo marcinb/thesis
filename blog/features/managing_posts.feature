@@ -13,15 +13,25 @@ Feature: Managing posts
     Then I should be on posts list
     And I should see "How to disassemble atomic bomb?"
     And I should see "You should avoid using fork for that."
-
+    
+  @javascript
   Scenario: Deleting blog post
     Given following posts exists:
       | title                   | body                      |
       | How to raise your kid   | You should be good parent |
     When I am on the home page
     Then I should see "How to raise your kid"
-    When I press "delete"
-    Then I should see "Are you sure?"
-    When I press "OK"
+    When I press "delete" and confirm
     Then I should be on posts list
     And I should not see "How to raise your kid"
+  
+  @javascript
+  Scenario: Cancel deleteting blog post
+    Given following posts exists:
+      | title                   | body                      |
+      | How to raise your kid   | You should be good parent |
+    When I am on the home page
+    Then I should see "How to raise your kid"
+    When I press "delete" and not confirm
+    Then I should be on the home page
+    And I should see "How to raise your kid"
