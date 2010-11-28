@@ -14,13 +14,14 @@ Feature: Managing posts
     And I should see "How to disassemble atomic bomb?"
     And I should see "You should avoid using fork for that."
 
-  @javascript
   Scenario: Deleting blog post
-    Given post titled "How to disassemble atomic bomb?" exists
+    Given following posts exists:
+      | title                   | body                      |
+      | How to raise your kid   | You should be good parent |
     When I am on the home page
-    Then I should see "How to disassemble atomic bomb?"
-    When I press "Delete"
+    Then I should see "How to raise your kid"
+    When I press "delete"
     Then I should see "Are you sure?"
-    When I press "Ok"
+    When I press "OK"
     Then I should be on posts list
-    And I should not see "How to disassemble atomic bomb?"
+    And I should not see "How to raise your kid"

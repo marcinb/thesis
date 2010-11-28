@@ -4,5 +4,7 @@
 - for post in @posts
   %h2= post.title
   %p.post_body= post.body
-  %p.edit= link_to "edit", edit_post_path(post)
+  %ul.actions
+    %li.edit= link_to("edit", edit_post_path(post))
+    %li.delete= button_to("delete", post_path(post), :method => :delete, :confirm => 'Are you sure?')
   %hr

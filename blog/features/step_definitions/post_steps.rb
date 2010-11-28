@@ -3,6 +3,7 @@ Given /^no posts exist$/ do
 end
 
 Given /^following posts exists:$/ do |posts_table|
+  Post.destroy_all
   posts_table.hashes.each do |attributes|
     Factory(:post, attributes)
   end
