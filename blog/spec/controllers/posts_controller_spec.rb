@@ -84,7 +84,7 @@ describe PostsController do
       it "redirects to the post" do
         Post.stub(:find) { mock_post(:update_attributes => true) }
         put :update, :id => "1"
-        response.should redirect_to(post_url(mock_post))
+        response.should redirect_to(posts_url)
       end
     end
 
