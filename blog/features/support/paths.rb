@@ -10,6 +10,8 @@ module NavigationHelpers
 
     when /the home\s?page/
       '/'
+    when /the administer dashboard page/
+      '/administer'
     when /posts list/
       '/posts'
 
