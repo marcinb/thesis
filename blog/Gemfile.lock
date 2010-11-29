@@ -29,6 +29,7 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
+    administer (0.2.0)
     arel (2.0.4)
     autotest (4.4.2)
     builder (2.1.2)
@@ -129,6 +130,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  administer (= 0.2.0)
   autotest
   capybara
   cucumber
