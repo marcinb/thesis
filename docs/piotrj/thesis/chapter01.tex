@@ -23,7 +23,7 @@
   \section{Existing Solutions}
   Thanks to its rapidly growing popularity, Ruby and Ruby on Rails got very broad community. Not only does it result in a huge number of places you can ask for help, but also in all kind of libraries that would make the life of web developer easier. And as it seems I am not alone stating the issue described above. There are already several implementations attacking the problem of admin interface. Some of them are more successful than others, there are different kinds of approaches and different outcomes. 
   
-  In order to see what market has to offer I looked through available solutions and chose 3 most popular ones in order to see what kind of functionalities they provide and what flaws they suffer from. 
+  In order to see what market has to offer I looked through available solutions and chose 4 most popular ones in order to see what kind of functionalities they provide and what flaws they suffer from. 
   
     \subsection[Active Scaffold] {Active Scaffold\footnote{http://activescaffold.com/}}
       According to Ruby Toolbox\footnote{http://ruby-toolbox.com/categories/rails\_admin\_interfaces.html} it is the most popular plugin for admin interface generation. Unfortunately, it seems like the days of glory for this gem are long gone. The plugin does not support Rails in version 3, which despite being released very recently already became a standard for new applications. 
@@ -103,6 +103,32 @@
   Of course, it provides us with some level of customizability, though it is not as wide as in two other projects. But, admin\_data has the level of dynamism I have been looking for. It creates the list of models on the fly, so while developing our application we will constantly have the most current version of our models lists, no question asked. Moreover, we can also see table's structure for given model, which may come in handy at times.
   
   On the other hand, you can clearly see that admin\_data has been created with programmers in mind. The user interface can be very hard to comprehend for people that do not know what is SQL or do not care how developers organized tables in the database. Therefore, it could be very hard to convince our business people that it is something they can use.
+  
+  \subsection{rails\_admin}
+  Although rails\_admin is not present on the ruby-toolbox list it has been very popular lately. It has been developed during Ruby Summer of Code\footnote{http://rubysoc.org/}. It has been developed strictly for Rails 3 so it uses all the best features and the best practices from the newest version of the framework.
+  
+  Installation is very quick, although we need to go through few steps. Moreover, it depends on devise\footnote{https://github.com/plataformatec/devise} gem, which takes care of users authentication, as rails\_admin's default option is to make people to log in to the administration panel.
+  
+  What we get after installation is very nice and user-friendly panel(figure \ref{railsadmin1}). In addition, it tracks changes in records, what gives us functionality of seeing whole history of activities on records as well as people that made them. Additionally, we have that data presented in form of nice graph that gives us an idea of what was happening in the system throughout the month or year.
+  
+  
+  \begin{figure}[hbt!]
+		\begin{center}
+			\includegraphics[width=\linewidth]{images/chapter01/railsadmin1.png}
+			\caption{rails\_admin dashboard}
+			\label{railsadmin1}
+		\end{center}
+	\end{figure}
+	
+	\begin{figure}[hbt!]
+		\begin{center}
+			\includegraphics[width=\linewidth]{images/chapter01/railsadmin2.png}
+			\caption{Form generated in rails\_admin }
+			\label{railsadmin2}
+		\end{center}
+	\end{figure}
+
+  Rails\_admin seems to have real potential and although I have not seen it in use in production yet, soon it maybe become real power of Rails applications. Definitely, ideas used in that project are very interesting and may be very useful.
   
   \section{Solution Proposal}
     \subsection{Solution Proposal}
