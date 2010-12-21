@@ -1,0 +1,33 @@
+\chapter[Test Driven Development]{Test Driven Development}
+  \section{Czym jest TDD?}
+    Test Driven Development jest praktyką, według założeń której każda modyfikacja systemu poprzedzona jest stworzeniem odpowiedniego testu opisującego tą modyfikację. Programista zaczyna od napisania testu, który z naturalnych przyczyn (testowany kod nie istnieje a tym etapie) daje wynik negatywny. Następnie napisany zostaje właściwy kod, którego zachowanie zgodne jest z testowanym. Kiedy testy przechodzą można wprowadzić ewentualne poprawki.
+    Proces rozwoju oprogramowania w zgodzie z filozofią TDD składa się z wielu takich cyklów, które zobrazować można diagramem:
+    
+    [diagram cyklu TDD]
+    \begin{enumerate}
+      \item Napisz test
+      \item Uruchom testy, upewnij się, że nowe testy nie przechodzą
+      \item Napisz kod 
+      \item Uruchom testy, upewnij się, że przechodzą
+      \item Jeśli jest to potrzebne, zmodyfikuj kod
+    \end{enumerate}
+  \subsection{Główne zasady TDD}
+    \paragraph{Zacznij od testu}
+      Test powinien być napisany zanim zacznie się implementacja funkcjonalności. Takie podejście gwarantuje, że będziemy mieli pełen zestaw testów, opisujących każdą funkcję systemu. Inną zaletą jest konieczność dokładnego przemyślenia szczegółów implementacji, jeszcze przed jej rozpoczęciem.
+    \paragraph{Zaraz po napisaniu nowe testy powinny dawać negatywny wynik}
+      Daje to pewność, że testy faktycznie spełniają swoją funkcję oraz, że każda degradacja funkcjonalności będzie sygnalizowana nieprzechodzącym testem.
+  \subsection{Budowa testu}
+    TBD
+  \subsection{Zalety TDD}
+    TBD
+    \begin{itemize}
+      \item Wzrost produktywności
+      \item Wzrost jakości kodu
+      \item Minimalizacja liczby defektów
+      \item Możliwość wczesnego wykrycia defektów
+      \item Modularyzacja kodu jako pozytywny skutek uboczny
+    \end{itemize}
+
+  \section{Narzędzia wspierające TDD dostępne dla języka Ruby}
+    TBD
+
