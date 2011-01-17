@@ -1,4 +1,30 @@
 \chapter[Behavior Driven Development]{Behavior Driven Development}
   \section{Czym jest BDD?}
+    Behavior Driven Development jest metodyką rozwoju oprogramowania, w której główny nacisk położony jest na zacieśnienie współpracy między programistami, a nietechnicznymi uczestnikami projektu. Podobnie jak w przypadku TDD implementację konkretnej funkcjonalności poprzedza zdefiniowanie jej zachowania w teście, różnica polega na tym, że scenariusze BDD pisane są w naturalnym języku, tak aby były zrozumiałe nie tylko dla programistów. Idealną sytuacją jest, kiedy scenariusze takie powstają w wyniku ścisłej współpracy programistów oraz właścicieli projektu ponieważ, jak sama nazwa wskazuje BDD kładzie nacisk na zdefiniowanie i zrozumienie zachowania aplikacji, a szczegóły implementacji są tu nieistotne.
+    \subsection{Funkcjonalności i scenariusze}
+      Każdy program tak naprawdę składa się z zestawu funkcjonalności, każda z nich wnosi konkretną wartość dodaną z punktu widzenia grupy docelowej, dla której oprogramowanie powstaje. Przykładowo program do obsługi księgowości powinien pozwalać zarządzać rachunkiem zysków i strat oraz sporządzać bilans (to oczywiście tylko niektóre z funkcji). Każda wyżej wymienionych czynności to pojedyncza funkcjonalność, która w zgodzie z filozofią BDD powinna zostać opisana zestawem scenariuszy.
+      
+      Scenariusze opisują zachowanie się programu w kontekście konkretnej funkcjonalności w precyzyjnie zdefiniowanej sytuacji, dla każdej funkcjonalności możemy więc zdefiniować dowolną ilość scenariuszy użycia. Na przykład dla funkcjonalności Zarządzanie rachunkiem zysków i strat mogą być zdefiniowane następujące scenariusze:
+      
+      \begin{itemize}
+        \item Wprowadzenie nowej poprawnej pozycji
+        \item Wprowadzenie nowej nie poprawnej pozycji
+        \item Modyfikacja pozycji
+        \item Próba wprowadzenia nowej pozycji przez nieautoryzowanego użytkownika
+      \end{itemize}
+      
+      Narzędzia BDD pozwalają na bardzo dużą swobodę jeśli chodzi o język definiowania scenariuszy, przykładowy plik definiujący powyższą funkcjonalność wraz ze scenariuszem 'Wprowadzenie nowej nie poprawnej pozycji' mógłby wyglądać tak:
+      
+\begin{verbatim}
+  Funkcjonalność: Zarządzanie rachunkiem zysków i strat
+  
+  Scenariusz: Wprowadzenie nowej nie poprawnej pozycji
+    Jako zalogowany użytkownik systemu
+    Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"
+    Oraz wprowadzam do pola "Przychody netto ze sprzedaży produktów" wartość "to_nie_jest_liczba"
+    Wtedy powinienem zobaczyć wiadomość "Błąd: Niepoprawna wartość. To pole jest polem liczbowym."
+    Oraz wartość "Przychody netto ze sprzedaży produktów" powinna być pusta
+\end{verbatim}
+      
   \section{Narzędzia BDD dostępne dla języka Ruby}
 
