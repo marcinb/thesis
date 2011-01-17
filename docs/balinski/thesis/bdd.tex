@@ -1,7 +1,7 @@
 \chapter[Behavior Driven Development]{Behavior Driven Development}
   \section{Czym jest BDD?}
     Behavior Driven Development jest metodyką rozwoju oprogramowania, w której główny nacisk położony jest na zacieśnienie współpracy między programistami, a nietechnicznymi uczestnikami projektu. Podobnie jak w przypadku TDD implementację konkretnej funkcjonalności poprzedza zdefiniowanie jej zachowania w teście, różnica polega na tym, że scenariusze BDD pisane są w naturalnym języku, tak aby były zrozumiałe nie tylko dla programistów. Idealną sytuacją jest, kiedy scenariusze takie powstają w wyniku ścisłej współpracy programistów oraz właścicieli projektu ponieważ, jak sama nazwa wskazuje BDD kładzie nacisk na zdefiniowanie i zrozumienie zachowania aplikacji, a szczegóły implementacji są tu nieistotne.
-    \subsection{Funkcjonalności i scenariusze}
+    \subsection{BDD jako narzędzie dokumentacji, funkcjonalności i scenariusze}
       Każdy program tak naprawdę składa się z zestawu funkcjonalności, każda z nich wnosi konkretną wartość dodaną z punktu widzenia grupy docelowej, dla której oprogramowanie powstaje. Przykładowo program do obsługi księgowości powinien pozwalać zarządzać rachunkiem zysków i strat oraz sporządzać bilans (to oczywiście tylko niektóre z funkcji). Każda wyżej wymienionych czynności to pojedyncza funkcjonalność, która w zgodzie z filozofią BDD powinna zostać opisana zestawem scenariuszy.
       
       Scenariusze opisują zachowanie się programu w kontekście konkretnej funkcjonalności w precyzyjnie zdefiniowanej sytuacji, dla każdej funkcjonalności możemy więc zdefiniować dowolną ilość scenariuszy użycia. Na przykład dla funkcjonalności Zarządzanie rachunkiem zysków i strat mogą być zdefiniowane następujące scenariusze:
@@ -23,8 +23,79 @@
     Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"
     Oraz wprowadzam do pola "Przychody netto ze sprzedaży produktów" wartość "to_nie_jest_liczba"
     Wtedy powinienem zobaczyć wiadomość "Błąd: Niepoprawna wartość. To pole jest polem liczbowym."
-    Oraz wartość "Przychody netto ze sprzedaży produktów" powinna być pusta
+    Oraz pole "Przychody netto ze sprzedaży produktów" powinno być puste
 \end{verbatim}
+
+    Powyższy przykład opisuje zachowanie aplikacji w sposób na tyle naturalny, że nikt nie będzie miał trudności w jego zrozumieniu, a po poznaniu kilku prostych zasad językowych, którymi należy się kierować również nie techniczny uczestnicy projektu mogą opisywać nowe funkcjonalności w ten sposób.
+    
+    Tworzenie specyfikacji projektu w postaci scenariuszy BDD jest bardzo pożądane. Zmniejsza to ilość niepotrzebnej dokumentacji, powoduje zacieśnienie współpracy w zespole oraz, o czym więcej w następnym podrozdziale, zwiększa pokrycie kodu testami.
+    
+    \subsection{BDD jako narzędzie testowania}
+      Prawdziwą mocą bibliotek wspierających Behavior Driven Development jest to, że traktują one specyfikacje dostarczoną w postaci scenariuszy jako zestaw testów. Dołączając więc scenariusze do naszego zestawu testów automatycznych mamy pewność, że oprogramowanie zachowuje się zgodnie z opisanymi w nich założeniami. W tym podrozdziale chciałbym opisać w jaki sposób, z technicznego punktu widzenia przebiega proces translacji specyfikacji (będącej plikiem tekstowym składającym się z pojedynczych scenariuszy) na zestaw automatycznych testów.
+      \subsubsection{Definicje kroków na przykładzie biblioteki Cucumber}
+        Aby skutecznie uruchomić scenariusze w formie testów należy skonstruować plik tekstowy je zawierający w zgodzie z pewnymi zasadami. Przykładowy plik definiujący funkcjonalność 'Zarządzanie rachunkiem zysków i strat' rządzi się pewnymi prawami:
+        
+        \begin{itemize}
+          \item Nazwa opisywanej funkcjonalności zdefiniowana jest po słowie kluczowym 'Funkcjonalność:'
+          \item Pojedyncze scenariusze definiowane są po słowie kluczowym 'Scenariusz:'. Należą do ostatnio zdefiniowanej funkcjonalności.
+          \item Każda kolejna linia nie będąca definicją nowego scenariusza lub funkcjonalności traktowana jest jako pojedynczy krok ostatnio zdefiniowanego scenariusza.
+        \end{itemize}
+        
+      Sercem biblioteki Cucumber są definicje kroków, które pozwalają powiązać każdy z nich z konkretną akcją. Definicja kroku składa się z wzorca językowego kroku oraz kodu który ma zostać wykonany jeśli wzorzec pasuje do aktualnie przetwarzanego kroku.
       
+      Wzorzec językowy najczęściej przybiera postać wyrażenia regularnego, cucumber przetwarzając nowy krok iteruje po wzorcach, które zostały zdefiniowane i wykonuje kod powiązany z pierwszym, do którego pasuje nazwa kroku (dlatego ważne jest definiowanie wzorców tak, aby były unikalne). Przykładowa definicja dla kroku 'Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"' może wyglądać tak:
+      
+      \begin{verbatim}
+        Kiedy /wybieram z menu głównego pozycję "(.*)"/ do |pozycja|
+          # zmienna 'pozycja' zawiera teraz ciąg znaków, który dopasowany został
+          # do wyrażenia "(.*)" a więc dla kroku 'Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"'
+          # będzie miała wartość: Wprowadź nową pozycję
+        end
+      \end{verbatim}
+      
+      Kiedy cucumber spróbuje przetworzyć krok 'Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"' dopasuje go do pierwszego odpowiadającego wzorca, który zdefiniowaliśmy oraz uruchomi blok kodu zdefiniowany pomiędzy słowami kluczowymi do ... end przekaże do tego bloku również wszelkie zmienne zdefiniowane we wzorcu. Powyższy przykład jest na razie bezużyteczny ponieważ jedyne, co znajduje się w bloku kodu to komentarz.
+      
+      Krok scenariusza najczęściej definiuje jedną z trzech rzeczy: założenie co do stanu środowiska w jakim uruchomione jest oprogramowanie, konkretną akcję wykonywaną na oprogramowaniu (taką jak np. kliknięcie przycisku) lub rezultat, jakiego się spodziewamy. Cucumber sam w sobie jest narzędziem które dopasowuje krok do odpowiadającej mu definicji, wszelkie interakcje z działającym programem, modyfikowanie środowiska działania czy też testowanie otrzymywanych wyników muszą zostać wykonywane przez zewnętrzne biblioteki, które należy samodzielnie skonfigurować.
+      
+      Aby lepiej zobrazować w jaki sposób może wyglądać działające środowisko BDD poczynię kilka założeń co do aplikacji, którą testujemy, oraz bibliotek, których użyjemy. Pominę szczegóły konfiguracji, jest to treścią jednego z kolejnych rozdziałów tej pracy.
+      
+      \begin{itemize}
+        \item Interfejs naszej aplikacji zdefiniowany jest językiem opisu dokumentów HTML.
+        \item Aplikacja napisana jest w języku Ruby, przy pomocy frameworka Ruby on Rails
+        \item Narzędzie RSpec zostało zainstalowane i skonfigurowane
+        \item Narzędzie Capybara zostało zainstalowane i skonfigurowane
+      \end{itemize}
+      
+      O bibliotece RSpec pisałem już w poprzednim rozdziale, tutaj użyjemy go w podobnym celu, to jest do testowania wyników działania aplikacji. Biblioteka Capybara służy do symulacji interakcji użytkownika z aplikacją używającą jako interfejsu HTML. Używając powyższych narzędzi mogę opisać pełen zestaw definicji kroków dla scenariusza 'Wprowadzenie nowej nie poprawnej pozycji':
+      
+      \begin{verbatim}        
+        Jako /zalogowany użytkownik systemu/ do
+          # znajdź pierwszego zarejestrowanego użytkownika
+          user = User.first
+          # otwórz stronę logowania
+          visit "/login"
+          # wypełnik pola 'email' i 'hasło' poprawnymi danymi
+          fill_in("email", :with => user.email)
+          fill_in("hasło", :with => user.password)
+          click_button("Zaloguj")
+        end
+        
+        Kiedy /wybieram z menu głównego pozycję "(.*)"/ do |pozycja|
+          select(pozycja, :from => "menu główne")
+        end
+        
+        Oraz /wprowadzam do pola "(.*)" wartość "(.*)"/ do |pole, wartosc|
+          fill_in(pole, :with => wartosc)
+        end
+        
+        Wtedy /powinienem zobaczyć wiadomość "(.*)"/ do |wiadomosc|
+          response.should contain(wiadomosc)
+        end
+        
+        Oraz /pole "Przychody netto ze sprzedaży produktów" powinno być puste/ do |pole|
+          field_labeled(pole).value.should be_empty
+        end
+      \end{verbatim}
+        
   \section{Narzędzia BDD dostępne dla języka Ruby}
 
