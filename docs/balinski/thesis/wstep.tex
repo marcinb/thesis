@@ -2,25 +2,26 @@
 	\section{Problemy napotykane w procesie wytwarzania oprogramowania}
 	  Na każdy projekt informatyczny można patrzeć z różnych perspektyw, w tej pracy chciałby jednak skupić się na technicznym aspekcie, jakim jest faza jego rozwoju w wybranym języku programowania, zaczynając od opisania częstych problemów podczas tej fazy.
 	  
-	  Rozwój oprogramowania nie jest rzeczą trywialną, po dogłębnej analizie potrzeb, wybraniu narzędzi, które posłużą do budowy systemu następuje faza implementacji. Jej trudność zależy od wielu czynników takich jak:
+	  Rozwój oprogramowania nie jest rzeczą trywialną. Po dogłębnej analizie potrzeb, wybraniu narzędzi, które posłużą do budowy systemu następuje faza implementacji, której trudność zależy od wielu czynników takich jak:
 	  
 	  \begin{description}
 	    \item[Rodzaj wybranych narzędzi] Czy wybrane środki techniczne takie jak język programowania lub zestaw zewnętrznych bibliotek nadają się do rozwiązania tego typu problemu?
 	    \item[Stopień skomplikowania systemu]
-	    \item[Stopień integracji systemu] Czy łatwo oddzielić od siebie poszczególne wewnętrzne funkcje systemu, czy konieczna jest integracja z zewnętrznym oprogramowaniem?
+	    \item[Stopień integracji systemu] Czy łatwo oddzielić od siebie poszczególne wewnętrzne funkcje systemu? Czy konieczna jest integracja z zewnętrznym oprogramowaniem?
 	    \item[Wielkość zespołu programistów]
-	    \item[Stopień technicznej świadomości ludzi odpowiedzialnych za prowadzenie projektu] Wpływa na jakość komunikacji z programistami
+	    \item[Stopień technicznej świadomości ludzi odpowiedzialnych za prowadzenie projektu] Wpływa na jakość komunikacji z programistami.
 	  \end{description}
 	  
-	  Powyższe czynniki wpływają bezpośrednio na konkretne problemy, jakie pojawiają się podczas implementacji systemu. Rozwojowi oprogramowania najczęściej towarzyszą problemy takie jak:
+	  Powyższe czynniki wpływają bezpośrednio na problemy, które pojawiają się podczas implementacji systemu. Rozwojowi oprogramowania najczęściej towarzyszą problemy takie jak:
 	  
 	  \paragraph{Wzrost stopnia skomplikowania bazy kodu}
 	    Kod staje się coraz bardziej skomplikowany i trudniejszy w utrzymaniu, wynika to często z braku ustalonych konwencji, polityki włączania do projektu zewnętrznych rozwiązań lub słabej komunikacji w zespole programistów.
 	  \paragraph{Niepotrzebny wzrost stopnia integracji}
-	    Łamanie zasady modułowego tworzenia oprogramowania, poszczególne części systemu są ze sobą coraz bardziej związane i znacząco na siebie wpływają, powoduje to sytuację, w której usterka w jednym module powoduję awarię w kilku innych częściach systemu.
+	    Łamanie zasady modułowego tworzenia oprogramowania, poszczególne części systemu są ze sobą coraz bardziej związane i znacząco na siebie wpływają. Powoduje to sytuację, w której usterka w jednym module powoduję awarię w kilku innych częściach systemu.
 	  \paragraph{Trudność w utrzymaniu systemu zgodnie z dostarczoną specyfikacją}
 	    Wynikająca z niewłaściwej komunikacji lub z wcześniejszych błędów.
 	
+	\subsubsection{}
 	Te i wiele innych problemów sprawiają, że koniecznym staję się wprowadzenie narzędzia kontroli, dzięki któremu można by upewnić się co do jakości dostarczonych rozwiązań a także zminimalizować ryzyko pojawienia się podobnych problemów w przyszłości. Jednym z takich narzędzi są testy oprogramowania.
 	  
 	\section{Testowanie oprogramowania}
@@ -38,7 +39,7 @@
   	   	\item Brak możliwości dokładnego przetestowania szczegółów implementacji danej funkcjonalności
   	  \end{itemize}
 	  
-  	  Waga powyższych niedogodności rośnie wykładniczo wraz ze wzrostem poziomu skomplikowania oprogramowania, dlatego też manualne testowanie sprawdza się w zasadzie tylko w projektach o małej złożoności, w innych przypadkach istnieje potrzeba uzupełnienia lub zastąpienia go przez testy automatyczne.
+  	  Waga powyższych niedogodności rośnie wykładniczo wraz ze wzrostem poziomu skomplikowania oprogramowania, dlatego też manualne testowanie sprawdza się w zasadzie tylko w projektach o małej złożoności. W innych przypadkach istnieje potrzeba uzupełnienia lub zastąpienia żywego testera przez testy automatyczne.
 	  
 	  \subsection{Testy automatyczne}
 	    Automatyzacja procesu testowania odbywa się poprzez zastąpienie testera oprogramowaniem, które przejmie jego rolę. Automatyczne metody testowania umożliwiają sprawdzenie działania kodu programu, jak również graficznego interfejsu użytkownika.
@@ -51,19 +52,19 @@
 	        \item[Testu integracyjne] Sprawdzają interakcję między składowymi elementami systemu
         \end{description}
         
-        Celem testu może być wynik działania danej części kodu, może być nim również chęć upewnienia się, że wynik działania osiągnięty jest w konkretny sposób. Dla przykładu testując funkcję, której zadaniem jest wyświetlić na ekranie monitora napis "Witaj Świecie!", możliwe jest, że prócz samego faktu pojawienia się treści na ekranie, chcemy również upewnić się, że do jej wyświetlenia użyta została jakaś konkretna metoda pochodząca z biblioteki standardowej. Jest to duża przewaga w stosunku to manualnego testowania oprogramowania, które nie daje nam takiej możliwości kontrolowania procesów prowadzących do widzialnych rezultatów.
+        Celem testu może być wynik działania danej części kodu, może być nim również chęć upewnienia się, że wynik działania osiągnięty jest w konkretny sposób. Dla przykładu testując funkcję, której zadaniem jest wyświetlić na ekranie monitora napis "Witaj Świecie!" możliwe jest, że prócz samego faktu pojawienia się treści na ekranie chcemy również upewnić się, że do jej wyświetlenia użyta została jakaś konkretna metoda pochodząca z biblioteki standardowej. Jest to duża przewaga w stosunku to manualnego testowania oprogramowania, które nie daje nam takiej możliwości kontrolowania procesów prowadzących do widzialnych rezultatów.
 
         W chwili obecnej istnieją dziesiątki gotowych narzędzi pozwalających testować kod napisany w każdym szerzej używanym języku programowania. Ich używanie należy do podstaw każdej nowoczesnej metodyki prowadzenia projektów informatycznych.
         
       \subsubsection{Testowanie interfejsu użytkownika}
         
-        Istnieje szereg narzędzi pozwalających testować zachowanie, oraz wygląd interfejsów użytkownika, ich działanie opiera się najczęściej na nagrywaniu i późniejszym odtwarzaniu testowanych interakcji oraz porównywaniu ich rezultatów z oczekiwanymi. W taki sposób można testować tradycyjne aplikacje, jak również aplikacje www, działające w przeglądarce\footnote{w tym  przypadku szczegóły działania narzędzi testujących są inne, interfejs użytkownika jest bowiem najczęściej zdefiniowany przez znaczniki HTML.}
+        Istnieje szereg narzędzi pozwalających testować zachowanie, oraz wygląd interfejsów użytkownika, ich działanie opiera się najczęściej na nagrywaniu i późniejszym odtwarzaniu testowanych interakcji oraz porównywaniu ich rezultatów z naszymi oczekiwaniami. W taki sposób można testować tradycyjne aplikacje, jak również aplikacje www, działające w przeglądarce\footnote{w tym  przypadku szczegóły działania narzędzi testujących są inne, interfejs użytkownika jest bowiem najczęściej zdefiniowany przez znaczniki HTML.}
         
         W kwestii testowania interfejsu użytkownika przewaga automatycznych testów nie jest już tak druzgocąca jak w przypadku testowania kodu, jednak i tutaj jesteśmy w stanie znacząco skorzystać na automatyzacji, zyskiem jest przede wszystkim czas oraz zerowy koszt powtórzenia testu.
         
       \subsubsection{}
 
-        Decydując się na automatyzacje procesu testowania oprogramowania należy pamiętać, że nadal kluczowym elementem jest konieczność dogłębnego zrozumienia specyfikacji oprogramowania przez osobę odpowiedzialną za pisanie testów. Równie ważnym wymogiem jest to, że pakiet testów powinien być kompletny, to znaczy pokrywać wszystkie kluczowe elementy systemu. Im większy procent kodu pokryty jest testami, tym lepiej, oznacza to również, że każdy nowy kod musi być dostarczony wraz z odpowiednimi testami.
+        Decydując się na automatyzacje procesu testowania oprogramowania należy pamiętać, że nadal kluczowym elementem jest konieczność dogłębnego zrozumienia specyfikacji oprogramowania przez osobę odpowiedzialną za pisanie testów. Równie ważnym wymogiem jest to, że pakiet testów powinien być kompletny, to znaczy pokrywać wszystkie kluczowe elementy systemu. Im większy procent kodu pokryty jest testami tym lepiej. Oznacza to również, że każdy nowy kod musi być dostarczony wraz z odpowiednimi testami.
         
         Jeśli spełnimy te warunki proces utrzymania oprogramowania stanie się dużo łatwiejszy, oto niektóre z korzyści:
         

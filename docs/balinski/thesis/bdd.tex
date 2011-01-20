@@ -1,10 +1,10 @@
 \chapter[Behavior Driven Development]{Behavior Driven Development}
   \section{Czym jest BDD?}
-    Behavior Driven Development jest metodyką rozwoju oprogramowania, w której główny nacisk położony jest na zacieśnienie współpracy między programistami, a nietechnicznymi uczestnikami projektu. Podobnie jak w przypadku TDD implementację konkretnej funkcjonalności poprzedza zdefiniowanie jej zachowania w teście, różnica polega na tym, że scenariusze BDD pisane są w naturalnym języku, tak aby były zrozumiałe nie tylko dla programistów. Idealną sytuacją jest, kiedy scenariusze takie powstają w wyniku ścisłej współpracy programistów oraz właścicieli projektu ponieważ, jak sama nazwa wskazuje BDD kładzie nacisk na zdefiniowanie i zrozumienie zachowania aplikacji, a szczegóły implementacji są tu nieistotne.
-    \subsection{BDD jako narzędzie dokumentacji, funkcjonalności i scenariusze}
-      Każdy program tak naprawdę składa się z zestawu funkcjonalności, każda z nich wnosi konkretną wartość dodaną z punktu widzenia grupy docelowej, dla której oprogramowanie powstaje. Przykładowo program do obsługi księgowości powinien pozwalać zarządzać rachunkiem zysków i strat oraz sporządzać bilans (to oczywiście tylko niektóre z funkcji). Każda wyżej wymienionych czynności to pojedyncza funkcjonalność, która w zgodzie z filozofią BDD powinna zostać opisana zestawem scenariuszy.
+    Behavior Driven Development jest metodyką rozwoju oprogramowania, w której główny nacisk położony jest na zacieśnienie współpracy między programistami, a nietechnicznymi uczestnikami projektu. Podobnie jak w przypadku TDD implementację konkretnej funkcjonalności poprzedza zdefiniowanie jej zachowania w teście. Różnica polega na tym, że scenariusze BDD pisane są w naturalnym języku, tak aby były zrozumiałe nie tylko dla programistów. Idealną sytuacją jest kiedy scenariusze takie powstają w wyniku ścisłej współpracy programistów oraz właścicieli projektu ponieważ, jak sama nazwa wskazuje, BDD kładzie nacisk na zdefiniowanie i zrozumienie zachowania aplikacji a szczegóły implementacji są tutaj mniej istotne.
+    \subsection{BDD jako narzędzie dokumentacji. Funkcjonalności i scenariusze}
+      Każdy program tak naprawdę składa się z zestawu funkcjonalności. Każda funkcjonalność wnosi konkretną wartość dodaną z punktu widzenia grupy docelowej, dla której oprogramowanie powstaje. Przykładowo program do obsługi księgowości powinien pozwalać zarządzać rachunkiem zysków i strat oraz sporządzać bilans (to oczywiście tylko niektóre z funkcji). Każda wyżej wymienionych czynności to pojedyncza funkcjonalność, która w zgodzie z filozofią BDD powinna zostać opisana zestawem scenariuszy.
       
-      Scenariusze opisują zachowanie się programu w kontekście konkretnej funkcjonalności w precyzyjnie zdefiniowanej sytuacji, dla każdej funkcjonalności możemy więc zdefiniować dowolną ilość scenariuszy użycia. Na przykład dla funkcjonalności Zarządzanie rachunkiem zysków i strat mogą być zdefiniowane następujące scenariusze:
+      Scenariusze opisują zachowanie się programu w kontekście konkretnej funkcjonalności w precyzyjnie zdefiniowanej sytuacji a dla każdej funkcjonalności możemy zdefiniować dowolną ilość scenariuszy użycia. Na przykład dla funkcjonalności Zarządzanie rachunkiem zysków i strat mogą być zdefiniowane następujące scenariusze:
       
       \begin{itemize}
         \item Wprowadzenie nowej poprawnej pozycji
@@ -43,7 +43,7 @@
         
       Sercem biblioteki Cucumber są definicje kroków, które pozwalają powiązać każdy z nich z konkretną akcją. Definicja kroku składa się z wzorca językowego kroku oraz kodu który ma zostać wykonany jeśli wzorzec pasuje do aktualnie przetwarzanego kroku.
       
-      Wzorzec językowy najczęściej przybiera postać wyrażenia regularnego, cucumber przetwarzając nowy krok iteruje po wzorcach, które zostały zdefiniowane i wykonuje kod powiązany z pierwszym, do którego pasuje nazwa kroku (dlatego ważne jest definiowanie wzorców tak, aby były unikalne). Przykładowa definicja dla kroku 'Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"' może wyglądać tak:
+      Wzorzec językowy najczęściej przybiera postać wyrażenia regularnego. Cucumber przetwarzając nowy krok iteruje po wzorcach, które zostały zdefiniowane i wykonuje kod powiązany z pierwszym, do którego pasuje nazwa kroku (dlatego ważne jest definiowanie wzorców tak, aby były unikalne). Przykładowa definicja dla kroku 'Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"' może wyglądać tak:
       
       \begin{verbatim}
         Kiedy /wybieram z menu głównego pozycję "(.*)"/ do |pozycja|
@@ -53,7 +53,7 @@
         end
       \end{verbatim}
       
-      Kiedy cucumber spróbuje przetworzyć krok 'Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"' dopasuje go do pierwszego odpowiadającego wzorca, który zdefiniowaliśmy oraz uruchomi blok kodu zdefiniowany pomiędzy słowami kluczowymi do ... end przekaże do tego bloku również wszelkie zmienne zdefiniowane we wzorcu. Powyższy przykład jest na razie bezużyteczny ponieważ jedyne, co znajduje się w bloku kodu to komentarz.
+      Kiedy cucumber spróbuje przetworzyć krok 'Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"' dopasuje go do pierwszego odpowiadającego wzorca, który zdefiniowaliśmy oraz uruchomi blok kodu zdefiniowany pomiędzy słowami kluczowymi \verb+do+ oraz \verb+end+. Przekaże do tego bloku również wszelkie zmienne zdefiniowane we wzorcu. Powyższy przykład jest na razie bezużyteczny ponieważ jedyne co znajduje się w bloku kodu to komentarz.
       
       Krok scenariusza najczęściej definiuje jedną z trzech rzeczy: założenie co do stanu środowiska w jakim uruchomione jest oprogramowanie, konkretną akcję wykonywaną na oprogramowaniu (taką jak np. kliknięcie przycisku) lub rezultat, jakiego się spodziewamy. Cucumber sam w sobie jest narzędziem które dopasowuje krok do odpowiadającej mu definicji, wszelkie interakcje z działającym programem, modyfikowanie środowiska działania czy też testowanie otrzymywanych wyników muszą zostać wykonywane przez zewnętrzne biblioteki, które należy samodzielnie skonfigurować.
       
