@@ -3,3 +3,5 @@
 *.lof
 *.gz
 *.toc
+*.bbl
+*.blg
