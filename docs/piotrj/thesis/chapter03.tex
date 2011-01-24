@@ -1,0 +1,78 @@
+% Copyright 2011, Piotr Jakubowski
+
+\chapter{Research}
+  The aim of this chapter is to present the environment in which the plugin will be developed. I will present, firstly, the features of Ruby language and then what is Ruby on Rails, how it is constructed and how we can enrich it with plugins. In the end I will take a look into possibilities of metaprogramming in Ruby and Rails.
+  
+  \section{Ruby}
+  Here you will find information abut Ruby language and especially those features that create the power of Ruby and distinguish it from other programming languages.
+    \subsection{Basic information}
+      \subsubsection{History}
+      Ruby language has been created by Yukihiro Matsumoto also known as "Matz" for english speaking programmers. It firstly appeared publicly in 1995 with version 0.95 in order to reach version 1.0 a year later. As of the time of writing this document, the latest release of Ruby is of branch 1.9 (specifically 1.9.2), but the branch 2.0 with brand new exciting features is emerging on the horizon.
+    
+      While creating Ruby Matz stated that he focused on developing a language that would be programmer-friendly and that would make the barrier between idea and putting this idea in code as low as possible. The most famous quote of Matz fully describes the philosophy of the language:
+    
+      \begin{quote}
+        Ruby is designed to make programmers happy
+      \end{quote}
+    
+      That explains the idea behind the project.
+    
+      \subsubsection{Implementation}
+      The official implementation of Ruby has been written in C language. As no particular standard has been developed for the language, the official implementation is a reference for all other vendors. Nonetheless, there is plenty of other implementations including one operating in JVM(JRuby\footnote{http://www.jruby.org/}), .NET framework(IronRuby\footnote{http://ironruby.codeplex.com/}) and Objective-C runtime(MacRuby\footnote{http://www.macruby.org/}).
+    
+    \subsection{Features}
+      \subsubsection{Basic features}
+      It is worth mentioning few basic features of Ruby language that would make the further part of this chapter clearer.
+      \begin{itemize}
+        \item Ruby is scripting language - statements are executed as provided and there is no special \texttt{main} function
+    	  \item Ruby is dynamically typed
+    	  \item Method invocations do not need to include parentheses
+    	\end{itemize}
+    	
+      \subsubsection{Everything is an object}
+      Ruby is an object oriented language. In fact, every value in Ruby is a object. Even such "primitive" values as integers, true, false or nil (which is Ruby's NULL). Thanks to that, Ruby promotes and enforce object oriented programming. 
+      
+      Moreover, you can have methods on integers or other primitive values which makes the code much more readable, shorter and enjoyable. For example instead of having Java-like:
+      
+      \lstinputlisting[language=java]{code/chapter03/objects.java}
+      
+      You can have much more readable:
+      
+      \lstinputlisting[language=ruby]{code/chapter03/objects.rb}
+      
+      Ruby standard library does not include \texttt{to\_roman} function for integers, but we could easily add one by using next described feature.
+      
+      \subsubsection{All classes are open}
+      Ruby gives us freedom to change already declared classes. Moreover, it does not mean that we can change only the classes that we defined. We can change even classes defined by Ruby standard library. Therefore we can open for example class Integer that represents all integer values in Ruby code and add method \texttt{to\_roman}:
+      
+      \lstinputlisting[language=ruby]{code/chapter03/openclasses.rb}
+      
+      Now, we would be able to have following line in our code:
+      
+      \lstinputlisting[language=ruby]{code/chapter03/openclasses2.rb}
+      
+      \subsubsection{Power of blocks}
+      This is one of the most exciting features of Ruby language. Block is a fragment of code that can be passed to a function and the function may call this code anywhere inside its body. 
+      
+      Block in ruby can be denoted in two ways:
+      
+      \lstinputlisting[language=ruby]{code/chapter03/blocks01.rb}
+      
+      Usually the first way is used for blocks that span throughout multiple lines, while the second way is used for single line blocks. 
+      
+      Blocks can be used in number of ways. The most popular are iterators:
+      
+      \lstinputlisting[language=ruby]{code/chapter03/blocks02.rb}
+      
+      Above code would result in printing 1, 2, 3 to the output. Statement \texttt{do |i|} means that this block expects one argument called \texttt{i} just like regular functions do.
+      
+      In order to understand how blocks operate, let me present simple example:
+      
+      \lstinputlisting[language=ruby]{code/chapter03/blocks03.rb}
+      
+      The above example adds the \texttt{each\_nested} method to an array that allows us to perform operations on every element of multidimensional matrix. It iterates over every element of an array. If given element is again an array then it recursively calls \texttt{each\_nested} on it and if it is other element then it passes the control to a block along with the element as a parameter.
+      
+      As we can see appropriate use of blocks may be very useful and can make code much shorter and more readable
+      
+    \section{Summary}
+    This chapter demonstrated basic features of Ruby language. In order to get more information on this language I forward the reader to the official website\footnote{http://ruby-lang.org/} or to some books from bibliography\cite{ruby01}.
