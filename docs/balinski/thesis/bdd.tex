@@ -96,6 +96,28 @@
           field_labeled(pole).value.should be_empty
         end
       \end{verbatim}
-        
+      
+    \subsubsection{Rola programisty}
+    
+      Jak widać definiowanie kroków wymaga podstawowej wiedzy z zakresu programowania oraz budowy opisywanego systemu, dlatego też zadanie to najczęściej wykonują programiści pracujący nad projektem.  Klient w tym wypadku dostarcza specyfikacji w postaci scenariuszy użycia, programiści zaś definiują brakujące kroki. Na szczęście problem ten jest uciążliwy właściwie tylko na początku życia projektu. Wraz z rosnącą ilością scenariuszy rośnie też ilość definicji kroków, a w pewnym momencie życia projektu definicje kroków zaczynają gęsto pokrywać większość funkcjonalności systemu tak, że w większości wypadków nawet do nowych funkcjonalności można bez problemu dopasować istniejące już kroki.
+      
+      Ważne jest aby scenariusze były jak najbardziej zestandaryzowane, to znaczy, aby w miarę możliwości korzystać z już zdefiniowanych kroków w procesie ich tworzenia. Aby to osiągnąć osoba odpowiedzialna  za dostarczenie specyfikacji w postaci scenariuszy powinna poświęcić trochę czasu na zapoznanie się z dostępnymi definicjami kroków.
+      
+      Ze strony programistów, którzy piszą definicje szczególny nacisk powinien zostać położony na kilka kwestii:
+      
+      \begin{description}
+        \item[Unikanie powtórzeń] Należy upewnić się, że brakujący krok jest na pewno unikalny. Może okazać się, że wcześniej został zdefiniowany bardzo podobny krok, o innej nazwie.
+        \item[Parametryzacja] Jeśli zachodzi taka potrzeba należy przystosować definicję kroku tak, aby obsługiwała więcej niż jeden przypadek użycia.
+        \item[Klasyfikacja] Aby zwiększyć czytelność kodu należy klasyfikować kroki na przykład według funkcjonalności, które obsługują, można w tym celu umieszczać kroki w osobnych plikach.
+      \end{description}
+      
+      Przestrzeganie tych zasad nie jest konieczne do poprawnego działania systemu ale na pewno w znaczącym stopniu poprawi czytelność i jakość naszej bazy testów.
+      
+    \subsection{Testy akceptacyjne a BDD}
+      
+      Kiedy nowa funkcjonalność jest skończona klient zawsze powinien ją przetestować i zaakceptować jeśli spełnia jego oczekiwania, lub odrzucić w przeciwnym wypadku. W tradycyjnym podejściu do rozwoju oprogramowania testy akceptacyjne wyglądają najczęściej tak, że klient ręcznie sprawdza nową funkcjonalność. Minusy manualnego testowania zostały szczegółowo opisane w rozdziale dotyczącym TDD. Behavior Driven Development pozwala w dużym stopniu wyeliminować czasochłonne manualne testy akceptacyjne. W momencie, kiedy mamy gotowy dobry zestaw scenariuszy użycia, który jednocześnie jest specyfikacją funkcjonalności sam fakt, że wszystkie scenariusze zostają uruchomione z pozytywnym skutkiem jest wystarczającym testem akceptacyjnym.
+      
+      Jeśli chcemy zastąpić testy akceptacyjne z żywym klientem na scenariusze BDD należy pamiętać, że środowisko testowe (w tym definicje kroków) muszą zostać zaprojektowane tak, aby działały w identycznej konfiguracji jak konfiguracja produkcyjna (czyli taka, w jakiej działa nasze oprogramowanie po dostarczeniu do klienta). Szczególnie nie należy używać imitacji (ang. mock) obiektów, których bardzo często używa się w testach jednostkowych, scenariusze powinny testować zachowanie się aplikacji w naturalnym środowisku.
+      
   \section{Narzędzia BDD dostępne dla języka Ruby}
 
