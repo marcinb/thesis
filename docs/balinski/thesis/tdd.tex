@@ -84,6 +84,109 @@
   \section{Narzędzia wspierające TDD dostępne dla języka Ruby}
     
     \subsection{Test::Unit}
+    
+    Test::Unit należy do bibliotek dołączanych standardowo do każdej dystrybucji języka Ruby. Oprogramowanie testujemy tutaj przy pomocy tak zwanych asercji. Najprostsza asercja ma postać wywołania metody \verb+assert+, która sygnalizuje powodzenie testu w momencie, kiedy wyrażenie przekazane jako jej parametr jest prawdą, przykładowo:
+    
+     \begin{verbatim}
+       def test_one_plus_one_equals_two
+         assert 1 + 1 == 2
+       end
+     \end{verbatim}
+     
+     \subsubsection{Konstrukcja zestawu testów}
+     Zestaw testów biblioteki Test::Unit ma postać definicji klasy, która dziedziczy po klasie Test::Unit::TestCase. Pojedyncze testy definiujemy jako metody, rozpoczynające się od ciągu znaków 'test'. W ciele każdej z takich metod możemy zdefiniować wiele asercji (aczkolwiek idealnie jest, jeśli jeden test równoznaczny jest z jedną asercją). Test kończy się sukcesem jedynie, kiedy wszystkie należące do niego asercję również zakończą się sukcesem.
+     
+     Przykładowy prosty zestaw testów opisujących zachowanie aplikacji będącej kalkulatorem może wyglądać tak:
+     
+     \begin{verbatim}
+       require 'test/unit'
+       
+       class CalculatorTest < Test::Unit::TestCase
+         def test_adding
+           calc = Calculator.new
+           assert calc.add(2, 2) == 4
+         end
+         
+         def test_substracting
+           calc = Calculator.new
+           assert calc.sub(2, 2) == 0
+         end
+         
+         def test_multiplying
+           calc = Calculator.new
+           assert calc.multiply(2, 4) == 8
+         end
+         
+         def test_dividing
+           calc = Calculator.new
+           assert calc.div(2, 2) == 1
+         end
+       end
+     \end{verbatim}
+     
+     metoda \verb+assert+ nie jest jedynym typem asercji, z którego możemy korzystać, istnieje ich dużo więcej a najbardziej przydatne z nich to:
+     
+     \begin{description}
+       \item[assert\_equal(expected, actual)] przyjmuje dwa parametry, zwraca prawdę, jeśli parametry są sobie równe.
+       \item[assert\_not\_equal(expected, astual)] przyjmuje dwa parametry, zwraca prawdę, jeśli parametry różne od siebie.
+       \item[assert\_match(regex, string)] przyjmuje dwa parametry w postaci łańcucha znaków lub wyrażenia regularnego, zwraca prawdę jeśli nastąpi dopasowanie wzorca.
+       \item[assert\_no\_match(regex, string)] przyjmuje dwa parametry w postaci łańcucha znaków lub wyrażenia regularnego, zwraca prawdę jeśli dopasowanie wzorca nie nastąpi.
+       \item[assert\_nil(object)] zwraca prawdę jeśli przekazany parametry ma pustą wartość (\verb+nil+).
+       \item[assert\_not\_nil(object)] zwraca prawdę, jeśli przekazany parametr ma niepustą wartość (różną od \verb+nil+).
+       \item[assert\_instance\_of(class, object)] przyjmuje na wejściu nazwę klasy oraz parametr, zwraca prawdę, jeśli parametr jest obiektem typu \verb+class+.
+    \end{description}
+    
+    \subsubsection{Warunki początkowe i końcowe}
+    Czasem grupa testów powinna być uruchamiana przy takich samych warunkach początkowych, albo też (nie tak częsty przypadek) występuje konieczność wykonania jakichś czynności na koniec każdego testu (np. wyczyszczenie bazy danych). Biblioteka Test::Unit pozwala definiować warunki początkowe i końcowe przy pomocy metod \verb+setup+ i \verb+teardown+.
+    Metoda \verb+setup+ zostanie wykonana przed każdym testem, metoda \verb+teardown+ bezpośrednio po każdym teście. Możemy np. znacząco uprościć nasz przykładowy zestaw testów kalkulatora poprzez przeniesienie procesu tworzenia obiektu Calculator do metody setup. zmodyfikowane testy używają również bardziej właściwych asercji:
+    
+    \begin{verbatim}
+      require 'test/unit'
       
+      class CalculatorTest < Test::Unit::TestCase
+        def setup
+          @calc = Calculator.new
+        end
+      
+        def test_adding
+          assert_equal 4, @calc.add(2, 2)
+        end
+        
+        def test_substracting
+          assert_equal 0, @calc.sub(2, 2)
+        end
+        
+        def test_multiplying
+          assert_equal 8, @calc.multiply(2, 4)
+        end
+        
+        def test_dividing
+          assert_equal 1, @calc.div(2, 2)
+        end
+      end
+    \end{verbatim}
+    
+    Przedrostek \verb+@+ przy zmiennej \verb+calc+ oznacza, że odnosimy się do zmiennej instancyjnej a więc dzielonej w obrębie obiektu danej klasy, zmienne bez tego przedrostka traktowane są w Ruby jako zmienne lokalne.
+    
+    \subsubsection{Pakiety testów}
+    Testując dużą aplikację będziemy chcieli podzielić testy na kilka plików tak, aby odzwierciedlić modułową budowę aplikacji oraz poprawić czytelność testów. Biblioteka Test::Unit upraszcza proces uruchamiania całego pakietu testów jedyne, co musimy w tym wypadku zrobić, to stworzyć nowy plik i przy pomocy metody \verb+require+ załadować wszystkie pliki zawierające interesujące nas testy:
+    
+    \begin{verbatim}
+      # test/full_suite.rb
+      
+      require 'test/unit'
+      
+      require 'test_suite1'
+      require 'test_suite2'
+      require 'test_suite3'
+    \end{verbatim}
+    
+    Teraz, jeśli wykonamy polecenie:
+    
+    \begin{verbatim}
+      ruby test/full_suite.rb
+    \end{verbatim}
+    
+    uruchomione zostaną wszystkie testy zdefiniowane w plikach: \verb+test/test_suite1.rb+, \verb+test/test_suite2.rb+ oraz \verb+test/test_suite3.rb+
     \subsection{RSpec}
 
