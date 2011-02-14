@@ -188,5 +188,47 @@
     \end{verbatim}
     
     uruchomione zostaną wszystkie testy zdefiniowane w plikach: \verb+test/test_suite1.rb+, \verb+test/test_suite2.rb+ oraz \verb+test/test_suite3.rb+
+    
     \subsection{RSpec}
+    
+    Kolejnym narzędziem świetnie wspierającym testowanie oprogramowania w języku Ruby jest biblioteka RSpec. RSpec jest narzędziem bardziej rozbudowanym niż Test::Unit, w tym podrozdziale skupię się jednak na jego podstawowych funkcjach umożliwiających testowanie oprogramowania w zgodzie z filozofią TDD.
+    
+    Bibliotekę RSpec najłatwiej zainstalować przy pomocy narzędzia ruby gems, które jest standardowo dostarczane wraz z każdą dystrybucją języka Ruby. Proces instalacji jest trywialny, wystarczy z konsoli systemowej wydać polecenie:
+    
+    \begin{verbatim}
+      gem install rspec
+    \end{verbatim}
+    
+    \subsubsection{Przykłady}
+    W RSpec każdy test nazywany jest przykładem (ang. example). RSpec definiuje własny dialekt języka Ruby, dzięki czemu przykłady wyglądają bardziej jak naturalny język. W początkowej części tego rozdziału zdefiniowaliśmy już przykłady dla oprogramowania obsługującego sportową tablicę wyników:
+    
+    \begin{verbatim}
+      require 'sports_table'
 
+      describe SportsTable do
+        it "should properly join team names with 'vs.'" do
+          table = SportsTable.new
+          table.header('Chicago Bulls', 'Los Angeles Lakers').should == 'Chicago Bulls vs. Los Angeles Lakers'
+        end
+      end
+    \end{verbatim}
+    
+    Pierwsze co powyższy kod robi, to dołącza plik z klasą \verb+SportsTable+, którą mamy zamiar przetestować. Zaraz później znajduje się linia:
+    
+    \verb+describe SportsTable do+
+    
+    Metoda \verb+describe+ zwraca tak zwaną grupę przykładów, która w bibliotece RSpec implementowana jest przez klasę \verb+ExampleGroup+. Jako parametry przyjmuje ona testowaną klasę oraz opcjonalny opis. Metoda \verb+describe+ przyjmuje też blok kodu, który programista definiuje pomiędzy słowami kluczowymi \verb+do ... end+.
+    
+    Konkretne przykłady zdefiniowane są w bloku przekazanym do metody \verb+describe+. Przykład definiuje metoda \verb+it+, której parametrem jest łańcuch znaku będący opisem a sam przykład zdefiniowany w przekazywanym do tej metody bloku.
+    
+    \subsubsection{Oczekiwania}
+    Oczekiwanie jest odpowiednikiem asercji znanych z Test::Unit, w bibliotece RSpec mechanizm oczekiwań zaimplementowany jest w module Spec::Expectations w taki sposób, że do każdego obiektu dynamicznie dodawane są metody \verb+should+ oraz \verb+should_not+. Każda z tych metod jako parametr przyjmuje kolejne wyrażenie dopasowujące (ang. Matcher) wyrażenia takie można definiować samemu, albo pozwolić aby RSpec zdefiniował je dynamicznie. Przykładowe oczekiwania, które dynamicznie rozumie RSpec:
+    
+    \begin{verbatim}
+      [].should be_empty                      # prawda, [] jest pustą tablicą
+      ["kot", "pies"].should include("małpa") # fałsz, testowana tablica nie zawiera elementu "małpa"
+      [].should be_instance_of(Array)         # prawda
+    \end{verbatim}
+    
+    W języku Ruby metody, które kończą się znakiem zapytania w zgodzie z konwencją powinny być metodami które zwracają prawdę lub fałsz, metoda taka testuje po prostu jakieś założenie w stosunku do obiektu danej klasy. Przykładowo metoda \verb+empty?+ obiektu klasy Array testuje czy dana tablica jest pusta zwracając wartość \verb+true+ jeśli tak jest, lub \verb+false+ w przeciwnym wypadku. Automatyczne sprawdzanie oczekiwań w bibliotece RSpec korzysta właśnie z tej konwencji w taki sposób, że jeśli nie uda się znaleźć zdefiniowanego wyrażenia dopasowującego o danej nazwie RSpec szuka metody obiektu o tej samej nazwie zakończonej dodatkowo znakiem zapytania. W tym procesie pomijane są pewne początkowe słowa kluczowe takie jak \verb+be_+, \verb+a_+ czy \verb+an_+ co pozwala to na konstruowanie przykładów tak, aby bardziej przypominały naturalny język. W powyższych przykładach do sprawdzenia prawdziwości testu kolejno wykorzystywane są następujące metody obiektu klasy Array: \verb+empty?+, \verb+include?+, \verb+instance_of?+
+    
