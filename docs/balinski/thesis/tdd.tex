@@ -85,11 +85,11 @@
     
     \subsection{Test::Unit}
     
-    Test::Unit należy do bibliotek dołączanych standardowo do każdej dystrybucji języka Ruby. Oprogramowanie testujemy tutaj przy pomocy tak zwanych asercji. Najprostsza asercja ma postać wywołania metody \verb+assert+, która sygnalizuje powodzenie testu w momencie, kiedy wyrażenie przekazane jako jej parametr jest prawdą, przykładowo:
+    Test::Unit należy do bibliotek dołączanych standardowo do każdej dystrybucji języka Ruby. Oprogramowanie testujemy tutaj przy pomocy tak zwanych asercji. Najprostsza asercja ma postać wywołania metody \verb+assert+, która sygnalizuje niepowodzenie testu w momencie, kiedy wyrażenie przekazane jako jej parametr jest fałszem, przykładowo:
     
      \begin{verbatim}
        def test_one_plus_one_equals_two
-         assert 1 + 1 == 2
+         assert 1 + 1 == 3
        end
      \end{verbatim}
      
@@ -124,7 +124,10 @@
        end
      \end{verbatim}
      
+     
      metoda \verb+assert+ nie jest jedynym typem asercji, z którego możemy korzystać, istnieje ich dużo więcej a najbardziej przydatne z nich to:
+     
+      --- Oprócz metody assert biblioteka oferuje bardziej wyspecjalizowane typy asercji
      
      \begin{description}
        \item[assert\_equal(expected, actual)] przyjmuje dwa parametry, zwraca prawdę, jeśli parametry są sobie równe.
@@ -190,6 +193,7 @@
     uruchomione zostaną wszystkie testy zdefiniowane w plikach: \verb+test/test_suite1.rb+, \verb+test/test_suite2.rb+ oraz \verb+test/test_suite3.rb+
     
     \subsection{RSpec}
+    % dokładniejszy opis, trochę więcej o tym, dlaczego powstał RSPEC
     
     Kolejnym narzędziem świetnie wspierającym testowanie oprogramowania w języku Ruby jest biblioteka RSpec. RSpec jest narzędziem bardziej rozbudowanym niż Test::Unit, w tym podrozdziale skupię się jednak na jego podstawowych funkcjach umożliwiających testowanie oprogramowania w zgodzie z filozofią TDD.
     
@@ -230,5 +234,39 @@
       [].should be_instance_of(Array)         # prawda
     \end{verbatim}
     
+    % prościej?
     W języku Ruby metody, które kończą się znakiem zapytania w zgodzie z konwencją powinny być metodami które zwracają prawdę lub fałsz, metoda taka testuje po prostu jakieś założenie w stosunku do obiektu danej klasy. Przykładowo metoda \verb+empty?+ obiektu klasy Array testuje czy dana tablica jest pusta zwracając wartość \verb+true+ jeśli tak jest, lub \verb+false+ w przeciwnym wypadku. Automatyczne sprawdzanie oczekiwań w bibliotece RSpec korzysta właśnie z tej konwencji w taki sposób, że jeśli nie uda się znaleźć zdefiniowanego wyrażenia dopasowującego o danej nazwie RSpec szuka metody obiektu o tej samej nazwie zakończonej dodatkowo znakiem zapytania. W tym procesie pomijane są pewne początkowe słowa kluczowe takie jak \verb+be_+, \verb+a_+ czy \verb+an_+ co pozwala to na konstruowanie przykładów tak, aby bardziej przypominały naturalny język. W powyższych przykładach do sprawdzenia prawdziwości testu kolejno wykorzystywane są następujące metody obiektu klasy Array: \verb+empty?+, \verb+include?+, \verb+instance_of?+
     
+    \subsubsection{Imitacje obiektów}
+    W trakcie testowania oprogramowania zdarzają się sytuacje, kiedy chcemy uniknąć korzystania z prawdziwych instancji jakiejś klasy. Najczęściej jest tak w przypadku, kiedy dany obiekt nie jest bezpośrednio przedmiotem testu, ale inna część oprogramowania polega na nim, lub jeśli wykonuje on kosztowne operacje, które spowalniają testy.
+    
+    RSpec pozwala w takim przypadku na definiowanie tak zwanych imitacji obiektów. Imitacja (ang. Mock) to w skrócie obiekt-atrapa, programista deklaruje na jakie komunikaty ma odpowiadać. Wyobraźmy sobie, że pewien moduł naszego systemu wykonuje bardzo czasochłonne operacje matematyczne, na wynikach tych operacji polega drugi moduł, który chcemy przetestować. W takiej sytuacji moglibyśmy oczywiście skonstruować test tak, że faktycznie inicjowalibyśmy cały proces obliczeniowy modułu matematycznego, a jego wynik przekazywali do testowanego modułu jednak taka metoda szybko sprawiłaby, że nasze testy byłyby bardzo powolne. 
+    
+    Jeśli moduł matematyczny sam w sobie jest dobrze przetestowany, to nic nie stoi na przeszkodzie, aby przy testowaniu zależnej od niego części systemu użyć już tylko jego imitacji. W Rspec może to wyglądać w taki sposób:
+    
+    \begin{verbatim}
+      describe CoolPartUsingMathsModule do
+        it "should use result of math module computation when run method triggered" do
+          maths = mock(MathsModule, :compute => 1337)
+          obj = CoolPartUsingMathsModule.new(maths)
+          obj.run
+        end
+      end
+    \end{verbatim}
+    
+    Zakładamy tutaj, że metoda \verb+run+ obiektu klasy \verb+CoolPartUsingMathsModule+ korzysta z wyniku jaki zwraca metoda \verb+compute+ obiektu typu \verb+MathsModule+. Metoda \verb+mock+ zwraca imitacje obiektu. Klasę obiektu definiujemy jako pierwszy argument, następnie występuje opcjonalna lista komunikatów wraz ze zwracaną wartością, na te komunikaty atrapa będzie odpowiadać.
+    
+    Test ten można skonstruować jeszcze lepiej. W aktualnej formie nie stawiamy w nim bowiem żadnych warunków jakie musi spełniać testowana metoda \verb+run+. Zdefiniowaliśmy w prawdzie imitację obiektu matematycznego, która odpowiada na wywołanie metody \verb+compute+ zwracając wartość \verb+1337+, nie sprawdzamy jednak, czy metoda ta kiedykolwiek zostaje wykonana. Chcąc upewnić się, że tak faktycznie jest możemy napisać powyższy test tak:
+    
+    \begin{verbatim}
+      describe CoolPartUsingMathsModule do
+        it "should use result of math module computation when run method triggered" do
+          maths = mock(MathsModule)
+          obj = CoolPartUsingMathsModule.new(maths)
+          maths.should_receive(:compute).and_return(1337)
+          obj.run
+        end
+      end
+    \end{verbatim}
+    
+    Wywołując na obiekcie metodę \verb+should_receive+ definiujemy nowe oczekiwanie: teraz test zakończy się sukcesem tylko wtedy, kiedy nastąpi dokładnie jedno wywołanie metody \verb+compute+. W taki sposób przetestowaliśmy integrację pomiędzy naszymi modułami i jednocześnie sprawiliśmy, że test jest bardzo szybki, nie wykonuje on bowiem żadnych obliczeń modułu matematycznego, a zamiast tego korzysta z bardzo prostej atrapy.
