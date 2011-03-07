@@ -74,5 +74,33 @@
       
       As we can see appropriate use of blocks may be very useful and can make code much shorter and more readable
       
-    \section{Summary}
+    \subsection{Summary}
     This chapter demonstrated basic features of Ruby language. In order to get more information on this language I forward the reader to the official website\footnote{http://ruby-lang.org/} or to some books from bibliography\cite{ruby01}.
+    
+  \section{RubyGems}
+    \subsection{Basic Information}
+  RubyGems\footnote{http://rubygems.org/} is the packaging system to distribute libraries for Ruby language. The packages and libraries are called gems and console front-end script is called (not surprisingly) \texttt{gem} (distributed along with ruby 1.9, for ruby 1.8 needs to be installed separately). With the help of RubyGems Ruby program can be easily enhanced our with variety of functionalities (for instance serializing/deserializing JSON, handling weekends and holidays in Dates, authentication system etc). 
+  
+  In order to use particular gem first it has to be installed with \texttt{gem} command 
+  \begin{lstlisting}
+    gem install some_gem
+  \end{lstlisting}
+  
+  And then it has to be added to application by first requiring rubygems itself and then requiring the gem.
+  
+  \begin{lstlisting}
+    require 'rubygems'
+    require 'some_gem'
+  \end{lstlisting}
+  
+  With those few lines of code it is possible to add really extensive features to Ruby programs, as the community gets bigger and bigger and, moreover, its members are willing to share the code.
+  
+    \subsection{Dependencies management}
+  Of course, every gem can use other gems in order to build up on their functionalities. However, in order for those gem to function properly all their dependencies. Moreover, different version of the same gem can differ not only in the implementation, but also in their API. Therefore gems need to keep track of their versions. Surely, it would be totally inefficient if users would have to take care of this on their own. This is why RubyGems take care of it for us.
+  
+  Every gem is described by its gemspec (gem specification) file. Gemspec is simply Ruby code that defines particular gem. Below is presented gemspec for Ruby on Rails:
+  
+  \lstinputlisting[language=ruby]{code/chapter03/rails.gemspec}
+  
+  As seen above, gemspec is pretty straightforward. Along with other attributes, developer can specify dependencies of his gem. Then, when user installs it RubyGems traverses the list of dependencies and installs all of them (of course in the meantime traversing their gemspecs and installing theirs dependencies, which results in the entire tree of dependency). That way, RubyGems becomes really efficient tool to handle libraries. 
+  
