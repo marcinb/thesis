@@ -120,4 +120,104 @@
       Jeśli chcemy zastąpić testy akceptacyjne z żywym klientem na scenariusze BDD należy pamiętać, że środowisko testowe (w tym definicje kroków) muszą zostać zaprojektowane tak, aby działały w identycznej konfiguracji jak konfiguracja produkcyjna (czyli taka, w jakiej działa nasze oprogramowanie po dostarczeniu do klienta). Szczególnie nie należy używać imitacji (ang. mock) obiektów, których bardzo często używa się w testach jednostkowych, scenariusze powinny testować zachowanie się aplikacji w naturalnym środowisku.
       
   \section{Narzędzia BDD dostępne dla języka Ruby}
+    \subsection{Cucumber}
+      W środowisku programistów języka Ruby najpopularniejszym narzędziem BDD jest bez wątpienia biblioteka Cucumber. Cucumber powstał w 2008 roku jako następca biblioteki Story Runner będącej częścią narzędzia RSpec. Biblioteka miała umożliwić programistom opisywanie naturalnym językiem sposobu w jaki powinno zachowywać się oprogramowanie. Scenariusze służą jednocześnie jako dokumentacja oraz zestaw automatycznych testów. 
+      
+      Niewątpliwą zaletą biblioteki Cucumber jest to, że możne ona współpracować również z innymi niż Ruby platformami programistycznymi takimi jak Java, .NET, Adobe Flex czy Python. Więcej informacji na ten temat znaleźć można pod adresem: http://github.com/aslakhellesoy/cucumber/wiki.
+      
+      Instalacja jest równie prosta jak w przypadku omawianej wcześniej biblioteki RSpec:
+      
+      \begin{verbatim}
+        gem install cucumber
+      \end{verbatim}
+      
+      Jako, że techniki prezentowane w tym rozdziale opisane i zaprezentowane zostały na przykładzie biblioteki Cucumber powtórny szczegółowy opis tego narzędzia jest w tym miejscu zbędny. Szczegółowa dokumentacja dostępna jest pod adresem: http://cukes.info
+      
+    \subsection{Steak}
+      Steak podobnie jak Cucumber jest narzędziem, które służy do opisywania zachowania aplikacji w formie automatycznych testów, główny nacisk jest tutaj jednak kładziony na wygodę programisty oraz szybkość powstawania testów. Ograniczenia w stosunku do tego co oferuje Cucumber są następujące:
+      
+      \begin{itemize}
+        \item Brak wsparcia dla naturalnego języka
+        \item Brak podziału na scenariusze oraz kroki
+        \item Konieczność pisania testów w Ruby
+      \end{itemize}
+      
+      Steak rezygnuje z filozofii angażowania nie technicznych uczestników projektu w cykl testowania oprogramowania wychodząc z założenia, że opcja ta i tak nie jest wykorzystywana w większości projektów informatycznych. Programista sam konstruuje testy w języku Ruby, nie jest to tak czytelne jak w przypadku Cucumbera, jednak ich tworzenie i utrzymanie jest prostsze:
+      
+      \begin{itemize}
+        \item Definicje kroków są zbędne
+        \item Nie trzeba ustalać i trzymać się konwencji językowych
+        \item Bezpośredni dostęp do wszystkich funkcji języka Ruby
+      \end{itemize}
+      
+      Przykładowa specyfikacja napisana przy pomocy biblioteki Steak wygląda następująco:
+      
+      \begin{verbatim}
+      feature "Main page" do
 
+          background do
+            create_user :login => "jdoe"
+            login_as "jdoe"
+          end
+
+          scenario "should show existing quotes" do
+            create_quote :text => "The language of friendship is not words, but meanings",
+                         :author => "Henry David Thoreau"
+
+            visit "/"
+
+            page.should have_css(".quote", :count => 1)
+            within(:css, ".quote") do
+              page.should have_css(".text", :text => "The language of friendship is not words, but meanings")
+              page.should have_css(".author", :text => "Henry David Thoreau")
+            end
+          end
+
+        end
+      \end{verbatim}
+      
+      Instalacja jak zwykle w przypadku (ogromnej większości) bibliotek Ruby sprowadza się do
+      
+      \begin{verbatim}
+        gem install steak
+      \end{verbatim}
+      
+      W przypadku, kiedy nasza aplikacja oparta jest o framework Rails, Steak oferuje dodatkowe udogodnienia, ale wymaga również minimalnie więcej konfiguracji. Wszelkie kroki są jasno opisane pod adresem http://github.com/cavalle/steak
+      
+      Steak jest dobrym rozwiązaniem jeśli projekt prowadzony jest przez stricte techniczny zespół lub zarząd projektu nie jest przekonany do uczestniczenia w procesie specyfikowania oprogramowania w formie testów. Minusem rezygnacji z takiej formy współpracy jest niestety spadek znaczenia tworzonej w Steaku specyfikacji jako testów akceptacyjnych: jeśli właściciele projektu nie będą rozumieli specyfikacji w formie jaką oferuje to najprawdopodobniej testy akceptacyjne będą chcieli przeprowadzić osobiście.
+    
+    \subsection{Capybara}  
+
+      Capybara ułatwia integracyjne testowanie aplikacji działających w przeglądarce www symulując akcję jakie wykonywałby żywy użytkownik. Nie jest to narzędzie związane stricte z BDD, jednak świetnie uzupełnia i wspomaga biblioteki takie jak Cucumber czy Steak.
+      
+      Chcąc opisać krok po kroku zachowanie aplikacji internetowej, naturalnym jest łączenie akcji, które wykonuje w przeglądarce użytkownik z ich konsekwencjami. Przykładowo w celu zalogowania się należy najpierw wypełnić pole tekstowe 'Login', następnie wpisać hasło do pola 'Hasło' oraz ostatecznie kliknąć przycisk 'Zaloguj'. Capybara pozwala symulować interakcje użytkownika z naszą aplikacją w przeglądarce i wykonywać na niej takie akcje jak kliknięcie w link, wypełnienie pola czy odświeżenie strony.
+      Informacją zwrotną, która często służy do określenia efektu naszych działań jest obiekt \verb+page+, który przechowuje ostatnią wyświetloną użytkownikowi stronę. Przykładowo kod:
+      
+      \begin{verbatim}
+        feature "signing up" do
+          background do
+            User.create(:email => 'user@example.com', :password => 'caplin')
+          end
+
+          scenario "signing in with correct credentials" do
+            within("#session") do
+              fill_in 'Login', :with => 'user@example.com'
+              fill_in 'Password', :with => 'caplin'
+            end
+              click_link 'Sign in'
+              assert_true page.has_content?('Successfuly logged in!')
+            end
+          end
+        end
+      \end{verbatim}
+      
+      Wypełni wszelkie konieczne do zalogowania się pola, zasymuluje kliknięcie przycisku z etykietą 'Sign in' oraz sprawdzi, czy w wyniku tego, na nowo wyświetlonej stronie znajduje się treść 'Successfuly logged in!'.
+      
+      Instalacja podstawowej biblioteki odbywa się poprzez:
+      
+      \begin{verbatim}
+        gem install capybara
+      \end{verbatim}
+      
+      Tak jak w przypadku Cucumbera, funkcje Capybary wykorzystywane były w tym rozdziale w celu zobrazowania założeń BDD. Dokładna dokumentacja bardzo bogatych możliwości biblioteki wykracza poza ramy tej pracy, można ją jednak odnaleźć wraz ze szczegółami konfiguracji dla różnych środowisk na stronie http://github.com/jnicklas/capybara.
+      
