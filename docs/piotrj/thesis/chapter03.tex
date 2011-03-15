@@ -74,5 +74,76 @@
       
       As we can see appropriate use of blocks may be very useful and can make code much shorter and more readable
       
-    \section{Summary}
+    \subsection{Summary}
     This chapter demonstrated basic features of Ruby language. In order to get more information on this language I forward the reader to the official website\footnote{http://ruby-lang.org/} or to some books from bibliography\cite{ruby01}.
+    
+  \section{RubyGems}
+    \subsection{Basic Information}
+  RubyGems\footnote{http://rubygems.org/} is the packaging system to distribute libraries for Ruby language. The packages and libraries are called gems and console front-end script is called (not surprisingly) \texttt{gem} (distributed along with ruby 1.9, for ruby 1.8 needs to be installed separately). With the help of RubyGems Ruby program can be easily enhanced our with variety of functionalities (for instance serializing/deserializing JSON, handling weekends and holidays in Dates, authentication system etc). 
+  
+  In order to use particular gem first it has to be installed with \texttt{gem} command 
+  \begin{lstlisting}
+    gem install some_gem
+  \end{lstlisting}
+  
+  And then it has to be added to application by first requiring rubygems itself and then requiring the gem.
+  
+  \begin{lstlisting}
+    require 'rubygems'
+    require 'some_gem'
+  \end{lstlisting}
+  
+  With those few lines of code it is possible to add really extensive features to Ruby programs, as the community gets bigger and bigger and, moreover, its members are willing to share the code.
+  
+    \subsection{Dependency management}
+  Of course, every gem can use other gems in order to build up on their functionalities. However, in order for those gem to function properly all their dependencies. Moreover, different version of the same gem can differ not only in the implementation, but also in their API. Therefore gems need to keep track of their versions. Surely, it would be totally inefficient if users would have to take care of this on their own. This is why RubyGems take care of it for us.
+  
+  Every gem is described by its gemspec (gem specification) file. Gemspec is simply Ruby code that defines particular gem. Below is presented gemspec for Ruby on Rails:
+  
+  \lstinputlisting[language=ruby]{code/chapter03/rails.gemspec}
+  
+  As seen above, gemspec is pretty straightforward. Along with other attributes, developer can specify dependencies of his gem. Then, when user installs it RubyGems traverses the list of dependencies and installs all of them (of course in the meantime traversing their gemspecs and installing theirs dependencies, which results in the entire tree of dependency). That way, RubyGems becomes really efficient tool to handle libraries. 
+  
+  \section{Ruby on Rails}
+    \subsection{Introduction}
+  Ruby on Rails is a comprehensive framework for web applications development. It has been created by David Heinemeier Hansson in 2004 and a year later he earned Hacker of the Year award  earned Google and O'Reilly's Hacker of the Year award. Its main characteristic is promoting convention over configuration, what enables developers to quickly build even complex web apps without the need to write lengthy XML configuration files. It utilizes Model-View-Controller pattern, which happens to be very good choice for web applications and helps produce clean and maintainable code.
+  
+  Ruby on Rails is distributed as a gem for Ruby language. After just one command (provided that Ruby and RubyGems are installed on the system):
+  
+  \begin{lstlisting}
+    gem install rails
+  \end{lstlisting}
+  
+  the user has entire environment for creating web applications (along with development server).
+  
+  Among others, Ruby on Rails has two main parts:
+  \begin{description}
+    \item[ActiveRecord] Object-relational mapper
+    \item[ActionPack] Framework for handling requests and rendering responses
+  \end{description}
+  
+  This two parts mainly create the power of the framework and will be described in more details later.
+  
+    \subsection{Structure of the application}
+    As mentioned before, Ruby on Rails takes its power and agility from "convention over configuration" rule. Therefore, Ruby on Rails applications have very well defined directory structure. The user can easily generate one for his application by using following command:
+    \begin{lstlisting}
+      rails new name_of_application
+    \end{lstlisting}
+    
+    Or in case the user is using older (below 3.0) version of Rails:
+    
+    \begin{lstlisting}
+      rails new name_of_application
+    \end{lstlisting}
+    
+    This command generates the entire directory tree that is used in Rails application. Most important directories are described below.
+    
+    \begin{description}
+      \item[app] Contains main code of applications. It is divided into models, controllers and views subfolders
+      \item[config] Holds configuration files
+      \item[db] Holds files that regard database
+      \item[lib] Contains files that create environment for the application but are considered as strictly connected to business logic of application
+      \item[public] Place for assets of the application: static pages, stylesheets, javascript files - anything that can be statically served.
+    \end{description}
+    
+    Thanks to such well-defined structure, Ruby on Rails knows exactly where to look for particular parts of the system. Moreover, it does not need to go through all the files, but rather load them on demand.
