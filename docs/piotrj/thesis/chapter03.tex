@@ -147,3 +147,102 @@
     \end{description}
     
     Thanks to such well-defined structure, Ruby on Rails knows exactly where to look for particular parts of the system. Moreover, it does not need to go through all the files, but rather load them on demand.
+
+    \subsection{ActiveRecord}
+      \subsubsection{Introduction}    
+      ActiveRecord is one of Ruby's Relational Object Mappers, but has been developed as
+      part of Ruby on Rails framework. As whole framework, ActiveRecord philosophy is convention
+      over configuration. 
+
+      Usually, models in Rails applications are stored in app/models directory. They are classes that
+      derive from ActiveRecord::Base class. And, in fact, this is enough to handle simple models. 
+      It is possible to create persistent business models with great ease.
+
+      \lstinputlisting[language=ruby]{code/chapter03/activerecord01.rb}
+
+      Above example depicts the most simple model. Of course, the user needs to set up configuration
+      for database connection. Usually it is done in config/database.yml file while in Ruby on Rails project
+      or provide paramaters directly to ActiveRecord (if not used in Rails project). 
+
+      \lstinputlisting[language=ruby]{code/chapter03/activerecord02.rb}
+
+      \subsubsection{Basic Model}
+      Coming back to the code example of model:
+
+      \lstinputlisting[language=ruby]{code/chapter03/activerecord01.rb}
+
+      This will map automatically to items table in the database. It is not necessary to specify
+      what kind of columns, the table has. All attributes of the model are automatically
+      drawn from the table and (thanks to dynamic nature of ruby) translated into appropriate
+      accessor methods for Ruby class.
+
+      So assuming the table has been created with following sql statement
+
+       \lstinputlisting[language=ruby]{code/chapter03/activerecord01.rb}
+
+      Then with the ruby code presented above we get following functionallity:
+
+       \lstinputlisting[language=ruby]{code/chapter03/activerecord04.rb}
+
+      Moreover, it is possible to search for records by forming (even very complex) queries:
+
+      \lstinputlisting[language=ruby]{code/chapter03/activerecord05.rb}
+
+      \subsubsection{Associations}
+      Of course it is possible to specify relations between models. The only thing that
+      needs to be done in order to handle associations well is add the foreign key
+      column to the database and describe the relation in the model by using one of three
+      class methods:
+        \begin{itemize}
+          \item{has\_many}
+          \item{has\_one}
+          \item{belongs\_to}
+        \end{itemize}
+      This is shown in the example:
+
+      \lstinputlisting[language=ruby]{code/chapter03/activerecord06.rb}
+
+      \subsubsection{Validations}
+      As models usually keep great deal of application's business logic there is another feature
+      that is extremely useful - validations. It is possible to define rules against which the 
+      model will be tested. If some of those conditions would not be fulfilled, the record would
+      not be saved and ActiveRecord would store Errors object that gathers information on 
+      unsatisfied validations.
+      
+      \lstinputlisting[language=ruby]{code/chapter03/activerecord07.rb}
+      
+      Functionality presented above is just a small subset of possibilities. It is possible
+      to specify when given validations should be executed (during create or update of the record)
+      or specify conditions that turn off validation (eg. do not check presence of one attribute
+      if the second one is true). Moreover, except for standard \texttt{validates\_*} functions,
+      the user can specify his own validations by passing the names of methods that would be  
+      executed during validations to \texttt{validate} class method.
+      
+      \subsubsection{Migrations}
+      Among others, ActiveRecord provides another feature that makes the life of developers
+      just a little less painful - Migrations. They are used to handle changes to the database,
+      and as an extension - to structure of Models. 
+      
+      So, instead of creating and altering tables from SQL we could use a migration that looks
+      like this:
+      
+      \lstinputlisting[language=ruby]{code/chapter03/activerecord08.rb}
+      
+      Rails provide tools that make work with migrations like generators that help create migration
+      files or tools for running migrations (\texttt{rake db:migrate}). Moreover, in the applicaiton
+      database Rails would create a table called \texttt{schema\_migrations} that keeps track of 
+      which migrations have been applied to given database. This is useful, when working on some
+      project with fellow developers - if one of them adds a migration and then the other developer
+      pulls it from the version control system, he can run \texttt{rake db:migrate} and Rails
+      would run only new migrations.
+
+      \subsubsection{Summary}
+      As stated in the introduction, it is clear to observe, that ActiveRecord provides great deal
+      of features that surely makes the rapid development of applications a breeze. Moreover, thanks
+      to Ruby's nature it all is packed in very easy and accessible API.
+      
+      The intent of this chapter is to make a short introduction to ActiveRecord and it did not cover 
+      all of amazing features of ActiveRecord. There is plenty of other things such as callbacks, 
+      observers, named\_scopes that are worth noting, but in order to keep 
+      this document as focused on the topic as possible they are omitted here. In order to get more 
+      information, the reader can refer to ActiveRecord documentation.
