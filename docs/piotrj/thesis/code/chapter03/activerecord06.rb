@@ -1,13 +1,13 @@
+# CREATE TABLE categories (
+#   id SERIAL PRIMARY KEY,
+#   name VARCHAR(255)
+# );
+#
 # CREATE TABLE items (
 #   id SERIAL PRIMARY KEY,
 #   name VARCHAR(255),
 #   quantity INTEGER,
 #   category_id INTEGER REFERENCES categories(id)
-# );
-#
-# CREATE TABLE categories (
-#   id SERIAL PRIMARY KEY,
-#   name VARCHAR(255)
 # );
 
 
