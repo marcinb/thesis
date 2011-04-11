@@ -1,6 +1,6 @@
 \chapter[Behavior Driven Development]{Behavior Driven Development}
   \section{Czym jest BDD?}
-    Behavior Driven Development jest metodyką rozwoju oprogramowania, w której główny nacisk położony jest na zacieśnienie współpracy między programistami, a nietechnicznymi uczestnikami projektu. Podobnie jak w przypadku TDD implementację konkretnej funkcjonalności poprzedza zdefiniowanie jej zachowania w teście. Różnica polega na tym, że scenariusze BDD pisane są w naturalnym języku, tak aby były zrozumiałe nie tylko dla programistów. Idealną sytuacją jest kiedy scenariusze takie powstają w wyniku ścisłej współpracy programistów oraz właścicieli projektu ponieważ, jak sama nazwa wskazuje, BDD kładzie nacisk na zdefiniowanie i zrozumienie zachowania aplikacji a szczegóły implementacji są tutaj mniej istotne.
+    Behavior Driven Development jest metodyką rozwoju oprogramowania, w której główny nacisk położony jest na zacieśnienie współpracy między programistami, a nie technicznymi uczestnikami projektu. Podobnie jak w przypadku TDD implementację konkretnej funkcjonalności poprzedza zdefiniowanie jej zachowania w teście. Różnica polega na tym, że scenariusze BDD pisane są w naturalnym języku, tak aby były zrozumiałe nie tylko dla programistów. Idealną sytuacją jest kiedy scenariusze takie powstają w wyniku ścisłej współpracy programistów oraz właścicieli projektu. BDD jak sama nazwa wskazuje kładzie nacisk na zdefiniowanie i zrozumienie zachowania aplikacji a szczegóły implementacji są tutaj mniej istotne.
     \subsection{BDD jako narzędzie dokumentacji. Funkcjonalności i scenariusze}
       Każdy program tak naprawdę składa się z zestawu funkcjonalności. Każda funkcjonalność wnosi konkretną wartość dodaną z punktu widzenia grupy docelowej, dla której oprogramowanie powstaje. Przykładowo program do obsługi księgowości powinien pozwalać zarządzać rachunkiem zysków i strat oraz sporządzać bilans (to oczywiście tylko niektóre z funkcji). Każda wyżej wymienionych czynności to pojedyncza funkcjonalność, która w zgodzie z filozofią BDD powinna zostać opisana zestawem scenariuszy.
       
@@ -15,16 +15,7 @@
       
       Narzędzia BDD pozwalają na bardzo dużą swobodę jeśli chodzi o język definiowania scenariuszy, przykładowy plik definiujący powyższą funkcjonalność wraz ze scenariuszem 'Wprowadzenie nowej nie poprawnej pozycji' mógłby wyglądać tak:
       
-\begin{verbatim}
-  Funkcjonalność: Zarządzanie rachunkiem zysków i strat
-  
-  Scenariusz: Wprowadzenie nowej nie poprawnej pozycji
-    Jako zalogowany użytkownik systemu
-    Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"
-    Oraz wprowadzam do pola "Przychody netto ze sprzedaży produktów" wartość "to_nie_jest_liczba"
-    Wtedy powinienem zobaczyć wiadomość "Błąd: Niepoprawna wartość. To pole jest polem liczbowym."
-    Oraz pole "Przychody netto ze sprzedaży produktów" powinno być puste
-\end{verbatim}
+\lstinputlisting[language=ruby]{examples/code/ch03/01}
 
     Powyższy przykład opisuje zachowanie aplikacji w sposób na tyle naturalny, że nikt nie będzie miał trudności w jego zrozumieniu, a po poznaniu kilku prostych zasad językowych, którymi należy się kierować również nie techniczny uczestnicy projektu mogą opisywać nowe funkcjonalności w ten sposób.
     
@@ -45,13 +36,7 @@
       
       Wzorzec językowy najczęściej przybiera postać wyrażenia regularnego. Cucumber przetwarzając nowy krok iteruje po wzorcach, które zostały zdefiniowane i wykonuje kod powiązany z pierwszym, do którego pasuje nazwa kroku (dlatego ważne jest definiowanie wzorców tak, aby były unikalne). Przykładowa definicja dla kroku 'Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"' może wyglądać tak:
       
-      \begin{verbatim}
-        Kiedy /wybieram z menu głównego pozycję "(.*)"/ do |pozycja|
-          # zmienna 'pozycja' zawiera teraz ciąg znaków, który dopasowany został
-          # do wyrażenia "(.*)" a więc dla kroku 'Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"'
-          # będzie miała wartość: Wprowadź nową pozycję
-        end
-      \end{verbatim}
+      \lstinputlisting[language=ruby]{examples/code/ch03/02}
       
       Kiedy cucumber spróbuje przetworzyć krok 'Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"' dopasuje go do pierwszego odpowiadającego wzorca, który zdefiniowaliśmy oraz uruchomi blok kodu zdefiniowany pomiędzy słowami kluczowymi \verb+do+ oraz \verb+end+. Przekaże do tego bloku również wszelkie zmienne zdefiniowane we wzorcu. Powyższy przykład jest na razie bezużyteczny ponieważ jedyne co znajduje się w bloku kodu to komentarz.
       
@@ -68,38 +53,11 @@
       
       O bibliotece RSpec pisałem już w poprzednim rozdziale, tutaj użyjemy go w podobnym celu, to jest do testowania wyników działania aplikacji. Biblioteka Capybara służy do symulacji interakcji użytkownika z aplikacją używającą jako interfejsu HTML. Używając powyższych narzędzi mogę opisać pełen zestaw definicji kroków dla scenariusza 'Wprowadzenie nowej nie poprawnej pozycji':
       
-      \begin{verbatim}        
-        Jako /zalogowany użytkownik systemu/ do
-          # znajdź pierwszego zarejestrowanego użytkownika
-          user = User.first
-          # otwórz stronę logowania
-          visit "/login"
-          # wypełnik pola 'email' i 'hasło' poprawnymi danymi
-          fill_in("email", :with => user.email)
-          fill_in("hasło", :with => user.password)
-          click_button("Zaloguj")
-        end
-        
-        Kiedy /wybieram z menu głównego pozycję "(.*)"/ do |pozycja|
-          select(pozycja, :from => "menu główne")
-        end
-        
-        Oraz /wprowadzam do pola "(.*)" wartość "(.*)"/ do |pole, wartosc|
-          fill_in(pole, :with => wartosc)
-        end
-        
-        Wtedy /powinienem zobaczyć wiadomość "(.*)"/ do |wiadomosc|
-          response.should contain(wiadomosc)
-        end
-        
-        Oraz /pole "Przychody netto ze sprzedaży produktów" powinno być puste/ do |pole|
-          field_labeled(pole).value.should be_empty
-        end
-      \end{verbatim}
+      \lstinputlisting[language=ruby]{examples/code/ch03/03}
       
     \subsubsection{Rola programisty}
     
-      Jak widać definiowanie kroków wymaga podstawowej wiedzy z zakresu programowania oraz budowy opisywanego systemu, dlatego też zadanie to najczęściej wykonują programiści pracujący nad projektem.  Klient w tym wypadku dostarcza specyfikacji w postaci scenariuszy użycia, programiści zaś definiują brakujące kroki. Na szczęście problem ten jest uciążliwy właściwie tylko na początku życia projektu. Wraz z rosnącą ilością scenariuszy rośnie też ilość definicji kroków, a w pewnym momencie życia projektu definicje kroków zaczynają gęsto pokrywać większość funkcjonalności systemu tak, że w większości wypadków nawet do nowych funkcjonalności można bez problemu dopasować istniejące już kroki.
+      Jak widać definiowanie kroków wymaga podstawowej wiedzy z zakresu programowania oraz budowy opisywanego systemu, dlatego też zadanie to najczęściej wykonują programiści pracujący nad projektem.  Klient w tym wypadku dostarcza specyfikacji w postaci scenariuszy użycia, programiści zaś definiują brakujące kroki. Na szczęście problem ten jest uciążliwy tylko na początku życia projektu. Wraz z rosnącą ilością scenariuszy rośnie też ilość definicji kroków, a w pewnym momencie życia projektu definicje kroków zaczynają gęsto pokrywać większość funkcjonalności systemu tak, że w większości wypadków nawet do nowych funkcjonalności można bez problemu dopasować istniejące już kroki.
       
       Ważne jest aby scenariusze były jak najbardziej zestandaryzowane, to znaczy, aby w miarę możliwości korzystać z już zdefiniowanych kroków w procesie ich tworzenia. Aby to osiągnąć osoba odpowiedzialna  za dostarczenie specyfikacji w postaci scenariuszy powinna poświęcić trochę czasu na zapoznanie się z dostępnymi definicjami kroków.
       
@@ -152,29 +110,7 @@
       
       Przykładowa specyfikacja napisana przy pomocy biblioteki Steak wygląda następująco:
       
-      \begin{verbatim}
-      feature "Main page" do
-
-          background do
-            create_user :login => "jdoe"
-            login_as "jdoe"
-          end
-
-          scenario "should show existing quotes" do
-            create_quote :text => "The language of friendship is not words, but meanings",
-                         :author => "Henry David Thoreau"
-
-            visit "/"
-
-            page.should have_css(".quote", :count => 1)
-            within(:css, ".quote") do
-              page.should have_css(".text", :text => "The language of friendship is not words, but meanings")
-              page.should have_css(".author", :text => "Henry David Thoreau")
-            end
-          end
-
-        end
-      \end{verbatim}
+      \lstinputlisting[language=ruby]{examples/code/ch03/04}
       
       Instalacja jak zwykle w przypadku (ogromnej większości) bibliotek Ruby sprowadza się do
       
@@ -193,23 +129,7 @@
       Chcąc opisać krok po kroku zachowanie aplikacji internetowej, naturalnym jest łączenie akcji, które wykonuje w przeglądarce użytkownik z ich konsekwencjami. Przykładowo w celu zalogowania się należy najpierw wypełnić pole tekstowe 'Login', następnie wpisać hasło do pola 'Hasło' oraz ostatecznie kliknąć przycisk 'Zaloguj'. Capybara pozwala symulować interakcje użytkownika z naszą aplikacją w przeglądarce i wykonywać na niej takie akcje jak kliknięcie w link, wypełnienie pola czy odświeżenie strony.
       Informacją zwrotną, która często służy do określenia efektu naszych działań jest obiekt \verb+page+, który przechowuje ostatnią wyświetloną użytkownikowi stronę. Przykładowo kod:
       
-      \begin{verbatim}
-        feature "signing up" do
-          background do
-            User.create(:email => 'user@example.com', :password => 'caplin')
-          end
-
-          scenario "signing in with correct credentials" do
-            within("#session") do
-              fill_in 'Login', :with => 'user@example.com'
-              fill_in 'Password', :with => 'caplin'
-            end
-              click_link 'Sign in'
-              assert_true page.has_content?('Successfuly logged in!')
-            end
-          end
-        end
-      \end{verbatim}
+      \lstinputlisting[language=ruby]{examples/code/ch03/05}
       
       Wypełni wszelkie konieczne do zalogowania się pola, zasymuluje kliknięcie przycisku z etykietą 'Sign in' oraz sprawdzi, czy w wyniku tego, na nowo wyświetlonej stronie znajduje się treść 'Successfuly logged in!'.
       

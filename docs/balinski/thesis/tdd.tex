@@ -24,17 +24,8 @@
     
     Praca rozpoczyna się od napisania testu opisującego pożądane zachowanie. W naszym wypadku może on wyglądać tak: 
     
-    \begin{verbatim}
-      require 'sports_table'
+    \lstinputlisting[language=ruby]{examples/code/ch02/01.rb}
 
-      describe SportsTable do
-        it "should properly join team names with 'vs.'" do
-          table = SportsTable.new
-          table.header('Chicago Bulls', 'Los Angeles Lakers').should == 'Chicago Bulls vs. Los Angeles Lakers'
-        end
-      end
-    \end{verbatim}
-    
     Dokładny opis budowy testu zawarty jest w podrozdziale 'Narzędzia wspierające TDD dostępne dla języka Ruby' i nie będę go tutaj powielał. Chciałbym jednak zwrócić uwagę na fakt, że już na etapie pisania testu programista zmuszony jest przemyśleć szczegóły implementacji. Zaprezentowany przykład jest bardzo prosty, ale na pierwszy rzut oka widać, że oprócz sprawdzenia poprawności zwracanego wyniku test definiuje także pewne szczegóły architektury programu. Po pierwsze zakładamy, że tablica wyników reprezentowana będzie przez klasę o nazwie \verb+SportsTable+, a żądana funkcjonalność zostanie zaimplementowana jako metoda instancyjna \verb+header+ a więc aby mieć z niej pożytek użytkownik musi skorzystać z istniejącego obiektu tej klasy. Widać tutaj wyraźnie jedną z głównych zalet testowo zorientowanych metodyk rozwoju oprogramowania - konieczność dokładnego przemyślenia szczegółów implementacji przed jej rozpoczęciem.
     
     Sednem tego konkretnego testu jest jednak upewnienie się, że dla przykładowych danych wejściowych otrzymamy poprawny wynik. W tym wypadku sprawdzamy, czy wywołanie metody \verb+header('Chicago Bulls', 'Los Angeles Lakers')+ na obiekcie klasy \verb+SportsTable+ zwróci łańcuch znaków \verb+Chicago Bulls vs. Los Angeles Lakers+
@@ -45,13 +36,7 @@
     
     Tym samym zakończyliśmy pierwszy etap: opisaliśmy wymagane zachowanie testem oraz upewniliśmy się, że test nie przechodzi. Następnym krokiem jest napisanie pierwszej wersji metody \verb+header+:
     
-    \begin{verbatim}
-      class SportsTable
-        def header(team1, team2)
-          return team1 + " vs. " + team2
-        end
-      end
-    \end{verbatim}
+    \lstinputlisting[language=ruby]{examples/code/ch02/02.rb}
     
     Ponowne uruchomienie zestawu testów kończy się sukcesem:
     
@@ -59,15 +44,9 @@
     
     Nasza metoda spełnia wszystkie założenia opisane przez testy, wciąż jednak jest pole do poprawy jakości kodu. W języku Ruby każda metoda domyślnie zwraca ostatnią zdefiniowaną w swoim ciele wartość, możemy więc zrezygnować ze zbędnego słowa kluczowego \verb+return+. Oprócz tego zmienimy sposób konstrukcji wynikowego łańcucha: zrezygnujemy z operatora \verb+++ na rzecz metody \verb+join+ obiektu klasy \verb+Array+. Po modyfikacji metoda \verb+header+ wygląda następująco:
     
-    \begin{verbatim}
-      class SportsTable
-        def header(team1, team2)
-          [team1, team2].join(' vs. ')
-        end
-      end
-    \end{verbatim}
+    \lstinputlisting[language=ruby]{examples/code/ch02/03.rb}
     
-  Powtórne uruchomienie zestawu testów kończy się sukcesem, a pierwsza iteracja TDD jest zakończona. Zdołaliśmy opisać nową funkcjonalność oraz poprawnie ją zaimplementować. W tym miejscu należy dodać, że w trzecim kroku, po modyfikacji i ulepszeniu kodu nie zmodyfikowaliśmy zestawu testów. W tym konkretnym przypadku nwjważniejszy dla nas jest wynik działania metody \verb+header+, nie zaś szczegóły implementacji. Nie testujemy np. tego, że konstrukcja wynikowego łańcucha znaków odbywa się z użyciem metody \verb+join+. Czasami jednak szczegóły implementacji są równie ważne jak zwracane wynik i wtedy należy napisać odpowiednie testy.
+  Powtórne uruchomienie zestawu testów kończy się sukcesem, a pierwsza iteracja TDD jest zakończona. Zdołaliśmy opisać nową funkcjonalność oraz poprawnie ją zaimplementować. W tym miejscu należy dodać, że w trzecim kroku, po modyfikacji i ulepszeniu kodu nie zmodyfikowaliśmy zestawu testów. W tym konkretnym przypadku najważniejszy dla nas jest wynik działania metody \verb+header+, nie zaś szczegóły implementacji. Nie testujemy np. tego, że konstrukcja wynikowego łańcucha znaków odbywa się z użyciem metody \verb+join+. Czasami jednak szczegóły implementacji są równie ważne jak zwracane wynik i wtedy należy napisać odpowiednie testy.
     
   \subsection{Zalety TDD}
     Test Driven Development wymusza na programiście konkretną dyscyplinę pracy. Proces rozwoju oprogramowania jest iteracyjny i bardzo uporządkowany a także wymaga uprzedniego zaplanowania każdej zmiany lub dodatku do istniejącej bazy kodu. Każda iteracja może zostać zakończona jedynie, gdy wszystkie testy zakończą się sukcesem. Taki sposób pracy niesie ze sobą wiele zalet, między innymi:
@@ -87,47 +66,16 @@
     
     Test::Unit należy do bibliotek dołączanych standardowo do każdej dystrybucji języka Ruby. Oprogramowanie testujemy tutaj przy pomocy tak zwanych asercji. Najprostsza asercja ma postać wywołania metody \verb+assert+, która sygnalizuje niepowodzenie testu w momencie, kiedy wyrażenie przekazane jako jej parametr jest fałszem, przykładowo:
     
-     \begin{verbatim}
-       def test_one_plus_one_equals_two
-         assert 1 + 1 == 3
-       end
-     \end{verbatim}
+    \lstinputlisting[language=ruby]{examples/code/ch02/04.rb}
      
      \subsubsection{Konstrukcja zestawu testów}
      Zestaw testów biblioteki Test::Unit ma postać definicji klasy, która dziedziczy po klasie Test::Unit::TestCase. Pojedyncze testy definiujemy jako metody, rozpoczynające się od ciągu znaków 'test'. W ciele każdej z takich metod możemy zdefiniować wiele asercji (aczkolwiek idealnie jest, jeśli jeden test równoznaczny jest z jedną asercją). Test kończy się sukcesem jedynie, kiedy wszystkie należące do niego asercję również zakończą się sukcesem.
      
      Przykładowy prosty zestaw testów opisujących zachowanie aplikacji będącej kalkulatorem może wyglądać tak:
      
-     \begin{verbatim}
-       require 'test/unit'
-       
-       class CalculatorTest < Test::Unit::TestCase
-         def test_adding
-           calc = Calculator.new
-           assert calc.add(2, 2) == 4
-         end
-         
-         def test_substracting
-           calc = Calculator.new
-           assert calc.sub(2, 2) == 0
-         end
-         
-         def test_multiplying
-           calc = Calculator.new
-           assert calc.multiply(2, 4) == 8
-         end
-         
-         def test_dividing
-           calc = Calculator.new
-           assert calc.div(2, 2) == 1
-         end
-       end
-     \end{verbatim}
+     \lstinputlisting[language=ruby]{examples/code/ch02/05.rb}
      
-     
-     metoda \verb+assert+ nie jest jedynym typem asercji, z którego możemy korzystać, istnieje ich dużo więcej a najbardziej przydatne z nich to:
-     
-      --- Oprócz metody assert biblioteka oferuje bardziej wyspecjalizowane typy asercji
+     Oprócz metody \verb+assert+ biblioteka oferuje bardziej wyspecjalizowane typy asercji:
      
      \begin{description}
        \item[assert\_equal(expected, actual)] przyjmuje dwa parametry, zwraca prawdę, jeśli parametry są sobie równe.
@@ -143,46 +91,14 @@
     Czasem grupa testów powinna być uruchamiana przy takich samych warunkach początkowych, albo też (nie tak częsty przypadek) występuje konieczność wykonania jakichś czynności na koniec każdego testu (np. wyczyszczenie bazy danych). Biblioteka Test::Unit pozwala definiować warunki początkowe i końcowe przy pomocy metod \verb+setup+ i \verb+teardown+.
     Metoda \verb+setup+ zostanie wykonana przed każdym testem, metoda \verb+teardown+ bezpośrednio po każdym teście. Możemy np. znacząco uprościć nasz przykładowy zestaw testów kalkulatora poprzez przeniesienie procesu tworzenia obiektu Calculator do metody setup. zmodyfikowane testy używają również bardziej właściwych asercji:
     
-    \begin{verbatim}
-      require 'test/unit'
-      
-      class CalculatorTest < Test::Unit::TestCase
-        def setup
-          @calc = Calculator.new
-        end
-      
-        def test_adding
-          assert_equal 4, @calc.add(2, 2)
-        end
-        
-        def test_substracting
-          assert_equal 0, @calc.sub(2, 2)
-        end
-        
-        def test_multiplying
-          assert_equal 8, @calc.multiply(2, 4)
-        end
-        
-        def test_dividing
-          assert_equal 1, @calc.div(2, 2)
-        end
-      end
-    \end{verbatim}
+    \lstinputlisting[language=ruby]{examples/code/ch02/06.rb}
     
     Przedrostek \verb+@+ przy zmiennej \verb+calc+ oznacza, że odnosimy się do zmiennej instancyjnej a więc dzielonej w obrębie obiektu danej klasy, zmienne bez tego przedrostka traktowane są w Ruby jako zmienne lokalne.
     
     \subsubsection{Pakiety testów}
-    Testując dużą aplikację będziemy chcieli podzielić testy na kilka plików tak, aby odzwierciedlić modułową budowę aplikacji oraz poprawić czytelność testów. Biblioteka Test::Unit upraszcza proces uruchamiania całego pakietu testów jedyne, co musimy w tym wypadku zrobić, to stworzyć nowy plik i przy pomocy metody \verb+require+ załadować wszystkie pliki zawierające interesujące nas testy:
+    Testując dużą aplikację będziemy chcieli podzielić testy na kilka plików tak, aby odzwierciedlić modułową budowę aplikacji oraz poprawić czytelność testów. Biblioteka Test::Unit upraszcza proces uruchamiania całego pakietu testów. Jedyne co musimy w tym wypadku zrobić to stworzyć nowy plik i przy pomocy metody \verb+require+ załadować wszystkie pliki zawierające interesujące nas testy:
     
-    \begin{verbatim}
-      # test/full_suite.rb
-      
-      require 'test/unit'
-      
-      require 'test_suite1'
-      require 'test_suite2'
-      require 'test_suite3'
-    \end{verbatim}
+    \lstinputlisting[language=ruby]{examples/code/ch02/07.rb}
     
     Teraz, jeśli wykonamy polecenie:
     
@@ -206,16 +122,7 @@
     \subsubsection{Przykłady}
     W RSpec każdy test nazywany jest przykładem (ang. example). RSpec definiuje własny dialekt języka Ruby, dzięki czemu przykłady wyglądają bardziej jak naturalny język. W początkowej części tego rozdziału zdefiniowaliśmy już przykłady dla oprogramowania obsługującego sportową tablicę wyników:
     
-    \begin{verbatim}
-      require 'sports_table'
-
-      describe SportsTable do
-        it "should properly join team names with 'vs.'" do
-          table = SportsTable.new
-          table.header('Chicago Bulls', 'Los Angeles Lakers').should == 'Chicago Bulls vs. Los Angeles Lakers'
-        end
-      end
-    \end{verbatim}
+    \lstinputlisting[language=ruby]{examples/code/ch02/08.rb}
     
     Pierwsze co powyższy kod robi, to dołącza plik z klasą \verb+SportsTable+, którą mamy zamiar przetestować. Zaraz później znajduje się linia:
     
@@ -228,14 +135,10 @@
     \subsubsection{Oczekiwania}
     Oczekiwanie jest odpowiednikiem asercji znanych z Test::Unit, w bibliotece RSpec mechanizm oczekiwań zaimplementowany jest w module Spec::Expectations w taki sposób, że do każdego obiektu dynamicznie dodawane są metody \verb+should+ oraz \verb+should_not+. Każda z tych metod jako parametr przyjmuje kolejne wyrażenie dopasowujące (ang. Matcher) wyrażenia takie można definiować samemu, albo pozwolić aby RSpec zdefiniował je dynamicznie. Przykładowe oczekiwania, które dynamicznie rozumie RSpec:
     
-    \begin{verbatim}
-      [].should be_empty                      # prawda, [] jest pustą tablicą
-      ["kot", "pies"].should include("małpa") # fałsz, testowana tablica nie zawiera elementu "małpa"
-      [].should be_instance_of(Array)         # prawda
-    \end{verbatim}
+    \lstinputlisting[language=ruby]{examples/code/ch02/09.rb}
     
     % prościej?
-    W języku Ruby metody, które kończą się znakiem zapytania w zgodzie z konwencją powinny być metodami które zwracają prawdę lub fałsz, metoda taka testuje po prostu jakieś założenie w stosunku do obiektu danej klasy. Przykładowo metoda \verb+empty?+ obiektu klasy Array testuje czy dana tablica jest pusta zwracając wartość \verb+true+ jeśli tak jest, lub \verb+false+ w przeciwnym wypadku. Automatyczne sprawdzanie oczekiwań w bibliotece RSpec korzysta właśnie z tej konwencji w taki sposób, że jeśli nie uda się znaleźć zdefiniowanego wyrażenia dopasowującego o danej nazwie RSpec szuka metody obiektu o tej samej nazwie zakończonej dodatkowo znakiem zapytania. W tym procesie pomijane są pewne początkowe słowa kluczowe takie jak \verb+be_+, \verb+a_+ czy \verb+an_+ co pozwala to na konstruowanie przykładów tak, aby bardziej przypominały naturalny język. W powyższych przykładach do sprawdzenia prawdziwości testu kolejno wykorzystywane są następujące metody obiektu klasy Array: \verb+empty?+, \verb+include?+, \verb+instance_of?+
+    W języku Ruby metody, które kończą się znakiem zapytania w zgodzie z konwencją powinny być metodami które zwracają prawdę lub fałsz. Metoda taka testuje po prostu jakieś założenie w stosunku do obiektu danej klasy. Przykładowo metoda \verb+empty?+ obiektu klasy Array testuje czy dana tablica jest pusta zwracając wartość \verb+true+ jeśli tak jest, lub \verb+false+ w przeciwnym wypadku. Automatyczne sprawdzanie oczekiwań w bibliotece RSpec korzysta właśnie z tej konwencji w taki sposób, że jeśli nie uda się znaleźć zdefiniowanego wyrażenia dopasowującego o danej nazwie RSpec szuka metody obiektu o tej samej nazwie zakończonej dodatkowo znakiem zapytania. W tym procesie pomijane są pewne początkowe słowa kluczowe takie jak \verb+be_+, \verb+a_+ czy \verb+an_+ co pozwala to na konstruowanie przykładów tak, aby bardziej przypominały naturalny język. W powyższych przykładach do sprawdzenia prawdziwości testu kolejno wykorzystywane są następujące metody obiektu klasy Array: \verb+empty?+, \verb+include?+, \verb+instance_of?+
     
     \subsubsection{Imitacje obiektów}
     W trakcie testowania oprogramowania zdarzają się sytuacje, kiedy chcemy uniknąć korzystania z prawdziwych instancji jakiejś klasy. Najczęściej jest tak w przypadku, kiedy dany obiekt nie jest bezpośrednio przedmiotem testu, ale inna część oprogramowania polega na nim, lub jeśli wykonuje on kosztowne operacje, które spowalniają testy.
@@ -244,29 +147,13 @@
     
     Jeśli moduł matematyczny sam w sobie jest dobrze przetestowany, to nic nie stoi na przeszkodzie, aby przy testowaniu zależnej od niego części systemu użyć już tylko jego imitacji. W Rspec może to wyglądać w taki sposób:
     
-    \begin{verbatim}
-      describe CoolPartUsingMathsModule do
-        it "should use result of math module computation when run method triggered" do
-          maths = mock(MathsModule, :compute => 1337)
-          obj = CoolPartUsingMathsModule.new(maths)
-          obj.run
-        end
-      end
-    \end{verbatim}
+    \lstinputlisting[language=ruby]{examples/code/ch02/10.rb}
     
     Zakładamy tutaj, że metoda \verb+run+ obiektu klasy \verb+CoolPartUsingMathsModule+ korzysta z wyniku jaki zwraca metoda \verb+compute+ obiektu typu \verb+MathsModule+. Metoda \verb+mock+ zwraca imitacje obiektu. Klasę obiektu definiujemy jako pierwszy argument, następnie występuje opcjonalna lista komunikatów wraz ze zwracaną wartością, na te komunikaty atrapa będzie odpowiadać.
     
     Test ten można skonstruować jeszcze lepiej. W aktualnej formie nie stawiamy w nim bowiem żadnych warunków jakie musi spełniać testowana metoda \verb+run+. Zdefiniowaliśmy w prawdzie imitację obiektu matematycznego, która odpowiada na wywołanie metody \verb+compute+ zwracając wartość \verb+1337+, nie sprawdzamy jednak, czy metoda ta kiedykolwiek zostaje wykonana. Chcąc upewnić się, że tak faktycznie jest możemy napisać powyższy test tak:
     
-    \begin{verbatim}
-      describe CoolPartUsingMathsModule do
-        it "should use result of math module computation when run method triggered" do
-          maths = mock(MathsModule)
-          obj = CoolPartUsingMathsModule.new(maths)
-          maths.should_receive(:compute).and_return(1337)
-          obj.run
-        end
-      end
-    \end{verbatim}
+    \lstinputlisting[language=ruby]{examples/code/ch02/11.rb}
+
     
     Wywołując na obiekcie metodę \verb+should_receive+ definiujemy nowe oczekiwanie: teraz test zakończy się sukcesem tylko wtedy, kiedy nastąpi dokładnie jedno wywołanie metody \verb+compute+. W taki sposób przetestowaliśmy integrację pomiędzy naszymi modułami i jednocześnie sprawiliśmy, że test jest bardzo szybki, nie wykonuje on bowiem żadnych obliczeń modułu matematycznego, a zamiast tego korzysta z bardzo prostej atrapy.

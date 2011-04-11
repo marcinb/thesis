@@ -1,0 +1,15 @@
+feature "signing up" do
+  background do
+    User.create(:email => 'user@example.com', :password => 'caplin')
+  end
+
+  scenario "signing in with correct credentials" do
+    within("#session") do
+      fill_in 'Login', :with => 'user@example.com'
+      fill_in 'Password', :with => 'caplin'
+    end
+      click_link 'Sign in'
+      assert_true page.has_content?('Successfuly logged in!')
+    end
+  end
+end

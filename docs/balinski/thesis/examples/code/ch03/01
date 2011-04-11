@@ -1,0 +1,8 @@
+Funkcjonalność: Zarządzanie rachunkiem zysków i strat
+
+Scenariusz: Wprowadzenie nowej nie poprawnej pozycji
+  Jako zalogowany użytkownik systemu
+  Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"
+  Oraz wprowadzam do pola "Przychody netto ze sprzedaży produktów" wartość "to_nie_jest_liczba"
+  Wtedy powinienem zobaczyć wiadomość "Błąd: Niepoprawna wartość. To pole jest polem liczbowym."
+  Oraz pole "Przychody netto ze sprzedaży produktów" powinno być puste
