@@ -246,4 +246,67 @@
       callbacks, observers, named\_scopes that are worth noting, but in order to keep
       this document as focused on the topic as possible they are omitted here. In order to get more
       information, the reader can refer to ActiveRecord documentation.
+      
+    \subsection{ActionPack}
+      \subsection{Introduction}
+      As said before, Ruby on Rails is build on the Model-View-Controller pattern. Model part is
+      handled by ActiveRecord described in previous chapter. ActionPack takes care of two remaining
+      parts - View and Controller. So, in general ActionPack is divided into two parts:
+      \begin{itemize}
+        \item{ActionController}
+        \item{ActionView}
+      \end{itemize}
+      It is easy to guess which part is responsible for which part of MVC pattern.
+      
+      \subsubsection{From request to response}
+      In very short, when Ruby on Rails application gets a request, first, it parses it in order 
+      to translate the request into form that is better to use programatically. Then, based on the
+      routing rules set in your application Rails determines which action from which controller
+      to call. Then it creates an instance of particular controller and calls method for 
+      target action and passes the parameters that came along with the request.
+      
+      Then the particular controller takes over. Its responsibility is to understand the data
+      provided with request, conduct some actions based on them and render appropriate 
+      response. The response is usually rendered by using some template that is filled with data
+      provided by the controller.
+      
+      \subsubsection{ActionController}
+      Controllers in Ruby on Rails are just subclasses of ApplicationController, which inherits
+      from ActionController::Base. Actions are defined by just simply adding instance methods
+      to controller class.
+      
+      The most basic controller for blog posts could look like this:
 
+      \lstinputlisting[language=ruby]{code/chapter03/actioncontroller01.rb}
+      
+      The controller presented above has 5 basic CRUD actions. It can be observed, that controller
+      assigns instance variables - this is in order to be able to read those variable in the view.
+      Moreover, some of the actions of this controller do not have \texttt{render} command which would 
+      cause the chosen template to be processed. This is correct, because Rails by default 
+      (if no \texttt{render} has been specified) looks for template in default path - in this
+      case it would be \texttt{app/views/posts/action\_name}, so for example for \texttt{index}
+      action it would look for \texttt{app/views/posts/index.html.erb}
+      
+      \subsubsection{ActionView}
+      ActionView is Ruby on Rails' way to generate html (and not only - xml and others can also be
+      produced) views. ActionView by default provides three ways to generate views:
+      
+      \begin{description}
+        \item[erb] ERB (Embedded Ruby) templates -  mix of html and embedded ruby code
+        \item[builder] builder for XML documents
+        \item[rjs] generator of javascript actions
+      \end{description}
+      
+      The most common are ERB templates. They enable developers to easily define
+      HTML views. The example of ERB template could look like this:
+      
+      \lstinputlisting[language=ruby]{code/chapter03/actionview01.erb}
+      
+      As said in previous chapter, the instance variables of controller are available in the view.
+      That is why it is possible to use \texttt{@post} variable and thanks to this it is possible to 
+      extract all the logic into controller and have clean views.
+      
+      \subsubsection{Summary}
+      This chapter was just the introduction into ActionPack in order to give an overview of how 
+      it works. It does not cover more advanced features as filters in controllers or layouts
+      and partials in views.
