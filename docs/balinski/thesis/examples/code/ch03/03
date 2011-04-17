@@ -1,23 +1,31 @@
 Jako /zalogowany użytkownik systemu/ do
   # znajdź pierwszego zarejestrowanego użytkownika
   user = User.first
+  
   # otwórz stronę logowania
   visit "/login"
+  
   # wypełnik pola 'email' i 'hasło' poprawnymi danymi
   fill_in("email", :with => user.email)
   fill_in("hasło", :with => user.password)
   click_button("Zaloguj")
 end
 
-Kiedy /wybieram z menu głównego pozycję "(.*)"/ do |pozycja|
+Kiedy /wybieram z menu głównego pozycję "(.*)"/ do 
+  |pozycja|
+  
   select(pozycja, :from => "menu główne")
 end
 
-Oraz /wprowadzam do pola "(.*)" wartość "(.*)"/ do |pole, wartosc|
+Oraz /wprowadzam do pola "(.*)" wartość "(.*)"/ do 
+  |pole, wartosc|
+  
   fill_in(pole, :with => wartosc)
 end
 
-Wtedy /powinienem zobaczyć wiadomość "(.*)"/ do |wiadomosc|
+Wtedy /powinienem zobaczyć wiadomość "(.*)"/ do 
+  |wiadomosc|
+  
   response.should contain(wiadomosc)
 end
 

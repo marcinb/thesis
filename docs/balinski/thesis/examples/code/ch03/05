@@ -1,6 +1,7 @@
 feature "signing up" do
   background do
-    User.create(:email => 'user@example.com', :password => 'caplin')
+    User.create(:email => 'user@example.com', 
+      :password => 'caplin')
   end
 
   scenario "signing in with correct credentials" do

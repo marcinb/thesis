@@ -28,7 +28,17 @@
 
     Dokładny opis budowy testu zawarty jest w podrozdziale 'Narzędzia wspierające TDD dostępne dla języka Ruby' i nie będę go tutaj powielał. Chciałbym jednak zwrócić uwagę na fakt, że już na etapie pisania testu programista zmuszony jest przemyśleć szczegóły implementacji. Zaprezentowany przykład jest bardzo prosty, ale na pierwszy rzut oka widać, że oprócz sprawdzenia poprawności zwracanego wyniku test definiuje także pewne szczegóły architektury programu. Po pierwsze zakładamy, że tablica wyników reprezentowana będzie przez klasę o nazwie \verb+SportsTable+, a żądana funkcjonalność zostanie zaimplementowana jako metoda instancyjna \verb+header+ a więc aby mieć z niej pożytek użytkownik musi skorzystać z istniejącego obiektu tej klasy. Widać tutaj wyraźnie jedną z głównych zalet testowo zorientowanych metodyk rozwoju oprogramowania - konieczność dokładnego przemyślenia szczegółów implementacji przed jej rozpoczęciem.
     
-    Sednem tego konkretnego testu jest jednak upewnienie się, że dla przykładowych danych wejściowych otrzymamy poprawny wynik. W tym wypadku sprawdzamy, czy wywołanie metody \verb+header('Chicago Bulls', 'Los Angeles Lakers')+ na obiekcie klasy \verb+SportsTable+ zwróci łańcuch znaków \verb+Chicago Bulls vs. Los Angeles Lakers+
+    Sednem tego konkretnego testu jest jednak upewnienie się, że dla przykładowych danych wejściowych otrzymamy poprawny wynik. W tym wypadku sprawdzamy, czy wywołanie metody 
+    
+    \begin{lstlisting} 
+      header('Chicago Bulls', 'Los Angeles Lakers')
+    \end{lstlisting}
+    
+    na obiekcie klasy \verb+SportsTable+ zwróci łańcuch znaków:
+    
+    \begin{lstlisting} 
+      Chicago Bulls vs. Los Angeles Lakers
+    \end{lstlisting}
     
     Po napisaniu uruchamiamy nasz zestaw testów, co kończy się porażką. Zakładając, że rozpoczęliśmy pracę z istniejącą, pustą definicją klasy \verb+SportsTable+ zdefiniowaną w pliku \verb+sports_table.rb+ wynik powinien wyglądać następująco:
 
@@ -102,11 +112,17 @@
     
     Teraz, jeśli wykonamy polecenie:
     
-    \begin{verbatim}
+    \begin{lstlisting} 
       ruby test/full_suite.rb
-    \end{verbatim}
+    \end{lstlisting}
     
-    uruchomione zostaną wszystkie testy zdefiniowane w plikach: \verb+test/test_suite1.rb+, \verb+test/test_suite2.rb+ oraz \verb+test/test_suite3.rb+
+    uruchomione zostaną wszystkie testy zdefiniowane w plikach:
+    
+    \begin{lstlisting} 
+      test/test_suite1.rb
+      test/test_suite2.rb
+      test/test_suite3.rb
+    \end{lstlisting}
     
     \subsection{RSpec}
     % dokładniejszy opis, trochę więcej o tym, dlaczego powstał RSPEC
@@ -115,9 +131,9 @@
     
     Bibliotekę RSpec najłatwiej zainstalować przy pomocy narzędzia ruby gems, które jest standardowo dostarczane wraz z każdą dystrybucją języka Ruby. Proces instalacji jest trywialny, wystarczy z konsoli systemowej wydać polecenie:
     
-    \begin{verbatim}
-      gem install rspec
-    \end{verbatim}
+    \begin{lstlisting}
+    gem install rspec
+    \end{lstlisting}
     
     \subsubsection{Przykłady}
     W RSpec każdy test nazywany jest przykładem (ang. example). RSpec definiuje własny dialekt języka Ruby, dzięki czemu przykłady wyglądają bardziej jak naturalny język. W początkowej części tego rozdziału zdefiniowaliśmy już przykłady dla oprogramowania obsługującego sportową tablicę wyników:
@@ -126,7 +142,9 @@
     
     Pierwsze co powyższy kod robi, to dołącza plik z klasą \verb+SportsTable+, którą mamy zamiar przetestować. Zaraz później znajduje się linia:
     
-    \verb+describe SportsTable do+
+    \begin{lstlisting}
+    describe SportsTable do
+    \end{lstlisting}
     
     Metoda \verb+describe+ zwraca tak zwaną grupę przykładów, która w bibliotece RSpec implementowana jest przez klasę \verb+ExampleGroup+. Jako parametry przyjmuje ona testowaną klasę oraz opcjonalny opis. Metoda \verb+describe+ przyjmuje też blok kodu, który programista definiuje pomiędzy słowami kluczowymi \verb+do ... end+.
     
