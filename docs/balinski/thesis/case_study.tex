@@ -34,5 +34,57 @@
   
   Jako narzędzie wspomagające proces zarządzania projektem użyta została darmowa wersja Pivotal Tracker\footnote{http://www.pivotaltracker.com}, który został zaprojektowany aby wspomagać zarządzanie projektem prowadzonym według zasad SCRUM.
   
+  % może inna nazwa?
   \section{Proces implementacji}
+  
+  Jak zostało to wspomniane wcześniej implementacja podzielona jest na tygodniowe iteracje zwane również sprintami. Każda planowana funkcjonalność zanim zostanie zaimplementowana i stanie się częścią projektu musi zostać krytycznie oceniona pod względem użyteczności oraz opisana w formie krótkiej specyfikacji.
+  
+  W wypadku kiedy mamy do czynienia z rozbudowaną funkcjonalnością należy podzielić jej implementację na jak najmniejsze, spójne kawałki a każdy z tych fragmentów powinien zostać jasno opisany. Idealnie jest, kiedy fragmenty danej funkcjonalności są od siebie niezależne, to znaczy, jeśli nad każdym z nich można pracować osobno w tym samym czasie. Taka sytuacja niestety zdarza się rzadko. Jeśli dany fragment zależy od innych, należy załączyć taką informację w jego opisie.
+  
+  Każde nowe zachowanie opisane jest testem w postaci odpowiedniego scenariusza Cucumber. Jest to warunek konieczny, scenariusze powstają przed rozpoczęciem procesu właściwej implementacji, po zaakceptowaniu przez Product Ownera pełnią one rolę testów akceptacyjnych. Testy jednostkowe w postaci specyfikacji RSpec powstają dla części systemu, których szczegóły implementacji są istotne dla prawidłowego jego działania.
+  
+  \subsection{Aplikacja testowa}
+  Specyfika projektu dynamicznego panelu administracyjnego utrudnia nieco pisanie scenariuszy jego użycia. Myśląc o panelu administracyjnym nigdy nie myślimy o nim jako o odrębnym bycie, jest raczej nieodłącznie związany z aplikacją, którą administruje. Aby proces testowania i specyfikowania systemu był jak najbardziej naturalny biblioteka administer rozwijana jest wraz z małą aplikacją testową.
+  
+  Prosty system blogowy został stworzony, aby opisać i przetestować zachowanie właściwego oprogramowania. Jedynym celem istnienia aplikacji blogowej jest przetestowanie integracji biblioteki administer z zewnętrzną aplikacją. Z technicznego punktu widzenia wszystkie testy behawioralne opisują zachowanie aplikacji testowej, która dołącza bibliotekę administer do puli wykorzystywanych przez siebie gemów. W przypadku oprogramowania, które działa na zasadzie integracji z zewnętrznym systemem taka konfiguracja środowiska testowego jest najlepsza, odpowiada bowiem faktycznemu scenariuszowi użycia. Sam blog jest niezwykle prostą aplikacją, w założeniach ma pozwalać na:
+  
+  \begin{itemize}
+    \item Wyświetlanie artykułów
+    \item Tworzenie artykułów
+    \item Edycję artykułów
+    \item Usuwanie artykułów
+    \item Kategoryzację artykułów
+    \item Tworzenie kategorii
+    \item Edycję kategorii
+    \item Usuwanie kategorii
+  \end{itemize}
+  
+  Blog świetnie nadaje się do testowania biblioteki typu administer - wszystkie powyższe funkcje, prócz pierwszej, są tak naprawdę funkcjami, które wykonywać ma panel administracyjny. W kontekście tego przykładu cel biblioteki administer jest jasny: Twórca bloga ze swojej strony musi jedynie dołączyć gem administer do projektu, zdefiniować modele biznesowe typu Post czy Kategoria, oraz dopisać akcję odpowiedzialną za wyświetlanie artykułów, cała część odpowiedzialna za akcję zarządzania modelami ma być dynamicznie wykonywana przez gem administer. 
+  
+  \begin{figure}[h!]
+		\begin{center}
+			\includegraphics[width=\linewidth]{images/blog.png}
+			\caption{Aplikacja testowa - wyświetlanie artykułów}
+			\label{blog_view}
+		\end{center}
+	\end{figure}
+	
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[width=\linewidth]{images/administer_edit.png}
+			\caption{administer - edycja rekordu}
+			\label{administer_edit}
+		\end{center}
+	\end{figure}
+  
+  % lepsza nazwa
+  \subsection{Konfiguracja zależności testowych}
+    % aplikacja testowa powinna kożystać ze źródeł testowanego gema, nie z jego release
+    % Test dependencies - warto coś o tym napisać?
+    
+  % zdecydowanie zmień nazwę tej sekcji 
+  \subsection{Implementacja konkretnej funkcji od A do Z}
+    % screen z listą tiketów
+    % dokładny opis całego procesu + wycinki kodu źródłowego dla konkretnego tiketa
+  
   \section{Wnioski}
