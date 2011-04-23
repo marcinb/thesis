@@ -61,7 +61,9 @@
   
   Blog świetnie nadaje się do testowania biblioteki typu administer - wszystkie powyższe funkcje, prócz pierwszej, są tak naprawdę funkcjami, które wykonywać ma panel administracyjny. W kontekście tego przykładu cel biblioteki administer jest jasny: Twórca bloga ze swojej strony musi jedynie dołączyć gem administer do projektu, zdefiniować modele biznesowe typu Post czy Kategoria, oraz dopisać akcję odpowiedzialną za wyświetlanie artykułów, cała część odpowiedzialna za akcję zarządzania modelami ma być dynamicznie wykonywana przez gem administer. 
   
-  \begin{figure}[h!]
+  
+  
+  \begin{figure}[!h]
 		\begin{center}
 			\includegraphics[width=\linewidth]{images/blog.png}
 			\caption{Aplikacja testowa - wyświetlanie artykułów}
@@ -69,7 +71,9 @@
 		\end{center}
 	\end{figure}
 	
-	\begin{figure}[h!]
+	\clearpage
+	
+	\begin{figure}[!h]
 		\begin{center}
 			\includegraphics[width=\linewidth]{images/administer_edit.png}
 			\caption{administer - edycja rekordu}
@@ -83,8 +87,98 @@
     % Test dependencies - warto coś o tym napisać?
     
   % zdecydowanie zmień nazwę tej sekcji 
-  \subsection{Implementacja konkretnej funkcji od A do Z}
+  \subsection{Implementacja funkcji usuwania rekordu}
     % screen z listą tiketów
     % dokładny opis całego procesu + wycinki kodu źródłowego dla konkretnego tiketa
+    
+    Ilustracja \ref{administer_stories}  przedstawia wycinek listy zadań związanych z pracą nad projektem administer a konkretnie są to zadania związane tylko i wyłącznie z rozwojem  panelu administracyjnego.
+    
+    \clearpage
+    
+    \begin{figure}
+  		\begin{center}
+  			\includegraphics[width=\linewidth]{images/administer_stories_list.png}
+  			\caption{Lista zadań do wykonania}
+  			\label{administer_stories}
+  		\end{center}
+  	\end{figure}
+  	
+    Jako, że projekt jest rozwijany już od jakiegoś czasu, większość zadań z tej listy jest już wykonana, znajdziemy jednak dwa nadal nie rozwiązane problemy:
+    
+    \begin{itemize}
+      \item Deletion of model records
+      \item Display validation errors in administer
+    \end{itemize}
+    
+    Skupmy się na rozwiązaniu pierwszego z nich. W momencie pisania tego rozdziału gem administer potrafi już tworzyć, modyfikować oraz wyświetlać informację o rekordach modeli biznesowych aplikacji, która z niego korzysta. Jedną z brakujących funkcji jest usuwanie istniejących rekordów. W tym podrozdziale przeanalizujemy krok po kroku cały cykl wdrażania tej nowej funkcji do istniejącego systemu. Przeanalizowanie tego procesu pomoże nam lepiej zrozumieć sposób w jaki rozwijane jest oprogramowanie w zgodzie z zasadami BDD, oraz korzyści z tego płynące.
+    
+    \subsubsection{Zrozumienie problemu}
+    Pierwszy etap pracy to rozpoznanie, z czym tak właściwie mamy do czynienia. Jeśli problem, który mamy rozwiązać został wcześniej udokumentowany, tak jak miało to miejsce w tym wypadku, należy zacząć od dokładnego zaznajomienia się z jego opisem.
+    
+    Ilustracja \ref{administer_story_desc} przedstawia szczegółowy widok naszego zadania prezentowany przez aplikację Pivotal Tracker, która używana jest jako narzędzie wspomagające proces zarządzania projektem administer.
+    
+    Podgląd ten informuje nas o wielu rzeczach związanych z zadaniem takich jak status ukończenia, estymacja pracochłonności czy informacja o osobach odpowiedzialnych za zadanie. W kontekście naszych rozważań najważniejszą informacją jaką możemy odczytać z niniejszego podglądu jest jednak opis funkcjonalności. 
+    
+    Administer rozwijany jest razem z prostą aplikacją testową - systemem blogowym, dlatego wszystkie funkcjonalności opisywane są w kontekście wykorzystania biblioteki przez ten właśnie system. Opis naszego zadania sformułowany jest następująco:
+    
+    \lstinputlisting{examples/code/ch04/01}
+    
+    Na pierwszy rzut oka widać, że opis dostarczony został w postaci, której bez modyfikacji można użyć jako scenariusza akceptacyjnego biblioteki cucumber. Należy także zwrócić uwagę na inne ważne cechy tego opisu:
+    
+    \begin{description}
+      \item[Niepodzielność] Dostarczone kroki stanowią minimum, jakie trzeba zaimplementować aby funkcjonalność usuwania rekordów była kompletna.
+      \item[Osadzenie w kontekście] Zachowanie zostało opisane w konkretnych warunkach. Mamy informację o stanie początkowym w jakim funkcjonalność powinna działać (Istnieje rekord należący do modelu Post), miejscu oraz zachowaniu które wywoła usunięcie rekordu (Kliknięcie przycisku \verb+Delete+ na stronie z postami) oraz o warunkach końcowych, jakie muszą zostać spełnione w wyniku działania naszej nowej funkcji (Post powinien zniknąć z listy).
+    \end{description}
+    
+    \begin{figure}[h]
+  		\begin{center}
+  			\includegraphics[width=\linewidth]{images/administer_story_desc.png}
+  			\caption{Szczegółowy opis zadania}
+  			\label{administer_story_desc}
+  		\end{center}
+  	\end{figure}
+  	
+  	\subsubsection{Czynności wstępne}
+  	
+  	Po zapoznaniu się i zrozumieniu istoty problemu, z którym będziemy się zmagać należy przygotować środowisko pracy. W naszym wypadku składają się na to dwie ważne czynności:
+  	
+  	 \begin{description}
+        \item[Upewnienie się, że posiadamy aktualną wersję oprogramowania] Zawsze powinniśmy rozpocząć pracę z najnowszą rozwojową wersją kodu.
+        \item[Uruchomienie pełnego zestawu testów] Przed rozpoczęciem pracy należy upewnić się, że wszystkie testy kończą się sukcesem.
+      \end{description}
+      
+    Kod biblioteki administer przechowywany jest w rozproszonym systemie kontroli wersji GIT, spełnienie pierwszego punktu wymaga więc od programisty jedynie synchronizacji swojego lokalnego repozytorium z najnowszą wersją rozwojowej gałęzi kodu znajdującej się w głównym zdalnym repozytorium. Szczegóły dotyczące operacji na systemie kontroli wersji wykraczają poza ramy tej pracy i zostaną tutaj pominięte. Przyjmijmy jednak, że synchronizacja została wykonana i mamy u siebie najnowszą wersję kodu biblioteki administer. 
+    
+    Uruchomienie pełnego zestawu testów daje nam pewność, że wersja oprogramowania, na której będziemy pracować spełnia warunki specyfikacji. Nie wolno rozpoczynać pracy, jeśli testy z jakiegoś powodu nie przechodzą. W takim wypadku należy najpierw znaleźć przyczynę problemu i zlikwidować go a pracę nad nową funkcjonalnością rozpocząć dopiero kiedy wszystkie testy automatyczne sygnalizują sukces.
+    
+    Aby uruchomić pełen zestaw testów biblioteki administer wydajemy z głównego katalogu projektu polecenie:
+    
+    \begin{lstlisting}
+      rake
+    \end{lstlisting}
+    
+    Projekt został tak skonfigurowany, że komenda \verb+rake+ uruchomiona bez dodatkowych parametrów uruchamia zestaw scenariuszy Cucumber oraz testów RSpec opisujących zachowanie biblioteki. 
+    
+    
+    
+    \begin{figure}[!h]
+  		\begin{center}
+  			\includegraphics[width=\linewidth]{images/spec_report.png}
+  			\caption{Zestaw testów RSpec - raport.}
+  			\label{spec_report}
+  		\end{center}
+  	\end{figure}
+  	
+  	\clearpage
+  	
+  	\begin{figure}[!h]
+  		\begin{center}
+  			\includegraphics[width=\linewidth]{images/features_report.png}
+  			\caption{Zestaw scenariuszy Cucumber - raport.}
+  			\label{features_report}
+  		\end{center}
+  	\end{figure}
+  	
+  	  Raport po pozytywnym przejściu wszystkich testów powinien wyglądać podobnie jak na ilustracji \ref{spec_report} oraz \ref{features_report}. Oznaczenie \verb+pending+ przy jednym z testów RSpec sygnalizuje, że został tymczasowo wyłączony z zestawu testów przez jednego z programistów. Przyczyny wyłączenia testów mogą być różne, ale proceder ten należy stosować w ostateczności i w pełni świadomie, niedopuszczalne jest wyłączanie testu bez wyraźnego powodu a najlepiej jest, żeby takie sytuacje w ogóle się nie zdarzały.
   
   \section{Wnioski}

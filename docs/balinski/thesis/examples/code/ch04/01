@@ -1,0 +1,5 @@
+Given there is post
+When I am on administer dashboard
+And I click Posts
+And I click Delete
+Then the post should disappear from posts list
