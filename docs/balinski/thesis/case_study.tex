@@ -61,7 +61,7 @@
   
   Blog świetnie nadaje się do testowania biblioteki typu administer - wszystkie powyższe funkcje, prócz pierwszej, są tak naprawdę funkcjami, które wykonywać ma panel administracyjny. W kontekście tego przykładu cel biblioteki administer jest jasny: Twórca bloga ze swojej strony musi jedynie dołączyć gem administer do projektu, zdefiniować modele biznesowe typu Post czy Kategoria, oraz dopisać akcję odpowiedzialną za wyświetlanie artykułów, cała część odpowiedzialna za akcję zarządzania modelami ma być dynamicznie wykonywana przez gem administer. 
   
-  
+  Ilustracja \ref{blog_view} przedstawia stronę z listą artykułów, jest to widok pochodzący z aplikacji testowej. Ilustracja \ref{administer_edit} przedstawia widok edycji rekordu konkretnego artykułu, funkcja ta implementowana jest przez bibliotekę administer.
   
   \begin{figure}[!h]
 		\begin{center}
@@ -110,7 +110,7 @@
       \item Display validation errors in administer
     \end{itemize}
     
-    Skupmy się na rozwiązaniu pierwszego z nich. W momencie pisania tego rozdziału gem administer potrafi już tworzyć, modyfikować oraz wyświetlać informację o rekordach modeli biznesowych aplikacji, która z niego korzysta. Jedną z brakujących funkcji jest usuwanie istniejących rekordów. W tym podrozdziale przeanalizujemy krok po kroku cały cykl wdrażania tej nowej funkcji do istniejącego systemu. Przeanalizowanie tego procesu pomoże nam lepiej zrozumieć sposób w jaki rozwijane jest oprogramowanie w zgodzie z zasadami BDD, oraz korzyści z tego płynące.
+    Skupmy się na rozwiązaniu pierwszego z nich. W momencie pisania tego rozdziału gem administer potrafi już tworzyć, modyfikować oraz wyświetlać informację o rekordach modeli biznesowych aplikacji, która z niego korzysta. Jedną z brakujących funkcji jest usuwanie istniejących rekordów. W tym podrozdziale przeanalizujemy krok po kroku cały cykl wdrażania tej nowej funkcji do istniejącego systemu. Przeanalizowanie tego procesu pomoże nam lepiej zrozumieć sposób w jaki rozwijane jest oprogramowanie w zgodzie z zasadami BDD oraz korzyści z tego płynące.
     
     \subsubsection{Zrozumienie problemu}
     Pierwszy etap pracy to rozpoznanie, z czym tak właściwie mamy do czynienia. Jeśli problem, który mamy rozwiązać został wcześniej udokumentowany, tak jak miało to miejsce w tym wypadku, należy zacząć od dokładnego zaznajomienia się z jego opisem.
@@ -147,9 +147,9 @@
         \item[Uruchomienie pełnego zestawu testów] Przed rozpoczęciem pracy należy upewnić się, że wszystkie testy kończą się sukcesem.
       \end{description}
       
-    Kod biblioteki administer przechowywany jest w rozproszonym systemie kontroli wersji GIT, spełnienie pierwszego punktu wymaga więc od programisty jedynie synchronizacji swojego lokalnego repozytorium z najnowszą wersją rozwojowej gałęzi kodu znajdującej się w głównym zdalnym repozytorium. Szczegóły dotyczące operacji na systemie kontroli wersji wykraczają poza ramy tej pracy i zostaną tutaj pominięte. Przyjmijmy jednak, że synchronizacja została wykonana i mamy u siebie najnowszą wersję kodu biblioteki administer. 
+    Kod biblioteki administer przechowywany jest w rozproszonym systemie kontroli wersji GIT, spełnienie pierwszego punktu wymaga więc od programisty jedynie synchronizacji swojego lokalnego repozytorium z najnowszą wersją rozwojowej gałęzi kodu znajdującej się w głównym repozytorium. Szczegóły dotyczące operacji na systemie kontroli wersji wykraczają poza ramy tej pracy i zostaną tutaj pominięte. Przyjmijmy jednak, że synchronizacja została wykonana i mamy u siebie najnowszą wersję kodu biblioteki administer. 
     
-    Uruchomienie pełnego zestawu testów daje nam pewność, że wersja oprogramowania, na której będziemy pracować spełnia warunki specyfikacji. Nie wolno rozpoczynać pracy, jeśli testy z jakiegoś powodu nie przechodzą. W takim wypadku należy najpierw znaleźć przyczynę problemu i zlikwidować go a pracę nad nową funkcjonalnością rozpocząć dopiero kiedy wszystkie testy automatyczne sygnalizują sukces.
+    Uruchomienie pełnego zestawu testów daje nam pewność, że wersja oprogramowania, na której będziemy pracować spełnia warunki specyfikacji. Nie wolno rozpoczynać pracy jeśli testy z jakiegoś powodu nie przechodzą. W takim wypadku należy najpierw znaleźć przyczynę problemu i zlikwidować go a pracę nad nową funkcjonalnością rozpocząć dopiero kiedy wszystkie testy automatyczne sygnalizują sukces.
     
     Aby uruchomić pełen zestaw testów biblioteki administer wydajemy z głównego katalogu projektu polecenie:
     
@@ -157,7 +157,7 @@
       rake
     \end{lstlisting}
     
-    Projekt został tak skonfigurowany, że komenda \verb+rake+ uruchomiona bez dodatkowych parametrów uruchamia zestaw scenariuszy Cucumber oraz testów RSpec opisujących zachowanie biblioteki. 
+    Projekt został tak skonfigurowany, że komenda \verb+rake+ wywołana bez dodatkowych parametrów uruchamia zestaw scenariuszy Cucumber oraz testów RSpec opisujących zachowanie biblioteki. 
     
     
     
@@ -180,5 +180,71 @@
   	\end{figure}
   	
   	  Raport po pozytywnym przejściu wszystkich testów powinien wyglądać podobnie jak na ilustracji \ref{spec_report} oraz \ref{features_report}. Oznaczenie \verb+pending+ przy jednym z testów RSpec sygnalizuje, że został tymczasowo wyłączony z zestawu testów przez jednego z programistów. Przyczyny wyłączenia testów mogą być różne, ale proceder ten należy stosować w ostateczności i w pełni świadomie, niedopuszczalne jest wyłączanie testu bez wyraźnego powodu a najlepiej jest, żeby takie sytuacje w ogóle się nie zdarzały.
+  	  
+  	\subsubsection{Więcej testów}
+  	  Proces implementacji zaczyna się od stworzenia scenariusza opisującego nową funkcjonalność. W naszym przypadku scenariusze umieszczone są w podkatalogu \verb+spec/rails_root/features/+. Nas szczególnie interesuje plik \verb+spec/rails_root/features/administer/posts.feature+ w którym opisane jest zachowanie wymagane od panelu administrującego blogiem. W momencie pisania tego rozdziału plik \verb+posts.feature+ wygląda następująco:
+  	  
+  	\lstinputlisting{examples/code/ch04/02}
+  	
+  	Powyższe scenariusze opisują zachowanie biblioteki w tym momencie życia projektu, funkcja usuwania rekordu nie jest jeszcze opisana, nie pozostaje nam nic innego jak dopisać odpowiedni scenariusz:
+  	
+  	\lstinputlisting{examples/code/ch04/03}
+  	
+  	Oryginalny opis zadania (Ilustracja \ref{administer_story_desc}) został lekko zmodyfikowany w celu lepszego dopasowania do istniejącej infrastruktury i definicji kroków. Powtórne uruchomienie zestawu testów powinno zakończyć się niepowodzeniem - dodany przez nas scenariusz specyfikuje funkcjonalność, której jeszcze nie ma. Sytuację ilustruje zrzut ekranu \ref{scenario_failure}.
+  	
+  	\clearpage
+  	
+  	\begin{figure}[!h]
+  		\begin{center}
+  			\includegraphics[width=\linewidth]{images/scenario_failure.png}
+  			\caption{Nowo dodany scenariusz nie przechodzi}
+  			\label{scenario_failure}
+  		\end{center}
+  	\end{figure}
+  	
+  	Oprócz informacji o błędzie, dostajemy również informacje o tym, że jeden z kroków scenariusza jest nie zdefiniowany:
+  	
+  	\begin{lstlisting}
+    Undefined step: "the post should disappear from posts list" (Cucumber::Undefined)
+    features/administer/posts.feature:53:in `Then the post should disappear from posts list'
+    \end{lstlisting}
+    
+    Z problemem tym można poradzić sobie na dwa sposoby: dodać nową definicję dla kroku \verb+the post should disappear from posts list+ lub zmodyfikować scenariusz tak, aby korzystał z istniejących kroków nie zmieniając jednocześnie jego sensu. Generalnie rzecz biorąc niepotrzebne tworzenie nowych bytów nie jest dobrym pomysłem, należy przyjrzeć się więc czy możliwe jest wykorzystanie już istniejących definicji kroków, żeby opisać interesujące nas zachowanie. Plik
+    
+    \begin{lstlisting}
+    spec/rails_root/features/step_definitions/post_steps.rb
+    \end{lstlisting}
+    
+    definiuje następujące kroki:
+    
+    \lstinputlisting[language=ruby]{examples/code/ch04/05}
+    
+    Krok opisujący zniknięcie rekordu z listy można tak naprawdę opisać przy pomocy dwóch innych kroków, po pierwsze po kliknięciu przycisku \verb+Delete+ powinniśmy upewnić się, że nadal jesteśmy na liście Postów, po drugie wiedząc, że istniał tylko jeden post, po wciśnięciu \verb+Delete+ nie powinien istnieć żaden. Wykorzystamy więc dwa już zdefiniowane kroki: 
+    
+    \begin{lstlisting}
+    I should be on administer posts list
+    \end{lstlisting}
+    
+    oraz 
+    
+    \begin{lstlisting}
+    there should be no posts
+    \end{lstlisting}
+    
+    Zmodyfikowany scenariusz wygląda następująco:
+    
+    \lstinputlisting{examples/code/ch04/06}
+    
+    Powtórne uruchomienie testów nadal sygnalizuje niepowodzenie, jednak wszystkie kroki są zdefiniowane. Jedyne nad czym musimy się teraz skupić to dostarczenie funkcjonalności, która spełni warunki nowego scenariusza.
+     
+     \clearpage
+     
+     \begin{figure}[!h]
+   		\begin{center}
+   			\includegraphics[width=\linewidth]{images/scenario_failure_2.png}
+   			\caption{Nowo dodany scenariusz nie przechodzi, wszystkie kroki są zdefiniowane.}
+   			\label{scenario_failure_2}
+   		\end{center}
+   	\end{figure}
   
   \section{Wnioski}
