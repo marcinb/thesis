@@ -92,7 +92,7 @@
     % screen z listą tiketów
     % dokładny opis całego procesu + wycinki kodu źródłowego dla konkretnego tiketa
     
-    Ilustracja \ref{administer_stories}  przedstawia wycinek listy zadań związanych z pracą nad projektem administer a konkretnie są to zadania związane tylko i wyłącznie z rozwojem  panelu administracyjnego.
+    Ilustracja \ref{administer_stories}  przedstawia wycinek listy zadań związanych z pracą nad projektem administer a konkretnie są to zadania związane z rozwojem panelu administracyjnego.
     
     \clearpage
     
@@ -111,7 +111,7 @@
       \item Display validation errors in administer
     \end{itemize}
     
-    Skupmy się na rozwiązaniu pierwszego z nich. W momencie pisania tego rozdziału gem administer potrafi już tworzyć, modyfikować oraz wyświetlać informację o rekordach modeli biznesowych aplikacji, która z niego korzysta. Jedną z brakujących funkcji jest usuwanie istniejących rekordów. W tym podrozdziale przeanalizujemy krok po kroku cały cykl wdrażania tej nowej funkcji do istniejącego systemu. Przeanalizowanie tego procesu pomoże nam lepiej zrozumieć sposób w jaki rozwijane jest oprogramowanie w zgodzie z zasadami BDD oraz korzyści z tego płynące.
+    Skupmy się na rozwiązaniu pierwszego z nich. W momencie pisania tego rozdziału gem administer potrafi już tworzyć, modyfikować oraz wyświetlać informacje o rekordach modeli biznesowych aplikacji, która z niego korzysta. Jedną z brakujących funkcji jest usuwanie istniejących rekordów. W tym podrozdziale przeanalizujemy krok po kroku cały cykl wdrażania tej nowej funkcji do istniejącego systemu. Przeanalizowanie tego procesu pomoże nam lepiej zrozumieć sposób w jaki rozwijane jest oprogramowanie w zgodzie z zasadami BDD oraz korzyści z tego płynące.
     
     \subsubsection{Zrozumienie problemu}
     Pierwszy etap pracy to rozpoznanie, z czym tak właściwie mamy do czynienia. Jeśli problem, który mamy rozwiązać został wcześniej udokumentowany, tak jak miało to miejsce w tym wypadku, należy zacząć od dokładnego zaznajomienia się z jego opisem.
@@ -247,5 +247,80 @@
    			\label{scenario_failure_2}
    		\end{center}
    	\end{figure}
+   	
+   \subsubsection{Dostarczenie wymaganej funkcjonalności}
+   
+   Nasze następne działania polegać będą na zaspokajaniu oczekiwań kolejnych kroków zdefiniowanego przez nas scenariusza aż do momentu ich wyczerpania i tym samym dostarczenia wymaganej funkcjonalności. Jak widać na ilustracji \ref{scenario_failure} dwa pierwsze kroki są zielone, skupmy się więc na trzecim z nich. Wszystko co musimy wiedzieć o przyczynach jego niepowodzenia zawarte jest w raporcie z przebiegu scenariusza:
+   
+   \begin{lstlisting}
+   And I press "Delete"   # features/step_definitions/web_steps.rb:27
+   
+   no button with value or id or text 'Delete' found (Capybara::ElementNotFound)
+   ./features/step_definitions/web_steps.rb:29
+   ./features/step_definitions/web_steps.rb:14:in `with_scope'
+   ./features/step_definitions/web_steps.rb:28:in `/^(?:|I )press "([^"]*)"(?: within "([^"]*)")?$/'
+   features/administer/posts.feature:52:in `And I press "Delete"'
+   \end{lstlisting}
+   
+   Przycisk \verb+Delete+ nie istnieje, dodajmy go do odpowiedniego widoku. Plik którego szukamy to 
+   
+   \begin{lstlisting}
+   app/views/administer/entities/index.html.haml
+   \end{lstlisting}
+   
+   Definiuje on widok panelu administracyjnego zobrazowany na ilustracji \ref{administer_index}
+   
+   \clearpage
+   
+    \begin{figure}[!h]
+  		\begin{center}
+  			\includegraphics[width=\linewidth]{images/administer_index.png}
+  			\caption{Lista rekordów wybranego modelu}
+  			\label{administer_index}
+  		\end{center}
+  	\end{figure}
+  	
+  Jest to ten sam widok, o którym mowa w scenariuszu. Naszym zadaniem będzie dodać przycisk \verb+Delete+ w kolumnie \verb+Actions+ dla każdego wyświetlanego rekordu. Przyjrzyjmy się naszemu widokowi od środka:
+  
+  \lstinputlisting[numbers=left]{examples/code/ch04/07}
+  
+  Powyższy kod to prosty język szablonów HAML, który jest dynamicznie przetwarzany do postaci HTML zrozumiałej dla przeglądarki. Jeśli zlokalizujemy w nim kod odpowiedzialny za wyświetlenie linka \verb+Edit+ to prawdopodobnie bardzo łatwo będzie nam dodać pod nim przycisk \verb+Delete+. Interesujący nas fragment znajdziemy w 17 linii:
+  
+  \lstinputlisting[firstline=17,lastline=17]{examples/code/ch04/07}
+  
+  Modyfikujemy kod szablonu dodając brakujący przycisk, który połączony jest z akcją odpowiedzialną za usunięcie odpowiedniego rekordu. Po modyfikacji interesujący nas fragment kodu wygląda następująco:
+  
+  \lstinputlisting{examples/code/ch04/08}
+  
+  Dla zachowania poprawnej semantyki dokumentu dodanych zostało kilka tagów HTML, jednak najważniejsza deklaracja to:
+  
+  \lstinputlisting[firstline=4,lastline=4]{examples/code/ch04/08}
+  
+  Kod ten składa się z metod implementowanych przez framework Rails oraz metod specyficznych dla samego projektu administer. W wyniku jego działania wygenerowany zostanie przycisk o etykiecie \verb+Delete+ powiązany z metodą \verb+destroy+ kontrolera, który odpowiedzialny jest za zarządzanie rekordami modeli biznesowych przez bibliotekę administer. W kontekście naszych rozważań na temat testowo zorientowanych metod rozwoju oprogramowania istotne jest, że modyfikacja ta zaspokaja wymaganie kroku scenariusza, nad którym aktualnie pracujemy. Uruchommy ponownie zestaw testów, aby przekonać się, że mimo iż przycisk \verb+Delete+ w tej chwili istnieje, to jednak ciągle są problemy z tym samym krokiem, informacja o niepowodzeniu jest jednak inna niż poprzednio:
+  
+  \begin{lstlisting}
+  And I press "Delete"  # features/step_definitions/web_steps.rb:27
+  
+  The action 'destroy' could not be found for Administer::EntitiesController (AbstractController::ActionNotFound)
+  ./features/step_definitions/web_steps.rb:29
+  ./features/step_definitions/web_steps.rb:14:in `with_scope'
+  ./features/step_definitions/web_steps.rb:28:in `/^(?:|I )press "([^"]*)"(?: within "([^"]*)")?$/'
+  features/administer/posts.feature:52:in `And I press "Delete"'
+  \end{lstlisting}
+  
+  Wyświetlamy przycisk \verb+Delete+ oraz jest on prawidłowo skojarzony z akcją \verb+destroy+ kontrolera \verb+Administer::EntitiesController+. Problem w tym, że akcja \verb+destroy+ nie została jeszcze zaimplementowana co skutkuje błędem - próbą uruchomienia nieistniejącej akcji w momencie kiedy użytkownik (W tym wypadku symulowany przez bibliotekę Capybara) klika w przycisk.
+  
+  Przejdźmy więc do wyżej wymienionego kontrolera \verb+EntitiesController+. Jego głównym zadaniem jest obsługa żądań związanych z modelami biznesowymi istniejącymi w aplikacji, która korzysta z biblioteki administer do zadań tych zaliczają się m.in dodawanie, modyfikowanie i usuwanie rekordów tych modeli. Pełen kod kontrolera wygląda w tym momencie następująco:
+  
+  \lstinputlisting[language=ruby]{examples/code/ch04/09}
+  
+  Kontroler ten definiuje akcje, które użytkownik może za jego pomocą wykonać, oprócz tego robi kilka innych ciekawych rzeczy. Przede wszystkim ustala informację o rodzaju modelu, na którym ma przeprowadzać operacje. Nazwa modelu jest przekazywana jako jeden z parametrów żądania (\verb+params[:model_name]+) i to na jej podstawie znajdowana jest właściwa klasa reprezentująca ten model, konkretne jego rekordy, lub cała ich kolekcja.
+  W tej chwili istnieją cztery akcje: \verb+new+, \verb+create+, \verb+edit+ oraz \verb+update+ brakuje (o czym zostaliśmy już poinformowani przez nieprzechodzący scenariusz) akcji \verb+destroy+, której implementacją zajmiemy się w tej chwili.
+  
+  Z treści naszego scenariusza wynika, że zadaniem akcji \verb+destroy+ jest usunięcie konkretnego rekordu z bazy danych oraz przekierowanie użytkownika z powrotem na listę wszystkich rekordów. Na wejściu akcja musi więc otrzymać dwa parametry: nazwę modelu oraz identyfikator rekordu a na podstawie tych danych wykonać polecenie które usunie rekord należący do tego modelu oraz noszący taki właśnie identyfikator. Kod spełniający taką specyfikacje może wyglądać następująco: 
+  
+  \lstinputlisting[language=ruby]{examples/code/ch04/10}
+  
+  % RSpec dla sytuacji kiedy zniszczenie obiektu się nie powiedzie
   
   \section{Wnioski}

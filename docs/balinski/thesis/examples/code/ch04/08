@@ -1,0 +1,4 @@
+%td 
+  %ul.actions
+    %li= link_to("Edit", edit_administer_entity_path(object, :model_name => model_class.model_name))
+    %li= button_to("Delete", administer_entity_path(object, :model_name => model_class.model_name), :method => :delete)
