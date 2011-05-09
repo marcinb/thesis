@@ -319,7 +319,49 @@
   
   Z treści naszego scenariusza wynika, że zadaniem akcji \verb+destroy+ jest usunięcie konkretnego rekordu z bazy danych oraz przekierowanie użytkownika z powrotem na listę wszystkich rekordów. Na wejściu akcja musi więc otrzymać dwa parametry: nazwę modelu oraz identyfikator rekordu a na podstawie tych danych wykonać polecenie które usunie rekord należący do tego modelu oraz noszący taki właśnie identyfikator. Kod spełniający taką specyfikacje może wyglądać następująco: 
   
-  \lstinputlisting[language=ruby]{examples/code/ch04/10}
+  \lstinputlisting[language=ruby,numbers=left]{examples/code/ch04/10}
+  
+  Po dodaniu metody \verb+destroy+ do kontrolera uruchamiamy testy raz jeszcze przy pomocy polecenia \verb+rake+. Tym razem wszystkie scenariusze przechodzą.
+  
+  \clearpage
+  
+   \begin{figure}[!h]
+ 		\begin{center}
+ 			\includegraphics[width=\linewidth]{images/delete_record_scenario_pass.png}
+ 			\caption{W tym momencie funkcjonalność spełnia wymagania scenariusza.}
+ 			\label{delete_record_scenario_pass}
+ 		\end{center}
+ 	\end{figure}
+ 	
+ 	Teoretycznie moglibyśmy w tym momencie uznać zadanie za zakończone, jednak pisząc metodę \verb+destroy+ wykroczyliśmy nieco poza to, co opisane zostało w scenariuszu, linie 3-5 definiują następujący blok kodu:
+ 	
+ 	\lstinputlisting[language=ruby,firstline=3,lastline=5]{examples/code/ch04/10}
+ 	
+ 	Jeśli usunięcie rekordu z jakiejś przyczyny nie zakończy się powodzeniem wyświetlony zostanie komunikat o treści:
+ 	
+ 	\begin{lstlisting}
+ 	Could not destroy object.
+ 	\end{lstlisting}
+ 	
+ 	Zachowanie to jest jak najbardziej sensowne, zostało ono jednak dodane samowolnie i nie jest nigdzie przetestowane. Jako odpowiedzialni programiści nie powinniśmy dopuścić do takiej sytuacji i dopisać odpowiedni test. Przetestowanie tego zachowania scenariuszem Cucumber jest trudne, trudno bowiem odtworzyć sytuację, w której usunięcie rekordu zakończy się niepowodzeniem - może się tak stać np. kiedy silnik bazy danych w której jest przechowywany nałożył na ten rekord blokadę, która trwa w momencie próby jego usunięcia. W tej sytuacji do testowania wykorzystamy bibliotekę RSpec i jej mechanizm oczekiwań oraz sztucznych obiektów. Odpowiedni zestaw testów zdefiniowany jest w pliku:
+ 	
+ 	\begin{lstlisting}
+ 	spec/rails_root/spec/controllers/administer/entities_controller_spec.rb
+ 	\end{lstlisting}
+ 	
+ 	W którym następująco opiszemy interesujące nas zachowanie:
+ 	
+ 	\lstinputlisting[language=ruby]{examples/code/ch04/12}
+ 	
+ 	Upewniliśmy się, że informacja o błędzie została ustawiona w kontrolerze. To jednak nie wszystko, musimy sprawdzić, czy jest ona wyświetlona w odpowiednim widoku. Administer wyświetla informacje o błędach w głównym widoku zdefiniowanym w pliku:
+ 	
+ 	\begin{lstlisting}
+ 	app/views/layouts/administer.html.haml
+ 	\end{lstlisting}
+ 	
+ 	Odpowiedni test ma sprawdzać, czy ustawiony komunikat zostanie wyświetlony:
+ 	
+ 	\lstinputlisting[language=ruby]{examples/code/ch04/13}
   
   % RSpec dla sytuacji kiedy zniszczenie obiektu się nie powiedzie
   

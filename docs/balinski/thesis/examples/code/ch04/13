@@ -1,0 +1,7 @@
+describe "layouts/administer.html.haml" do
+  it "renders error message when assigned" do
+    view.stub!(:flash).and_return({:error => 'Could not destroy object'})
+    render
+    rendered.should match(/Could not destroy object/)
+  end
+end
