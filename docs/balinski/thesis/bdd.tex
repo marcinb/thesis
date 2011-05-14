@@ -1,8 +1,11 @@
+% Copyright 2011, Marcin Baliński
+
 \chapter[Behavior Driven Development]{Behavior Driven Development}
   \section{Czym jest BDD?}
-    Behavior Driven Development jest metodyką rozwoju oprogramowania, w której główny nacisk położony jest na zacieśnienie współpracy między programistami, a nie technicznymi uczestnikami projektu. Podobnie jak w przypadku TDD implementację konkretnej funkcjonalności poprzedza zdefiniowanie jej zachowania w teście. Różnica polega na tym, że scenariusze BDD pisane są w naturalnym języku, tak aby były zrozumiałe nie tylko dla programistów. Idealną sytuacją jest kiedy scenariusze takie powstają w wyniku ścisłej współpracy programistów oraz właścicieli projektu. BDD jak sama nazwa wskazuje kładzie nacisk na zdefiniowanie i zrozumienie zachowania aplikacji a szczegóły implementacji są tutaj mniej istotne.
+    Behavior Driven Development jest metodyką rozwoju oprogramowania, w której główny nacisk położony jest na zacieśnienie współpracy między programistami i nie technicznymi uczestnikami projektu. Podobnie jak w przypadku TDD implementację konkretnej funkcjonalności poprzedza zdefiniowanie jej zachowania w teście. Różnica polega na tym, że scenariusze BDD pisane są w naturalnym języku, tak aby były zrozumiałe nie tylko dla programistów. Idealną sytuacją jest kiedy scenariusze takie powstają w wyniku ścisłej współpracy programistów oraz właścicieli projektu. BDD jak sama nazwa wskazuje kładzie nacisk na zdefiniowanie i zrozumienie zachowania aplikacji a szczegóły implementacji są tutaj mniej istotne. W tym rozdziale przybliżę najważniejsze cechy oraz przykładowe narzędzia, jakie można wykorzystać w procesie \emph{Behavior Driven Development}. W celu dokładniejszego zgłębienia tematu jeszcze raz polecam książkę \emph{The RSpec Book\footnote{\cite{rspec_book}}}.
+    
     \subsection{BDD jako narzędzie dokumentacji. Funkcjonalności i scenariusze}
-      Każdy program tak naprawdę składa się z zestawu funkcjonalności. Każda funkcjonalność wnosi konkretną wartość dodaną z punktu widzenia grupy docelowej, dla której oprogramowanie powstaje. Przykładowo program do obsługi księgowości powinien pozwalać zarządzać rachunkiem zysków i strat oraz sporządzać bilans (to oczywiście tylko niektóre z funkcji). Każda wyżej wymienionych czynności to pojedyncza funkcjonalność, która w zgodzie z filozofią BDD powinna zostać opisana zestawem scenariuszy.
+      Każdy program tak naprawdę składa się z zestawu funkcjonalności. Każda funkcjonalność wnosi konkretną wartość dodaną z punktu widzenia grupy docelowej, dla której oprogramowanie powstaje. Przykładowo program do obsługi księgowości powinien pozwalać zarządzać rachunkiem zysków i strat oraz sporządzać bilans (to oczywiście tylko niektóre z funkcji). Każda z wyżej wymienionych czynności to pojedyncza funkcjonalność, która w zgodzie z filozofią BDD powinna zostać opisana zestawem scenariuszy.
       
       Scenariusze opisują zachowanie się programu w kontekście konkretnej funkcjonalności w precyzyjnie zdefiniowanej sytuacji a dla każdej funkcjonalności możemy zdefiniować dowolną ilość scenariuszy użycia. Na przykład dla funkcjonalności Zarządzanie rachunkiem zysków i strat mogą być zdefiniowane następujące scenariusze:
       
@@ -23,7 +26,7 @@
     
     \subsection{BDD jako narzędzie testowania}
       Prawdziwą mocą bibliotek wspierających Behavior Driven Development jest to, że traktują one specyfikacje dostarczoną w postaci scenariuszy jako zestaw testów. Dołączając więc scenariusze do naszego zestawu testów automatycznych mamy pewność, że oprogramowanie zachowuje się zgodnie z opisanymi w nich założeniami. W tym podrozdziale chciałbym opisać w jaki sposób, z technicznego punktu widzenia przebiega proces translacji specyfikacji (będącej plikiem tekstowym składającym się z pojedynczych scenariuszy) na zestaw automatycznych testów.
-      \subsubsection{Definicje kroków na przykładzie biblioteki Cucumber}
+      \subsubsection[Definicje kroków na przykładzie biblioteki Cucumber]{Definicje kroków na przykładzie biblioteki Cucumber\footnote{\url{http://cukes.info/}\nocite{cucumber}}}
         Aby skutecznie uruchomić scenariusze w formie testów należy skonstruować plik tekstowy je zawierający w zgodzie z pewnymi zasadami. Przykładowy plik definiujący funkcjonalność 'Zarządzanie rachunkiem zysków i strat' rządzi się pewnymi prawami:
         
         \begin{itemize}
@@ -77,7 +80,7 @@
       
       Jeśli chcemy zastąpić testy akceptacyjne z żywym klientem na scenariusze BDD należy pamiętać, że środowisko testowe (w tym definicje kroków) muszą zostać zaprojektowane tak, aby działały w identycznej konfiguracji jak konfiguracja produkcyjna (czyli taka, w jakiej działa nasze oprogramowanie po dostarczeniu do klienta). Szczególnie nie należy używać imitacji (ang. mock) obiektów, których bardzo często używa się w testach jednostkowych, scenariusze powinny testować zachowanie się aplikacji w naturalnym środowisku.
       
-  \section{Narzędzia BDD dostępne dla języka Ruby}
+  \section[Narzędzia BDD dostępne dla języka Ruby]{Narzędzia BDD dostępne dla języka Ruby\footnote{\url{http://cukes.info/}\nocite{cucumber}}}
     \subsection{Cucumber}
       W środowisku programistów języka Ruby najpopularniejszym narzędziem BDD jest bez wątpienia biblioteka Cucumber. Cucumber powstał w 2008 roku jako następca biblioteki Story Runner będącej częścią narzędzia RSpec. Biblioteka miała umożliwić programistom opisywanie naturalnym językiem sposobu w jaki powinno zachowywać się oprogramowanie. Scenariusze służą jednocześnie jako dokumentacja oraz zestaw automatycznych testów. 
       
@@ -91,7 +94,7 @@
       
       Jako, że techniki prezentowane w tym rozdziale opisane i zaprezentowane zostały na przykładzie biblioteki Cucumber powtórny szczegółowy opis tego narzędzia jest w tym miejscu zbędny. Szczegółowa dokumentacja dostępna jest pod adresem: http://cukes.info
       
-    \subsection{Steak}
+    \subsection[Steak]{Steak\footnote{\url{http://github.com/cavalle/steak/wiki}}}
       Steak podobnie jak Cucumber jest narzędziem, które służy do opisywania zachowania aplikacji w formie automatycznych testów, główny nacisk jest tutaj jednak kładziony na wygodę programisty oraz szybkość powstawania testów. Ograniczenia w stosunku do tego co oferuje Cucumber są następujące:
       
       \begin{itemize}
@@ -122,7 +125,7 @@
       
       Steak jest dobrym rozwiązaniem jeśli projekt prowadzony jest przez stricte techniczny zespół lub zarząd projektu nie jest przekonany do uczestniczenia w procesie specyfikowania oprogramowania w formie testów. Minusem rezygnacji z takiej formy współpracy jest niestety spadek znaczenia tworzonej w Steaku specyfikacji jako testów akceptacyjnych: jeśli właściciele projektu nie będą rozumieli specyfikacji w formie jaką oferuje to najprawdopodobniej testy akceptacyjne będą chcieli przeprowadzić osobiście.
     
-    \subsection{Capybara}  
+    \subsection[Capybara]{Capybara\footnote{\url{http://github.com/jnicklas/capybara}}}  
 
       Capybara ułatwia integracyjne testowanie aplikacji działających w przeglądarce www symulując akcję jakie wykonywałby żywy użytkownik. Nie jest to narzędzie związane stricte z BDD, jednak świetnie uzupełnia i wspomaga biblioteki takie jak Cucumber czy Steak.
       

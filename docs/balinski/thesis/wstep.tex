@@ -1,3 +1,7 @@
+% Copyright 2011, Marcin Baliński
+
+\nocite{ruby_way}
+
 \chapter[Wstęp]{Wstęp}
 	\section{Problemy napotykane w procesie wytwarzania oprogramowania}
 	  Na każdy projekt informatyczny można patrzeć z różnych perspektyw, w tej pracy chciałby jednak skupić się na technicznym aspekcie, jakim jest faza jego rozwoju w wybranym języku programowania, zaczynając od opisania częstych problemów podczas tej fazy.
@@ -22,7 +26,7 @@
 	    Wynikająca z niewłaściwej komunikacji lub z wcześniejszych błędów.
 	
 	\subsubsection{}
-	Te i wiele innych problemów sprawiają, że koniecznym staję się wprowadzenie narzędzia kontroli, dzięki któremu można by upewnić się co do jakości dostarczonych rozwiązań a także zminimalizować ryzyko pojawienia się podobnych problemów w przyszłości. Jednym z takich narzędzi są testy oprogramowania.
+	Dokładniejszą analizę przyczyn i skutków problemów napotykanych podczas procesu rozwoju oprogramowania znaleźć można między innymi w takich pozycjach jak \cite{pragmatic_programmer} oraz \cite{rspec_book}.  W świetle tych informacji logicznym wydaje się wprowadzenie narzędzia kontroli, dzięki któremu można by upewnić się co do jakości dostarczonych rozwiązań a także zminimalizować ryzyko pojawienia się podobnych problemów w przyszłości. Jednym z takich narzędzi są testy oprogramowania.
 	  
 	\section{Testowanie oprogramowania}
 	  \subsection{Wady manualnego testowania}
@@ -72,4 +76,6 @@
      	    \item Mamy pewność, że system działa zgodnie z założeniami
      	    \item Proces modyfikacji oprogramowania staje się łatwiejszy i bezpieczniejszy: jeśli nowy kod spowoduje defekt w którejś z bieżących funkcjonalności zostaniemy o tym niezwłocznie poinformowani przez nie przechodzący test
      	  \end{itemize}
+     	  
+     	  Na temat automatyzacji procesu testowania oprogramowania napisano niezliczoną ilość książek oraz artykułów. Dobrym punktem startu dla tych, którzy chcieliby zgłębić temat bardziej będzie strona wikipedii\footnote{http://en.wikipedia.org/wiki/Test\_automation} \nocite{wiki_test_automation} poświęcona temu tematowi.
 

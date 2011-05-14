@@ -1,3 +1,5 @@
+% Copyright 2011, Marcin Baliński
+
 \chapter[Test Driven Development]{Test Driven Development}
   \section{Czym jest TDD?}
     Test Driven Development jest praktyką, według założeń której każda modyfikacja systemu poprzedzona jest stworzeniem odpowiedniego testu opisującego tą modyfikację. Programista zaczyna od napisania testu, który z naturalnych przyczyn (testowany kod nie istnieje a tym etapie) daje wynik negatywny. Następnie napisany zostaje właściwy kod, którego zachowanie zgodne jest z testowanym. Kiedy testy przechodzą można wprowadzić ewentualne poprawki.
@@ -19,6 +21,8 @@
     \paragraph{Zaraz po napisaniu nowe testy powinny dawać negatywny wynik}
       Daje to pewność, że testy faktycznie spełniają swoją funkcję, oraz każda degradacja funkcjonalności będzie sygnalizowana nieprzechodzącym testem.
       
+      Dużo więcej na temat historii, filozofii oraz zasad Test Driven Development znaleźć można w książce \emph{The RSpec Book}\footnote{\cite{rspec_book}}
+      
   \subsection{Przykładowe iteracja TDD}
     Przypuśćmy, że pracujemy nad oprogramowaniem sportowej tablicy wyników. Naszym aktualnym zadaniem jest napisanie metody, która na wejściu otrzymuje nazwy dwóch drużyn sportowych, zwraca zaś łańcuch składający się z nazw tych drużyn połączonych łańcuchem " vs ". Oprogramowanie napisane jest w języku Ruby, do testowania użyjemy biblioteki RSpec.
     
@@ -26,7 +30,7 @@
     
     \lstinputlisting[language=ruby]{examples/code/ch02/01.rb}
 
-    Dokładny opis budowy testu zawarty jest w podrozdziale 'Narzędzia wspierające TDD dostępne dla języka Ruby' i nie będę go tutaj powielał. Chciałbym jednak zwrócić uwagę na fakt, że już na etapie pisania testu programista zmuszony jest przemyśleć szczegóły implementacji. Zaprezentowany przykład jest bardzo prosty, ale na pierwszy rzut oka widać, że oprócz sprawdzenia poprawności zwracanego wyniku test definiuje także pewne szczegóły architektury programu. Po pierwsze zakładamy, że tablica wyników reprezentowana będzie przez klasę o nazwie \verb+SportsTable+, a żądana funkcjonalność zostanie zaimplementowana jako metoda instancyjna \verb+header+ a więc aby mieć z niej pożytek użytkownik musi skorzystać z istniejącego obiektu tej klasy. Widać tutaj wyraźnie jedną z głównych zalet testowo zorientowanych metodyk rozwoju oprogramowania - konieczność dokładnego przemyślenia szczegółów implementacji przed jej rozpoczęciem.
+    Dokładny opis budowy testu zawarty jest w podrozdziale \emph{Narzędzia wspierające TDD dostępne dla języka Ruby} i nie będę go tutaj powielał. Chciałbym jednak zwrócić uwagę na fakt, że już na etapie pisania testu programista zmuszony jest przemyśleć szczegóły implementacji. Zaprezentowany przykład jest bardzo prosty, ale na pierwszy rzut oka widać, że oprócz sprawdzenia poprawności zwracanego wyniku test definiuje także pewne szczegóły architektury programu. Po pierwsze zakładamy, że tablica wyników reprezentowana będzie przez klasę o nazwie \verb+SportsTable+, a żądana funkcjonalność zostanie zaimplementowana jako metoda instancyjna \verb+header+ a więc aby mieć z niej pożytek użytkownik musi skorzystać z istniejącego obiektu tej klasy. Widać tutaj wyraźnie jedną z głównych zalet testowo zorientowanych metodyk rozwoju oprogramowania - konieczność dokładnego przemyślenia szczegółów implementacji przed jej rozpoczęciem.
     
     Sednem tego konkretnego testu jest jednak upewnienie się, że dla przykładowych danych wejściowych otrzymamy poprawny wynik. W tym wypadku sprawdzamy, czy wywołanie metody 
     
@@ -72,14 +76,14 @@
 
   \section{Narzędzia wspierające TDD dostępne dla języka Ruby}
     
-    \subsection{Test::Unit}
+    \subsection[Test::Unit]{Test::Unit\footnote{\url{http://test-unit.rubyforge.org/test-unit/}\nocite{test_unit}}}
     
     Test::Unit należy do bibliotek dołączanych standardowo do każdej dystrybucji języka Ruby. Oprogramowanie testujemy tutaj przy pomocy tak zwanych asercji. Najprostsza asercja ma postać wywołania metody \verb+assert+, która sygnalizuje niepowodzenie testu w momencie, kiedy wyrażenie przekazane jako jej parametr jest fałszem, przykładowo:
     
     \lstinputlisting[language=ruby]{examples/code/ch02/04.rb}
      
      \subsubsection{Konstrukcja zestawu testów}
-     Zestaw testów biblioteki Test::Unit ma postać definicji klasy, która dziedziczy po klasie Test::Unit::TestCase. Pojedyncze testy definiujemy jako metody, rozpoczynające się od ciągu znaków 'test'. W ciele każdej z takich metod możemy zdefiniować wiele asercji (aczkolwiek idealnie jest, jeśli jeden test równoznaczny jest z jedną asercją). Test kończy się sukcesem jedynie, kiedy wszystkie należące do niego asercję również zakończą się sukcesem.
+     Zestaw testów biblioteki Test::Unit ma postać definicji klasy, która dziedziczy po klasie Test::Unit::TestCase. Pojedyncze testy definiujemy jako metody, rozpoczynające się od ciągu znaków \emph{test}. W ciele każdej z takich metod możemy zdefiniować wiele asercji (aczkolwiek idealnie jest, jeśli jeden test równoznaczny jest z jedną asercją). Test kończy się sukcesem jedynie, kiedy wszystkie należące do niego asercję również zakończą się sukcesem.
      
      Przykładowy prosty zestaw testów opisujących zachowanie aplikacji będącej kalkulatorem może wyglądać tak:
      
@@ -124,7 +128,7 @@
       test/test_suite3.rb
     \end{lstlisting}
     
-    \subsection{RSpec}
+    \subsection[RSpec]{RSpec\footnote{\url{http://rspec.info/}\nocite{rspec}}}
     % dokładniejszy opis, trochę więcej o tym, dlaczego powstał RSPEC
     
     Kolejnym narzędziem świetnie wspierającym testowanie oprogramowania w języku Ruby jest biblioteka RSpec. RSpec jest narzędziem bardziej rozbudowanym niż Test::Unit, w tym podrozdziale skupię się jednak na jego podstawowych funkcjach umożliwiających testowanie oprogramowania w zgodzie z filozofią TDD.
