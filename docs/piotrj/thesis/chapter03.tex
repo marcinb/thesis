@@ -388,6 +388,35 @@
       method at all.
       
     \subsection{Metaprogramming in Rails}
+      As Rails is a framework for Ruby it is sane to think that it would provide the same level of
+      dynamism and same level of metaprogramming capabilities. And this assumption turns out to be 
+      valid. First of all, developers can make use of all Ruby metaprogramming capabilities. But Ruby on 
+      Rails introduces some new capabilities on top of Ruby plus adds functionality that is specific for
+      web apps, object relational mapping etc.
+      
+      One of most useful methods added in Rails is constantize methods. It takes a string as an argument and
+      returns a constant that is found in the environment under this name. Therefore, as Ruby classes
+      are just constants that point to particular objects of Class we may get the classes by their names
+      in string as presented in the example:
+      
+      \lstinputlisting[language=ruby]{code/chapter03/meta03.rb}
+      
+      Such usage of constantize may be very useful, especially in kind of application this thesis
+      presents, as it would allow to pass the names of entities around as strings and dynamically retrieve
+      classes in the code.
+      
+      In addition, ActiveRecord provides comprehensive reflection API. Developer can get the list of all
+      columns the entity has in database by calling \texttt{columns} method on the entity class. That method 
+      returns list of subclasses of \texttt{ActiveRecord::ConnectionAdapters::Column} which provides
+      information on name, type and other metadata of the column.
+      
+      In order to fully make use of this API and effectively manage entities there is another method 
+      that may be helpful. Developer can call \texttt{reflect_on_all_associations} which would 
+      return the array of objects representing all associations (has_many, belongs_to, has_one) the 
+      particular entity has. Moreover, if you pass association type as an argument it would return only
+      associations of this type.
+      
+      Features shown above would definitely make writing the targeted plugin much easier and enjoyable.
       
     
       
