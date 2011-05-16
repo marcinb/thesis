@@ -46,9 +46,9 @@
   Każde nowe zachowanie opisane jest testem w postaci odpowiedniego scenariusza Cucumber. Jest to warunek konieczny, scenariusze powstają przed rozpoczęciem procesu właściwej implementacji, po zaakceptowaniu przez Product Ownera pełnią one rolę testów akceptacyjnych. Testy jednostkowe w postaci specyfikacji RSpec powstają dla części systemu, których szczegóły implementacji są istotne dla prawidłowego jego działania.
   
   \subsection{Aplikacja testowa}
-  Specyfika projektu dynamicznego panelu administracyjnego utrudnia nieco pisanie scenariuszy jego użycia. Myśląc o panelu administracyjnym nigdy nie myślimy o nim jako o odrębnym bycie, jest raczej nieodłącznie związany z aplikacją, którą administruje. Aby proces testowania i specyfikowania systemu był jak najbardziej naturalny biblioteka administer rozwijana jest wraz z małą aplikacją testową.
+  Specyfika projektu dynamicznego panelu administracyjnego utrudnia nieco pisanie scenariuszy jego użycia. Myśląc o panelu administracyjnym nigdy nie myślimy o nim jako o odrębnym bycie, jest raczej nieodłącznie związany z aplikacją, którą administruje. Aby proces testowania i specyfikowania systemu był jak najbardziej naturalny biblioteka \emph{administer} rozwijana jest wraz z małą aplikacją testową.
   
-  Prosty system blogowy został stworzony, aby opisać i przetestować zachowanie właściwego oprogramowania. Jedynym celem istnienia aplikacji blogowej jest przetestowanie integracji biblioteki administer z zewnętrzną aplikacją. Z technicznego punktu widzenia wszystkie testy behawioralne opisują zachowanie aplikacji testowej, która dołącza bibliotekę administer do puli wykorzystywanych przez siebie gemów. W przypadku oprogramowania, które działa na zasadzie integracji z zewnętrznym systemem taka konfiguracja środowiska testowego jest najlepsza, odpowiada bowiem faktycznemu scenariuszowi użycia. Sam blog jest niezwykle prostą aplikacją, w założeniach ma pozwalać na:
+  Prosty system blogowy został stworzony, aby opisać i przetestować zachowanie właściwego oprogramowania. Jedynym celem istnienia aplikacji blogowej jest przetestowanie integracji biblioteki \emph{administer} z zewnętrzną aplikacją. Z technicznego punktu widzenia wszystkie testy behawioralne opisują zachowanie aplikacji testowej, która dołącza bibliotekę \emph{administer} do puli wykorzystywanych przez siebie gemów. W przypadku oprogramowania, które działa na zasadzie integracji z zewnętrznym systemem taka konfiguracja środowiska testowego jest najlepsza, odpowiada bowiem faktycznemu scenariuszowi użycia. Sam blog jest niezwykle prostą aplikacją, w założeniach ma pozwalać na:
   
   \begin{itemize}
     \item Wyświetlanie artykułów
@@ -62,7 +62,7 @@
   \end{itemize}
   
   % PRZEREDAGOWAĆ
-  Blog świetnie nadaje się do testowania biblioteki typu administer - wszystkie powyższe funkcje, prócz pierwszej, są tak naprawdę funkcjami, które wykonywać ma panel administracyjny. W kontekście tego przykładu cel biblioteki administer jest jasny: Twórca bloga ze swojej strony musi jedynie dołączyć gem administer do projektu, zdefiniować modele biznesowe typu Post czy Kategoria, oraz dopisać akcję odpowiedzialną za wyświetlanie artykułów, cała część odpowiedzialna za akcję zarządzania modelami ma być dynamicznie wykonywana przez gem administer. 
+  Blog świetnie nadaje się do testowania biblioteki typu \emph{administer} - wszystkie powyższe funkcje, prócz pierwszej, są tak naprawdę funkcjami, które wykonywać ma panel administracyjny. W kontekście tego przykładu cel biblioteki \emph{administer} jest jasny: Twórca bloga ze swojej strony musi jedynie dołączyć gem \emph{administer} do projektu, zdefiniować modele biznesowe typu Post czy Kategoria, oraz dopisać akcję odpowiedzialną za wyświetlanie artykułów, cała część odpowiedzialna za akcję zarządzania modelami ma być dynamicznie wykonywana przez gem \emph{administer}. 
   
   Ilustracja \ref{blog_view} przedstawia stronę z listą artykułów, jest to widok pochodzący z aplikacji testowej. Ilustracja \ref{administer_edit} przedstawia widok edycji rekordu konkretnego artykułu, funkcja ta implementowana jest przez bibliotekę administer.
   
@@ -94,7 +94,7 @@
     % screen z listą tiketów
     % dokładny opis całego procesu + wycinki kodu źródłowego dla konkretnego tiketa
     
-    Ilustracja \ref{administer_stories}  przedstawia wycinek listy zadań związanych z pracą nad projektem administer a konkretnie są to zadania związane z rozwojem panelu administracyjnego.
+    Ilustracja \ref{administer_stories}  przedstawia wycinek listy zadań związanych z pracą nad projektem \emph{administer} a konkretnie są to zadania związane z rozwojem panelu administracyjnego.
     
     \clearpage
     
@@ -113,16 +113,16 @@
       \item Display validation errors in administer
     \end{itemize}
     
-    Skupmy się na rozwiązaniu pierwszego z nich. W momencie pisania tego rozdziału gem administer potrafi już tworzyć, modyfikować oraz wyświetlać informacje o rekordach modeli biznesowych aplikacji, która z niego korzysta. Jedną z brakujących funkcji jest usuwanie istniejących rekordów. W tym podrozdziale przeanalizujemy krok po kroku cały cykl wdrażania tej nowej funkcji do istniejącego systemu. Przeanalizowanie tego procesu pomoże nam lepiej zrozumieć sposób w jaki rozwijane jest oprogramowanie w zgodzie z zasadami BDD oraz korzyści z tego płynące.
+    Skupmy się na rozwiązaniu pierwszego z nich. W momencie pisania tego rozdziału gem \emph{administer} potrafi już tworzyć, modyfikować oraz wyświetlać informacje o rekordach modeli biznesowych aplikacji, która z niego korzysta. Jedną z brakujących funkcji jest usuwanie istniejących rekordów. W tym podrozdziale przeanalizujemy krok po kroku cały cykl wdrażania tej nowej funkcji do istniejącego systemu. Przeanalizowanie tego procesu pomoże nam lepiej zrozumieć sposób w jaki rozwijane jest oprogramowanie w zgodzie z zasadami BDD oraz korzyści z tego płynące.
     
     \subsubsection{Zrozumienie problemu}
     Pierwszy etap pracy to rozpoznanie, z czym tak właściwie mamy do czynienia. Jeśli problem, który mamy rozwiązać został wcześniej udokumentowany, tak jak miało to miejsce w tym wypadku, należy zacząć od dokładnego zaznajomienia się z jego opisem.
     
-    Ilustracja \ref{administer_story_desc} przedstawia szczegółowy widok naszego zadania prezentowany przez aplikację Pivotal Tracker, która używana jest jako narzędzie wspomagające proces zarządzania projektem administer.
+    Ilustracja \ref{administer_story_desc} przedstawia szczegółowy widok naszego zadania prezentowany przez aplikację Pivotal Tracker, która używana jest jako narzędzie wspomagające proces zarządzania projektem \emph{administer}.
     
     Podgląd ten informuje nas o wielu rzeczach związanych z zadaniem takich jak status ukończenia, estymacja pracochłonności czy informacja o osobach odpowiedzialnych za zadanie. W kontekście naszych rozważań najważniejszą informacją jaką możemy odczytać z niniejszego podglądu jest jednak opis funkcjonalności. 
     
-    Administer rozwijany jest razem z prostą aplikacją testową - systemem blogowym, dlatego wszystkie funkcjonalności opisywane są w kontekście wykorzystania biblioteki przez ten właśnie system. Opis naszego zadania sformułowany jest następująco:
+    \emph{Administer} rozwijany jest razem z prostą aplikacją testową - systemem blogowym, dlatego wszystkie funkcjonalności opisywane są w kontekście wykorzystania biblioteki przez ten właśnie system. Opis naszego zadania sformułowany jest następująco:
     
     \lstinputlisting{examples/code/ch04/01}
     
@@ -150,11 +150,11 @@
         \item[Uruchomienie pełnego zestawu testów] Przed rozpoczęciem pracy należy upewnić się, że wszystkie testy kończą się sukcesem.
       \end{description}
       
-    Kod biblioteki administer przechowywany jest w rozproszonym systemie kontroli wersji GIT, spełnienie pierwszego punktu wymaga więc od programisty jedynie synchronizacji swojego lokalnego repozytorium z najnowszą wersją rozwojowej gałęzi kodu znajdującej się w głównym repozytorium. Szczegóły dotyczące operacji na systemie kontroli wersji wykraczają poza ramy tej pracy i zostaną tutaj pominięte. Przyjmijmy jednak, że synchronizacja została wykonana i mamy u siebie najnowszą wersję kodu biblioteki administer. 
+    Kod biblioteki \emph{administer} przechowywany jest w rozproszonym systemie kontroli wersji GIT, spełnienie pierwszego punktu wymaga więc od programisty jedynie synchronizacji swojego lokalnego repozytorium z najnowszą wersją rozwojowej gałęzi kodu znajdującej się w głównym repozytorium. Szczegóły dotyczące operacji na systemie kontroli wersji wykraczają poza ramy tej pracy i zostaną tutaj pominięte. Przyjmijmy jednak, że synchronizacja została wykonana i mamy u siebie najnowszą wersję kodu biblioteki \emph{administer}. 
     
     Uruchomienie pełnego zestawu testów daje nam pewność, że wersja oprogramowania, na której będziemy pracować spełnia warunki specyfikacji. Nie wolno rozpoczynać pracy jeśli testy z jakiegoś powodu nie przechodzą. W takim wypadku należy najpierw znaleźć przyczynę problemu i zlikwidować go a pracę nad nową funkcjonalnością rozpocząć dopiero kiedy wszystkie testy automatyczne sygnalizują sukces.
     
-    Aby uruchomić pełen zestaw testów biblioteki administer wydajemy z głównego katalogu projektu polecenie:
+    Aby uruchomić pełen zestaw testów biblioteki \emph{administer} wydajemy z głównego katalogu projektu polecenie:
     
     \begin{lstlisting}
       rake
@@ -298,7 +298,7 @@
   
   \lstinputlisting[firstline=4,lastline=4]{examples/code/ch04/08}
   
-  Kod ten składa się z metod implementowanych przez framework Rails oraz metod specyficznych dla samego projektu administer. W wyniku jego działania wygenerowany zostanie przycisk o etykiecie \verb+Delete+ powiązany z metodą \verb+destroy+ kontrolera, który odpowiedzialny jest za zarządzanie rekordami modeli biznesowych przez bibliotekę administer. W kontekście naszych rozważań na temat testowo zorientowanych metod rozwoju oprogramowania istotne jest, że modyfikacja ta zaspokaja wymaganie kroku scenariusza, nad którym aktualnie pracujemy. Uruchommy ponownie zestaw testów, aby przekonać się, że mimo iż przycisk \verb+Delete+ w tej chwili istnieje, to jednak ciągle są problemy z tym samym krokiem, informacja o niepowodzeniu jest jednak inna niż poprzednio:
+  Kod ten składa się z metod implementowanych przez framework Rails oraz metod specyficznych dla samego projektu \emph{administer}. W wyniku jego działania wygenerowany zostanie przycisk o etykiecie \verb+Delete+ powiązany z metodą \verb+destroy+ kontrolera, który odpowiedzialny jest za zarządzanie rekordami modeli biznesowych przez bibliotekę \emph{administer}. W kontekście naszych rozważań na temat testowo zorientowanych metod rozwoju oprogramowania istotne jest, że modyfikacja ta zaspokaja wymaganie kroku scenariusza, nad którym aktualnie pracujemy. Uruchommy ponownie zestaw testów, aby przekonać się, że mimo iż przycisk \verb+Delete+ w tej chwili istnieje, to jednak ciągle są problemy z tym samym krokiem, informacja o niepowodzeniu jest jednak inna niż poprzednio:
   
   \begin{lstlisting}
   And I press "Delete"  # features/step_definitions/web_steps.rb:27
@@ -312,7 +312,7 @@
   
   Wyświetlamy przycisk \verb+Delete+ oraz jest on prawidłowo skojarzony z akcją \verb+destroy+ kontrolera \verb+Administer::EntitiesController+. Problem w tym, że akcja \verb+destroy+ nie została jeszcze zaimplementowana co skutkuje błędem - próbą uruchomienia nieistniejącej akcji w momencie kiedy użytkownik (W tym wypadku symulowany przez bibliotekę Capybara) klika w przycisk.
   
-  Przejdźmy więc do wyżej wymienionego kontrolera \verb+EntitiesController+. Jego głównym zadaniem jest obsługa żądań związanych z modelami biznesowymi istniejącymi w aplikacji, która korzysta z biblioteki administer do zadań tych zaliczają się m.in dodawanie, modyfikowanie i usuwanie rekordów tych modeli. Pełen kod kontrolera wygląda w tym momencie następująco:
+  Przejdźmy więc do wyżej wymienionego kontrolera \verb+EntitiesController+. Jego głównym zadaniem jest obsługa żądań związanych z modelami biznesowymi istniejącymi w aplikacji, która korzysta z biblioteki \emph{administer} do zadań tych zaliczają się m.in dodawanie, modyfikowanie i usuwanie rekordów tych modeli. Pełen kod kontrolera wygląda w tym momencie następująco:
   
   \lstinputlisting[language=ruby]{examples/code/ch04/09}
   
@@ -355,7 +355,7 @@
  	
  	\lstinputlisting[language=ruby]{examples/code/ch04/12}
  	
- 	Upewniliśmy się, że informacja o błędzie została ustawiona w kontrolerze. To jednak nie wszystko, musimy sprawdzić, czy jest ona wyświetlona w odpowiednim widoku. Administer wyświetla informacje o błędach w głównym widoku zdefiniowanym w pliku:
+ 	Upewniliśmy się, że informacja o błędzie została ustawiona w kontrolerze. To jednak nie wszystko, musimy sprawdzić, czy jest ona wyświetlona w odpowiednim widoku. \emph{Administer} wyświetla informacje o błędach w głównym widoku zdefiniowanym w pliku:
  	
  	\begin{lstlisting}
  	app/views/layouts/administer.html.haml
