@@ -16,7 +16,7 @@
         \item Próba wprowadzenia nowej pozycji przez nieautoryzowanego użytkownika
       \end{itemize}
       
-      Narzędzia BDD pozwalają na bardzo dużą swobodę jeśli chodzi o język definiowania scenariuszy, przykładowy plik definiujący powyższą funkcjonalność wraz ze scenariuszem 'Wprowadzenie nowej nie poprawnej pozycji' mógłby wyglądać tak:
+      Narzędzia BDD pozwalają na bardzo dużą swobodę jeśli chodzi o język definiowania scenariuszy, przykładowy plik definiujący powyższą funkcjonalność wraz ze scenariuszem \emph{Wprowadzenie nowej nie poprawnej pozycji} mógłby wyglądać tak:
       
 \lstinputlisting{examples/code/ch03/01}
 
@@ -27,21 +27,21 @@
     \subsection{BDD jako narzędzie testowania}
       Prawdziwą mocą bibliotek wspierających Behavior Driven Development jest to, że traktują one specyfikacje dostarczoną w postaci scenariuszy jako zestaw testów. Dołączając więc scenariusze do naszego zestawu testów automatycznych mamy pewność, że oprogramowanie zachowuje się zgodnie z opisanymi w nich założeniami. W tym podrozdziale chciałbym opisać w jaki sposób, z technicznego punktu widzenia przebiega proces translacji specyfikacji (będącej plikiem tekstowym składającym się z pojedynczych scenariuszy) na zestaw automatycznych testów.
       \subsubsection[Definicje kroków na przykładzie biblioteki Cucumber]{Definicje kroków na przykładzie biblioteki Cucumber\footnote{\url{http://cukes.info/}\nocite{cucumber}}}
-        Aby skutecznie uruchomić scenariusze w formie testów należy skonstruować plik tekstowy je zawierający w zgodzie z pewnymi zasadami. Przykładowy plik definiujący funkcjonalność 'Zarządzanie rachunkiem zysków i strat' rządzi się pewnymi prawami:
+        Aby skutecznie uruchomić scenariusze w formie testów należy skonstruować plik tekstowy je zawierający w zgodzie z pewnymi zasadami. Przykładowy plik definiujący funkcjonalność \emph{Zarządzanie rachunkiem zysków i strat} rządzi się pewnymi prawami:
         
         \begin{itemize}
-          \item Nazwa opisywanej funkcjonalności zdefiniowana jest po słowie kluczowym 'Funkcjonalność:'
-          \item Pojedyncze scenariusze definiowane są po słowie kluczowym 'Scenariusz:'. Należą do ostatnio zdefiniowanej funkcjonalności.
+          \item Nazwa opisywanej funkcjonalności zdefiniowana jest po słowie kluczowym \emph{Funkcjonalność:}
+          \item Pojedyncze scenariusze definiowane są po słowie kluczowym \emph{Scenariusz:}. Należą do ostatnio zdefiniowanej funkcjonalności.
           \item Każda kolejna linia nie będąca definicją nowego scenariusza lub funkcjonalności traktowana jest jako pojedynczy krok ostatnio zdefiniowanego scenariusza.
         \end{itemize}
         
       Sercem biblioteki Cucumber są definicje kroków, które pozwalają powiązać każdy z nich z konkretną akcją. Definicja kroku składa się z wzorca językowego kroku oraz kodu który ma zostać wykonany jeśli wzorzec pasuje do aktualnie przetwarzanego kroku.
       
-      Wzorzec językowy najczęściej przybiera postać wyrażenia regularnego. Cucumber przetwarzając nowy krok iteruje po wzorcach, które zostały zdefiniowane i wykonuje kod powiązany z pierwszym, do którego pasuje nazwa kroku (dlatego ważne jest definiowanie wzorców tak, aby były unikalne). Przykładowa definicja dla kroku 'Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"' może wyglądać tak:
+      Wzorzec językowy najczęściej przybiera postać wyrażenia regularnego. Cucumber przetwarzając nowy krok iteruje po wzorcach, które zostały zdefiniowane i wykonuje kod powiązany z pierwszym, do którego pasuje nazwa kroku (dlatego ważne jest definiowanie wzorców tak, aby były unikalne). Przykładowa definicja dla kroku \emph{Kiedy wybieram z menu głównego pozycję \textquotedblleft Wprowadź nową pozycję\textquotedblright} może wyglądać tak:
       
       \lstinputlisting[language=ruby]{examples/code/ch03/02}
       
-      Kiedy cucumber spróbuje przetworzyć krok 'Kiedy wybieram z menu głównego pozycję "Wprowadź nową pozycję"' dopasuje go do pierwszego odpowiadającego wzorca, który zdefiniowaliśmy oraz uruchomi blok kodu zdefiniowany pomiędzy słowami kluczowymi \verb+do+ oraz \verb+end+. Przekaże do tego bloku również wszelkie zmienne zdefiniowane we wzorcu. Powyższy przykład jest na razie bezużyteczny ponieważ jedyne co znajduje się w bloku kodu to komentarz.
+      Kiedy cucumber spróbuje przetworzyć krok \emph{Kiedy wybieram z menu głównego pozycję \textquotedblleft Wprowadź nową pozycję\textquotedblright} dopasuje go do pierwszego odpowiadającego wzorca, który zdefiniowaliśmy oraz uruchomi blok kodu zdefiniowany pomiędzy słowami kluczowymi \verb+do+ oraz \verb+end+. Przekaże do tego bloku również wszelkie zmienne zdefiniowane we wzorcu. Powyższy przykład jest na razie bezużyteczny ponieważ jedyne co znajduje się w bloku kodu to komentarz.
       
       Krok scenariusza najczęściej definiuje jedną z trzech rzeczy: założenie co do stanu środowiska w jakim uruchomione jest oprogramowanie, konkretną akcję wykonywaną na oprogramowaniu (taką jak np. kliknięcie przycisku) lub rezultat, jakiego się spodziewamy. Cucumber sam w sobie jest narzędziem które dopasowuje krok do odpowiadającej mu definicji, wszelkie interakcje z działającym programem, modyfikowanie środowiska działania czy też testowanie otrzymywanych wyników muszą zostać wykonywane przez zewnętrzne biblioteki, które należy samodzielnie skonfigurować.
       
@@ -54,7 +54,7 @@
         \item Narzędzie Capybara zostało zainstalowane i skonfigurowane
       \end{itemize}
       
-      O bibliotece RSpec pisałem już w poprzednim rozdziale, tutaj użyjemy go w podobnym celu, to jest do testowania wyników działania aplikacji. Biblioteka Capybara służy do symulacji interakcji użytkownika z aplikacją używającą jako interfejsu HTML. Używając powyższych narzędzi mogę opisać pełen zestaw definicji kroków dla scenariusza 'Wprowadzenie nowej nie poprawnej pozycji':
+      O bibliotece RSpec pisałem już w poprzednim rozdziale, tutaj użyjemy go w podobnym celu, to jest do testowania wyników działania aplikacji. Biblioteka Capybara służy do symulacji interakcji użytkownika z aplikacją używającą jako interfejsu HTML. Używając powyższych narzędzi mogę opisać pełen zestaw definicji kroków dla scenariusza \emph{Wprowadzenie nowej nie poprawnej pozycji}:
       
       \lstinputlisting[language=ruby]{examples/code/ch03/03}
       
@@ -129,12 +129,12 @@
 
       Capybara ułatwia integracyjne testowanie aplikacji działających w przeglądarce www symulując akcję jakie wykonywałby żywy użytkownik. Nie jest to narzędzie związane stricte z BDD, jednak świetnie uzupełnia i wspomaga biblioteki takie jak Cucumber czy Steak.
       
-      Chcąc opisać krok po kroku zachowanie aplikacji internetowej, naturalnym jest łączenie akcji, które wykonuje w przeglądarce użytkownik z ich konsekwencjami. Przykładowo w celu zalogowania się należy najpierw wypełnić pole tekstowe 'Login', następnie wpisać hasło do pola 'Hasło' oraz ostatecznie kliknąć przycisk 'Zaloguj'. Capybara pozwala symulować interakcje użytkownika z naszą aplikacją w przeglądarce i wykonywać na niej takie akcje jak kliknięcie w link, wypełnienie pola czy odświeżenie strony.
+      Chcąc opisać krok po kroku zachowanie aplikacji internetowej, naturalnym jest łączenie akcji, które wykonuje w przeglądarce użytkownik z ich konsekwencjami. Przykładowo w celu zalogowania się należy najpierw wypełnić pole tekstowe \emph{Login}, następnie wpisać hasło do pola \emph{Hasło} oraz ostatecznie kliknąć przycisk \emph{Zaloguj}. Capybara pozwala symulować interakcje użytkownika z naszą aplikacją w przeglądarce i wykonywać na niej takie akcje jak kliknięcie w link, wypełnienie pola czy odświeżenie strony.
       Informacją zwrotną, która często służy do określenia efektu naszych działań jest obiekt \verb+page+, który przechowuje ostatnią wyświetloną użytkownikowi stronę. Przykładowo kod:
       
       \lstinputlisting[language=ruby]{examples/code/ch03/05}
       
-      Wypełni wszelkie konieczne do zalogowania się pola, zasymuluje kliknięcie przycisku z etykietą 'Sign in' oraz sprawdzi, czy w wyniku tego, na nowo wyświetlonej stronie znajduje się treść 'Successfuly logged in!'.
+      Wypełni wszelkie konieczne do zalogowania się pola, zasymuluje kliknięcie przycisku z etykietą \emph{Sign in} oraz sprawdzi, czy w wyniku tego, na nowo wyświetlonej stronie znajduje się treść \emph{Successfuly logged in!}.
       
       Instalacja podstawowej biblioteki odbywa się poprzez:
       
