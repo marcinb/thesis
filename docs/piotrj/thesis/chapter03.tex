@@ -248,7 +248,7 @@
       information, the reader can refer to ActiveRecord documentation.
       
     \subsection{ActionPack}
-      \subsection{Introduction}
+      \subsubsection{Introduction}
       As said before, Ruby on Rails is build on the Model-View-Controller pattern. Model part is
       handled by ActiveRecord described in previous chapter. ActionPack takes care of two remaining
       parts - View and Controller. So, in general ActionPack is divided into two parts:
@@ -310,3 +310,92 @@
       This chapter was just the introduction into ActionPack in order to give an overview of how 
       it works. It does not cover more advanced features as filters in controllers or layouts
       and partials in views.
+      
+  \section{Metaprogramming}
+  Metaprogramming is programming of code that its input and output is other code. It is used to 
+  manipulate the behavior of the program during runtime depending on other parts of the application.
+
+  Thanks to dynamic nature of Ruby it provides comprehensive reflection API. It allows developer
+  to modify classes, list or add methods to classes or even particular objects.
+    
+    \subsection{Metaprogramming in Ruby}
+      The way Ruby language is constructed makes it really easy to apply metaprogramming to. First of   
+      all, it is a dynamic language which means that things like adding new code or extending objects 
+      can be done during run time. It is kind of a direct result of the fact that
+      Ruby is an interpreted language. Anyway, this single characteristic makes it very useful in
+      terms of metaprogramming. What is more, as everything in Ruby is an object so are classes 
+      (they are instances of class Class). Therefore, we can act on them as we would do on objects, 
+      what sounds like even bigger improvement on metaprogramming.
+    
+      As said before, developer can define methods during runtime. Moreover, it is possible to reopen 
+      class definitions multiple times and add methods. The following example depicts this
+    
+      \lstinputlisting[language=ruby]{code/chapter03/meta01.rb}
+    
+      The class \texttt{MyClass} is first created, but without any methods. Then the object of this
+      class is created. So far it is pretty standard, but next the user is asked for an input. Then
+      depending on this input the class \texttt{MyClass} is reopened and method \texttt{what?} is
+      defined with implementation depending on user input. Then the method is called on previously
+      created object. After running this program the user would be able to observe that depending
+      on what is his input the appropriate method definition is applied.
+    
+      The example above shows the dynamic nature of Ruby. But this is only the beginning. Thanks
+      to so-called Singleton Classes in Ruby it is possible to define methods on particular objects.
+      So it is possible to rewrite the example in such way:
+    
+      \lstinputlisting[language=ruby]{code/chapter03/meta02.rb}
+    
+      This time \texttt{what?} method has been defined for \texttt{object}. If developer would create
+      another instance of class \texttt{MyClass} it would not have \texttt{what?} method. As soon as
+      method has been defined for particular object the class of this object has been changed to 
+      singleton class - a subclass of \texttt{MyClass} - and it keeps all the methods defined for the 
+      \texttt{object}. If digged deeper into Ruby internals it would be 
+      possible to see that such class has "singleton" flag set to true. This is an indication for Ruby
+      that this class is only a helper class and would not be seen in example in \texttt{object.class}
+      call (this method would still yield \texttt{MyClass}).
+      
+      Those examples show the dynamic nature of Ruby language. In addition to features presented above, 
+      Ruby provides a lot more. For example, it gives the ability of evaluating a string as Ruby code.
+      This functionality is provided by following methods:
+        
+        \begin{itemize}
+          \item{eval}
+          \item{instance\_eval}
+          \item{class\_eval}
+        \end{itemize}
+
+      The difference between those methods is the context the string is going to be evaluated in. 
+      \texttt{Eval} evaluates code in current context (or in the context passed to eval by providing
+      Binding object as second argument), \texttt{instance\_eval} is called on some object and evaluates
+      the code in context of the receiver of the method while \texttt{class\_eval} can be called on a 
+      Class or Module and evaluates the code in context of given Class/Module.
+      
+      Moreover, the developer can find more methods that make the reflection API complete:
+      
+        \begin{itemize}
+          \item{methods}
+          \item{protected\_methods}
+          \item{private\_methods}
+          \item{define\_method}
+          \item{remove\_method}
+          \item{undef\_method}
+        \end{itemize}
+      
+      Names of the methods are self explanatory. The difference between \texttt{remove\_method}  and
+      \texttt{undef\_method} is that \texttt{remove\_method} removes implementation from particular module 
+      but Ruby will still traverse the inheritance tree to find implementations of given method in parent
+      classes. \texttt{Undef\_method},on the other hand, would prevent the module from responding to given
+      method at all.
+      
+    \subsection{Metaprogramming in Rails}
+      
+    
+      
+      
+      
+      
+        
+      
+      
+      
+      
