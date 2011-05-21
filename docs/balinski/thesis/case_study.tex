@@ -317,7 +317,7 @@
  		\end{center}
  	\end{figure}
  	
- 	Teoretycznie moglibyśmy w tym momencie uznać zadanie za zakończone, jednak pisząc metodę \texttt{destroy} wykroczyliśmy nieco poza to, co opisane zostało w scenariuszu, linie 3-5 definiują następujący blok kodu:
+ 	Teoretycznie moglibyśmy w tym momencie uznać zadanie za zakończone, jednak pisząc metodę \texttt{destroy} wykroczyliśmy nieco poza to, co opisane zostało w scenariuszu. Linie 3-5 definiują następujący blok kodu:
  	
  	\lstinputlisting[language=ruby,firstline=3,lastline=5]{examples/code/ch04/10}
  	
@@ -346,4 +346,24 @@
   
   \section{Wnioski}
   
-  W niniejszym
+  W niniejszym rozdziale prześledziliśmy krok po kroku proces tworzenia oprogramowania w zgodzie z zasadami \emph{Behavior Driven Development}. Nadszedł czas aby wyciągnąć wnioski oraz podsumować ten sposób prowadzenia projektów informatycznych.
+  
+  \subsection{Zalety zastosowania testowo zorientowanych metodyk wytwarzania oprogramowania}
+  
+  \subsubsection{Oprogramowanie odporne na błędy}
+    Dobre pokrycie kodu testami zapewnia, że system informatyczny jest dużo bardziej odporny na błędy, szczególnie podczas procesu jego modyfikacji. Jeśli programista przez przypadek zmieni charakter już istniejącej funkcjonalności zostanie o tym natychmiast poinformowany przez jeden lub więcej nieprzechodzących testów. Jest to szczególnie istotne kiedy system jest skomplikowany i zmiana w jednym jego module może spowodować niepożądane zmiany w modułach współzależnych. Nieprzechodzące testy uświadamiają programiście jakie dokładnie części systemu zostały dotknięte wprowadzonymi przez niego zmianami, pomagają mu rozeznać się w sytuacji oraz podjąć decyzję na temat następnych kroków.
+    
+  \subsubsection{Funkcjonalność jest najważniejsza}
+  Zasady \emph{BDD} nakazują, żeby każde nowe zadanie rozpoczynać od napisania odpowiedniego scenariusza użycia. Scenariusz ten od tej chwili staje się częścią specyfikacji systemu. Odpowiedzialnością programisty jest doprowadzić system do stanu, który spełnia specyfikację, a więc do momentu kiedy wszystkie testy i scenariusze przechodzą. Można powiedzieć, że w testowo zorientowanych metodykach testy automatyczne wyznaczają rytm i kierunek działań programistów. 
+    
+  W poprzednich podrozdziałach pokazałem, w jaki sposób scenariusz zdefiniowany dla danej funkcji determinował kolejne kroki, jakie musiał podjąć programista, zawsze skupiając się na pierwszym nieprzechodzącym kroku i robiąc tylko tyle, ile trzeba, aby spełnić jego wymagania. Taki rytm pracy ma dwie ważne zalety: po pierwsze wymaga przemyślenia przyszłych zadań już na etapie pisania testów, po drugie bardzo ułatwia skupienie się tylko na tym co ważne, a więc jedynie na kolejnej czynności, która przybliży nas do celu.
+    
+  \subsubsection{Oszczędność czasu i pieniędzy}
+  Co prawda na samym początku życia projektu pisanie zestawu testów do każdej nowej funkcjonalności może w istocie wydłużać czas pracy, jednak zmienia się to wraz z dojrzewaniem systemu. Przy dobrym pokryciu kodu testami większość usterek wynikających z modyfikacji zostanie wykryta i naprawiona od razu. Procent ukrytych usterek w przypadku oprogramowania dobrze pokrytego testami również jest znikomy, tak samo jest w przypadku nowych funkcjonalności - jeśli są dostarczane z odpowiednim zestawem testów, oraz nie psują już istniejących. Wszystko to sprawia, że z czasem oszczędność w porównaniu z systemami nie pokrytymi testami zaczyna być widoczna.
+  
+  \subsubsection{Pewność, że system zawsze działa według specyfikacji}
+  Wynika to z tego, że testy pełnią jednocześnie rolę specyfikacji i testów automatycznych. Każda istotna zmiana w systemie musi zostać opisana testem, oraz żadna modyfikacja nie zostanie przyjęta, jeśli nie jest dostarczona z pełnym zestawem przechodzących testów. W praktyce oznacza to, że jeśli mamy dobry zestaw testów, możemy być spokojni, że nasza aplikacja działa prawidłowo.
+  
+  \subsubsection{Eliminacja czynnika ludzkiego z procesu testowania}
+  Testy automatycznie mogą sprawdzać zarówno szczegóły implementacji, interfejs użytkownika jak i integrację poszczególnych modułów systemu. Czynnik ludzki jest zbędny w procesie testowania - wystarczą istniejące testy automatyczne. Oszczędza to czas, pieniądze oraz redukuje ilość niedopatrzeń i błędów jakie mógłby popełnić człowiek.
+    
