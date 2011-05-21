@@ -11,30 +11,30 @@
   Na pierwszy rzut oka może wydawać się, że ten wstęp niewiele ma wspólnego z tematem pracy. Należy jednak uświadomić sobie, że to właśnie opisane powyżej zmiany w sposobie myślenia o metodach prowadzenia projektów IT stoją u podstaw rozwoju nowoczesnych narzędzi takich jak wymienione wcześniej dynamiczne języki, wysokopoziomowe frameworki programistyczne na nich oparte czy metodologie pokroju Behaviour Driven Development. Środki, które służą osiągnięciu założonego celu są jedną z najważniejszych zmiennych od których zależy sukces projektu, w przeszłości istniało wiele barier ograniczających ich wybór, dziś większość z nich została usunięta.
   
   \section{Założenia projektu}
-  Celem niniejszego rozdziału jest pokazanie czytelnikowi w jaki sposób rozwija się konkretny projekt prowadzony w zgodzie z metodologią BDD oraz jakie płyną z tego korzyści. Wybrany temat projektu to dynamiczny panel administracyjny dla aplikacji internetowych opartych na bibliotece Ruby on Rails, jego główne założenia to:
+  Celem niniejszego rozdziału jest pokazanie czytelnikowi w jaki sposób rozwija się konkretny projekt prowadzony w zgodzie z metodologią BDD oraz jakie płyną z tego korzyści. Wybrany temat projektu to dynamiczny panel administracyjny dla aplikacji internetowych opartych na bibliotece \emph{Ruby on Rails\footnote{\url{http://rubyonrails.org/}}}, jego główne założenia to:
   
   \begin{description}
-    \item[Uniwersalność] Panel powinien współpracować z większością aplikacji napisanych w Ruby on Rails. W praktyce oznacza to, że jeśli modele biznesowe powinny być klasami pochodnymi klasy \verb+ActiveRecord+ a sposób budowy aplikacji jest zgodny z konwencjami przyjętymi dla aplikacji Ruby on Rails.
+    \item[Uniwersalność] Panel powinien współpracować z większością aplikacji napisanych w Ruby on Rails. W praktyce oznacza to, że modele biznesowe powinny być klasami pochodnymi klasy \texttt{ActiveRecord} a sposób budowy aplikacji jest zgodny z konwencjami przyjętymi dla aplikacji Ruby on Rails.
     \item[CRUD] W teorii baz danych istnieją cztery podstawowe operacje jakie możemy wykonać na zasobie: Tworzenie, odczytanie, aktualizacja, usunięcie (ang. Create, read, update and delete). Biblioteka ma pozwalać na zarządzanie modelami biznesowymi aplikacji przy użyciu jedynie tych czterech standardowych metod.
     \item[Dynamiczność] Po instalacji panel powinien sam wykryć rodzaje zasobów na jakich operuje aplikacja oraz wygenerować odpowiednie widoki i formularze do zarządzania nimi. Zmiany w budowie modeli biznesowych, które wymuszają konieczność zmian w zarządzaniu nimi, jak również pojawienie się nowych modeli również powinno być odzwierciedlone w zachowaniu panelu automatycznie, bez konieczności jakiejkolwiek ingerencji.
-    \item[Proste wdrożenie] Podstawowe wdrożenie rozwiązania wymaga jedynie aby aplikacja kliencka korzystała z biblioteki Ruby on Rails w wersji co najmniej 3.0.3. Po dodaniu biblioteki panelu do listy gemów wykorzystywanych przez aplikację możliwe jest natychmiastowe korzystanie.
+    \item[Proste wdrożenie] Podstawowe wdrożenie rozwiązania wymaga jedynie aby aplikacja kliencka korzystała z biblioteki Ruby on Rails w wersji co najmniej 3.0.3. Po dodaniu biblioteki panelu do listy \emph{gemów\footnote{\url{http://docs.rubygems.org/}}} wykorzystywanych przez aplikację możliwe jest natychmiastowe korzystanie.
     \item[Wygoda użytkowania] Proces zarządzania aplikacją powinien być jak najwygodniejszy. Oznacza to między innymi, że pola formularzy służących do tworzenia lub edycji rekordów powinny być dostosowane do rodzaju danych jakie przechowują a próby wprowadzenia nieprawidłowych wartości powinny być sygnalizowane czytelną informacją o błędzie. Jeśli istnieją powiązania pomiędzy kilkoma modelami biznesowymi, to powinna istnieć bardzo szybka możliwość zarządzania każdym z powiązanych rekordów.
   \end{description}
   
   \subsection{Open Source}
-    Biblioteka jest dostępna za darmo na zasadach licencji MIT.\footnote{http://en.wikipedia.org/wiki/MIT\_License} Filozofia rozwoju oprogramowania na zasadach open source jest bardzo bliska środowisku programistów Ruby. Sam język udostępniony jest na licencji GPL, biblioteka Ruby on Rails korzysta z licencji MIT. Użycie licencji MIT oznacza, że każdy otrzymuje prawo do nielimitowanego wykorzystania kopii oprogramowania w dowolny sposób, sprawia to, że jest to najchętniej wykorzystywana przez programistów Ruby licencja.
+    Biblioteka jest dostępna za darmo na zasadach licencji MIT.\footnote{\url{http://en.wikipedia.org/wiki/MIT_License}} Filozofia rozwoju oprogramowania na zasadach open source jest bardzo bliska środowisku programistów Ruby. Sam język udostępniony jest na licencji GPL, biblioteka Ruby on Rails korzysta z licencji MIT. Użycie licencji MIT oznacza, że każdy otrzymuje prawo do nielimitowanego wykorzystania kopii oprogramowania w dowolny sposób, sprawia to, że jest to najchętniej wykorzystywana przez programistów Ruby licencja.
     
   \subsection{Sposób prowadzenia projektu}
-  Projekt prowadzony jest według bardzo uproszczonych zasad metodologii SCRUM.\footnote{http://en.wikipedia.org/wiki/Scrum\_(development)} \nocite{wiki_scrum} Rozwój projektu podzielony jest na tygodniowe sprinty, przed każdym z nich następuje spotkanie zespołu, podczas którego wybierane i przydzielane są konkretne zadania do wykonania w następnej iteracji. Spotkania te służą również omówieniu bieżących spraw związanych z projektem.
+  Projekt prowadzony jest według bardzo uproszczonych zasad metodologii SCRUM.\footnote{\url{http://en.wikipedia.org/wiki/Scrum_(development)}} \nocite{wiki_scrum} Rozwój projektu podzielony jest na tygodniowe sprinty, przed każdym z nich następuje spotkanie zespołu, podczas którego wybierane i przydzielane są konkretne zadania do wykonania w następnej iteracji. Spotkania te służą również omówieniu bieżących spraw związanych z projektem.
   
   Zespół zaangażowany w projekt składa się z trzech osób: dwóch programistów, oraz osoby dzielącej rolę Scrum Mastera, który odpowiedzialny jest za przygotowanie i prowadzenie spotkań oraz Product Ownera, który reprezentuje oczekiwania końcowego użytkownika dotyczące kwestii funkcjonalności oraz ekonomicznych kwestii związanych z rozwojem projektu.
   
   Duży nacisk kładziony jest na testowanie oprogramowania, testy akceptacyjne istnieją w formie zautomatyzowanych scenariuszy BDD. Każda funkcjonalność lub modyfikacja oprogramowania akceptowana jest jedynie jeśli dostarczona jest wraz z pełnym zestawem testów ją dokumentujących.
   
   \subsection{Dodatkowe narzędzia}
-  Repozytorium projektu zarządzane jest przez system kontroli wersji GIT\footnote{http://git\-scm.com} a hostowane jest przez serwis GitHub.\footnote{http://github.com} Źródła projektu dostępne są publicznie pod adresem https://github.com/piotrj/administer.
+  Repozytorium projektu zarządzane jest przez system kontroli wersji GIT\footnote{\url{http://git-scm.com}} a hostowane jest przez serwis GitHub.\footnote{\url{http://github.com}} Źródła projektu dostępne są publicznie pod adresem https://github.com/piotrj/administer.
   
-  Jako narzędzie wspomagające proces zarządzania projektem użyta została darmowa wersja Pivotal Tracker\footnote{http://www.pivotaltracker.com}, który został zaprojektowany aby wspomagać zarządzanie projektem prowadzonym według zasad SCRUM.
+  Jako narzędzie wspomagające proces zarządzania projektem użyta została darmowa wersja Pivotal Tracker\footnote{\url{http://www.pivotaltracker.com}}, który został zaprojektowany aby wspomagać zarządzanie projektem prowadzonym według zasad SCRUM.
   
   % może inna nazwa?
   \section{Proces implementacji}
@@ -62,7 +62,7 @@
   \end{itemize}
   
   % PRZEREDAGOWAĆ
-  Blog świetnie nadaje się do testowania biblioteki typu \emph{administer} - wszystkie powyższe funkcje, prócz pierwszej, są tak naprawdę funkcjami, które wykonywać ma panel administracyjny. W kontekście tego przykładu cel biblioteki \emph{administer} jest jasny: Twórca bloga ze swojej strony musi jedynie dołączyć gem \emph{administer} do projektu, zdefiniować modele biznesowe typu Post czy Kategoria, oraz dopisać akcję odpowiedzialną za wyświetlanie artykułów, cała część odpowiedzialna za akcję zarządzania modelami ma być dynamicznie wykonywana przez gem \emph{administer}. 
+  Blog świetnie nadaje się do testowania biblioteki typu \emph{administer} - wszystkie powyższe funkcje, prócz pierwszej, są tak naprawdę funkcjami, które wykonywać ma panel administracyjny. W kontekście tego przykładu cel biblioteki \emph{administer} jest jasny: Twórca bloga ze swojej strony musi jedynie dołączyć gem \emph{administer} do projektu, zdefiniować modele biznesowe typu \texttt{Post} czy \texttt{Category}, oraz dopisać akcję odpowiedzialną za wyświetlanie artykułów, cała część odpowiedzialna za akcję zarządzania modelami ma być dynamicznie wykonywana przez gem \emph{administer}. 
   
   Ilustracja \ref{blog_view} przedstawia stronę z listą artykułów, jest to widok pochodzący z aplikacji testowej. Ilustracja \ref{administer_edit} przedstawia widok edycji rekordu konkretnego artykułu, funkcja ta implementowana jest przez bibliotekę administer.
   
@@ -113,7 +113,7 @@
       \item Display validation errors in administer
     \end{itemize}
     
-    Skupmy się na rozwiązaniu pierwszego z nich. W momencie pisania tego rozdziału gem \emph{administer} potrafi już tworzyć, modyfikować oraz wyświetlać informacje o rekordach modeli biznesowych aplikacji, która z niego korzysta. Jedną z brakujących funkcji jest usuwanie istniejących rekordów. W tym podrozdziale przeanalizujemy krok po kroku cały cykl wdrażania tej nowej funkcji do istniejącego systemu. Przeanalizowanie tego procesu pomoże nam lepiej zrozumieć sposób w jaki rozwijane jest oprogramowanie w zgodzie z zasadami BDD oraz korzyści z tego płynące.
+    Skupmy się na rozwiązaniu pierwszego z nich. W momencie pisania tego rozdziału gem \emph{administer} potrafi już tworzyć, modyfikować oraz wyświetlać informacje o rekordach modeli biznesowych aplikacji, która z niego korzysta. Jedną z brakujących funkcji jest usuwanie istniejących rekordów. W tym podrozdziale przeanalizujemy krok po kroku cały cykl wdrażania tej nowej funkcji do istniejącego systemu. Przeanalizowanie tego procesu pomoże nam lepiej zrozumieć sposób w jaki rozwijane jest oprogramowanie w zgodzie z zasadami BDD oraz jakie są korzyści z tego płynące.
     
     \subsubsection{Zrozumienie problemu}
     Pierwszy etap pracy to rozpoznanie, z czym tak właściwie mamy do czynienia. Jeśli problem, który mamy rozwiązać został wcześniej udokumentowany, tak jak miało to miejsce w tym wypadku, należy zacząć od dokładnego zaznajomienia się z jego opisem.
@@ -130,7 +130,7 @@
     
     \begin{description}
       \item[Niepodzielność] Dostarczone kroki stanowią minimum, jakie trzeba zaimplementować aby funkcjonalność usuwania rekordów była kompletna.
-      \item[Osadzenie w kontekście] Zachowanie zostało opisane w konkretnych warunkach. Mamy informację o stanie początkowym w jakim funkcjonalność powinna działać (Istnieje rekord należący do modelu Post), miejscu oraz zachowaniu które wywoła usunięcie rekordu (Kliknięcie przycisku \verb+Delete+ na stronie z postami) oraz o warunkach końcowych, jakie muszą zostać spełnione w wyniku działania naszej nowej funkcji (Post powinien zniknąć z listy).
+      \item[Osadzenie w kontekście] Zachowanie zostało opisane w konkretnych warunkach. Mamy informację o stanie początkowym w jakim funkcjonalność powinna działać (Istnieje rekord należący do modelu \texttt{Post}), miejscu oraz zachowaniu które wywoła usunięcie rekordu (Kliknięcie przycisku \texttt{Delete} na stronie z postami) oraz o warunkach końcowych, jakie muszą zostać spełnione w wyniku działania naszej nowej funkcji (Post powinien zniknąć z listy).
     \end{description}
     
     \begin{figure}[h]
@@ -160,7 +160,7 @@
       rake
     \end{lstlisting}
     
-    Projekt został tak skonfigurowany, że komenda \verb+rake+ wywołana bez dodatkowych parametrów uruchamia zestaw scenariuszy Cucumber oraz testów RSpec opisujących zachowanie biblioteki. 
+    Projekt został tak skonfigurowany, że komenda \texttt{rake} wywołana bez dodatkowych parametrów uruchamia zestaw scenariuszy Cucumber oraz testów RSpec opisujących zachowanie biblioteki. 
     
     
     
@@ -182,14 +182,14 @@
   		\end{center}
   	\end{figure}
   	
-  	  Raport po pozytywnym przejściu wszystkich testów powinien wyglądać podobnie jak na ilustracji \ref{spec_report} oraz \ref{features_report}. Oznaczenie \verb+pending+ przy jednym z testów RSpec sygnalizuje, że został tymczasowo wyłączony z zestawu testów przez jednego z programistów. Przyczyny wyłączenia testów mogą być różne, ale proceder ten należy stosować w ostateczności i w pełni świadomie, niedopuszczalne jest wyłączanie testu bez wyraźnego powodu a najlepiej jest, żeby takie sytuacje w ogóle się nie zdarzały.
+  	  Raport po pozytywnym przejściu wszystkich testów powinien wyglądać podobnie jak na ilustracji \ref{spec_report} oraz \ref{features_report}. Oznaczenie \texttt{pending} przy jednym z testów RSpec sygnalizuje, że został tymczasowo wyłączony z zestawu testów przez jednego z programistów. Przyczyny wyłączenia testów mogą być różne, ale proceder ten należy stosować w ostateczności i w pełni świadomie, niedopuszczalne jest wyłączanie testu bez wyraźnego powodu a najlepiej jest, żeby takie sytuacje w ogóle się nie zdarzały.
   	  
   	\subsubsection{Więcej testów}
-  	  Proces implementacji zaczyna się od stworzenia scenariusza opisującego nową funkcjonalność. W naszym przypadku scenariusze umieszczone są w podkatalogu \verb+spec/rails_root/features/+. Nas szczególnie interesuje plik \verb+spec/rails_root/features/administer/posts.feature+ w którym opisane jest zachowanie wymagane od panelu administrującego blogiem. W momencie pisania tego rozdziału plik \verb+posts.feature+ wygląda następująco:
+  	  Proces implementacji zaczyna się od stworzenia scenariusza opisującego nową funkcjonalność. W naszym przypadku scenariusze umieszczone są w podkatalogu \texttt{spec/rails\_root/features/}. Nas szczególnie interesuje plik \texttt{spec/rails\_root/features/administer/posts.feature} w którym opisane jest zachowanie wymagane od panelu administrującego blogiem. W momencie pisania tego rozdziału plik \texttt{posts.feature} wygląda następująco:
   	  
   	\lstinputlisting{examples/code/ch04/02}
   	
-  	Powyższe scenariusze opisują zachowanie biblioteki w tym momencie życia projektu, funkcja usuwania rekordu nie jest jeszcze opisana, nie pozostaje nam nic innego jak dopisać odpowiedni scenariusz:
+  	Powyższe scenariusze opisują zachowanie biblioteki w tym momencie życia projektu. Funkcja usuwania rekordu nie jest jeszcze opisana, nie pozostaje nam nic innego jak dopisać odpowiedni scenariusz:
   	
   	\lstinputlisting{examples/code/ch04/03}
   	
@@ -212,7 +212,7 @@
     features/administer/posts.feature:53:in `Then the post should disappear from posts list'
     \end{lstlisting}
     
-    Z problemem tym można poradzić sobie na dwa sposoby: dodać nową definicję dla kroku \verb+the post should disappear from posts list+ lub zmodyfikować scenariusz tak, aby korzystał z istniejących kroków nie zmieniając jednocześnie jego sensu. Generalnie rzecz biorąc niepotrzebne tworzenie nowych bytów nie jest dobrym pomysłem, należy przyjrzeć się więc czy możliwe jest wykorzystanie już istniejących definicji kroków, żeby opisać interesujące nas zachowanie. Plik
+    Z problemem tym można poradzić sobie na dwa sposoby: dodać nową definicję dla kroku \emph{the post should disappear from posts list} lub zmodyfikować scenariusz tak, aby korzystał z istniejących kroków nie zmieniając jednocześnie jego sensu. Generalnie rzecz biorąc niepotrzebne tworzenie nowych bytów nie jest dobrym pomysłem, należy przyjrzeć się więc czy możliwe jest wykorzystanie już istniejących definicji kroków, żeby opisać interesujące nas zachowanie. Plik
     
     \begin{lstlisting}
     spec/rails_root/features/step_definitions/post_steps.rb
@@ -222,19 +222,7 @@
     
     \lstinputlisting[language=ruby]{examples/code/ch04/05}
     
-    Krok opisujący zniknięcie rekordu z listy można tak naprawdę opisać przy pomocy dwóch innych kroków, po pierwsze po kliknięciu przycisku \verb+Delete+ powinniśmy upewnić się, że nadal jesteśmy na liście Postów, po drugie wiedząc, że istniał tylko jeden post, po wciśnięciu \verb+Delete+ nie powinien istnieć żaden. Wykorzystamy więc dwa już zdefiniowane kroki: 
-    
-    \begin{lstlisting}
-    I should be on administer posts list
-    \end{lstlisting}
-    
-    oraz 
-    
-    \begin{lstlisting}
-    there should be no posts
-    \end{lstlisting}
-    
-    Zmodyfikowany scenariusz wygląda następująco:
+    Krok opisujący zniknięcie rekordu z listy można tak naprawdę opisać przy pomocy dwóch innych kroków, po pierwsze po kliknięciu przycisku \texttt{Delete} powinniśmy upewnić się, że nadal jesteśmy na liście Postów, po drugie wiedząc, że istniał tylko jeden post, po wciśnięciu \texttt{Delete} nie powinien istnieć żaden. Wykorzystamy więc dwa już zdefiniowane kroki: \emph{I should be on administer posts list} oraz \emph{there should be no posts}. Zmodyfikowany scenariusz wygląda następująco:
     
     \lstinputlisting{examples/code/ch04/06}
     
@@ -264,13 +252,7 @@
    features/administer/posts.feature:52:in `And I press "Delete"'
    \end{lstlisting}
    
-   Przycisk \verb+Delete+ nie istnieje, dodajmy go do odpowiedniego widoku. Plik którego szukamy to 
-   
-   \begin{lstlisting}
-   app/views/administer/entities/index.html.haml
-   \end{lstlisting}
-   
-   Definiuje on widok panelu administracyjnego zobrazowany na ilustracji \ref{administer_index}
+   Przycisk \texttt{Delete} nie istnieje, dodajmy go do odpowiedniego widoku. Plik, którego szukamy to \texttt{app/views/administer/entities/index.html.haml} - definiuje on widok panelu administracyjnego zobrazowany na ilustracji \ref{administer_index}
    
    \clearpage
    
@@ -286,7 +268,7 @@
   
   \lstinputlisting[numbers=left]{examples/code/ch04/07}
   
-  Powyższy kod to prosty język szablonów HAML, który jest dynamicznie przetwarzany do postaci HTML zrozumiałej dla przeglądarki. Jeśli zlokalizujemy w nim kod odpowiedzialny za wyświetlenie linka \verb+Edit+ to prawdopodobnie bardzo łatwo będzie nam dodać pod nim przycisk \verb+Delete+. Interesujący nas fragment znajdziemy w 17 linii:
+  Powyższy kod to prosty język szablonów HAML, który jest dynamicznie przetwarzany do postaci HTML zrozumiałej dla przeglądarki. Jeśli zlokalizujemy w nim kod odpowiedzialny za wyświetlenie linka \texttt{Edit} to prawdopodobnie bardzo łatwo będzie nam dodać pod nim przycisk \texttt{Delete}. Interesujący nas fragment znajdziemy w 17 linii:
   
   \lstinputlisting[firstline=17,lastline=17]{examples/code/ch04/07}
   
@@ -298,7 +280,7 @@
   
   \lstinputlisting[firstline=4,lastline=4]{examples/code/ch04/08}
   
-  Kod ten składa się z metod implementowanych przez framework Rails oraz metod specyficznych dla samego projektu \emph{administer}. W wyniku jego działania wygenerowany zostanie przycisk o etykiecie \verb+Delete+ powiązany z metodą \verb+destroy+ kontrolera, który odpowiedzialny jest za zarządzanie rekordami modeli biznesowych przez bibliotekę \emph{administer}. W kontekście naszych rozważań na temat testowo zorientowanych metod rozwoju oprogramowania istotne jest, że modyfikacja ta zaspokaja wymaganie kroku scenariusza, nad którym aktualnie pracujemy. Uruchommy ponownie zestaw testów, aby przekonać się, że mimo iż przycisk \verb+Delete+ w tej chwili istnieje, to jednak ciągle są problemy z tym samym krokiem, informacja o niepowodzeniu jest jednak inna niż poprzednio:
+  Kod ten składa się z metod implementowanych przez framework Rails oraz metod specyficznych dla samego projektu \emph{administer}. W wyniku jego działania wygenerowany zostanie przycisk o etykiecie \texttt{Delete} powiązany z metodą \texttt{destroy} kontrolera, który odpowiedzialny jest za zarządzanie rekordami modeli biznesowych przez bibliotekę \emph{administer}. W kontekście naszych rozważań na temat testowo zorientowanych metod rozwoju oprogramowania istotne jest, że modyfikacja ta zaspokaja wymaganie kroku scenariusza, nad którym aktualnie pracujemy. Uruchommy ponownie zestaw testów, aby przekonać się, że mimo iż przycisk \texttt{Delete} w tej chwili istnieje, to jednak ciągle są problemy z tym samym krokiem, informacja o niepowodzeniu jest jednak inna niż poprzednio:
   
   \begin{lstlisting}
   And I press "Delete"  # features/step_definitions/web_steps.rb:27
@@ -310,20 +292,20 @@
   features/administer/posts.feature:52:in `And I press "Delete"'
   \end{lstlisting}
   
-  Wyświetlamy przycisk \verb+Delete+ oraz jest on prawidłowo skojarzony z akcją \verb+destroy+ kontrolera \verb+Administer::EntitiesController+. Problem w tym, że akcja \verb+destroy+ nie została jeszcze zaimplementowana co skutkuje błędem - próbą uruchomienia nieistniejącej akcji w momencie kiedy użytkownik (W tym wypadku symulowany przez bibliotekę Capybara) klika w przycisk.
+  Wyświetlamy przycisk \texttt{Delete} oraz jest on prawidłowo skojarzony z akcją \texttt{destroy} kontrolera \texttt{Administer::EntitiesController}. Problem w tym, że akcja \texttt{destroy} nie została jeszcze zaimplementowana co skutkuje błędem - próbą uruchomienia nieistniejącej akcji w momencie kiedy użytkownik (W tym wypadku symulowany przez bibliotekę Capybara) klika w przycisk.
   
-  Przejdźmy więc do wyżej wymienionego kontrolera \verb+EntitiesController+. Jego głównym zadaniem jest obsługa żądań związanych z modelami biznesowymi istniejącymi w aplikacji, która korzysta z biblioteki \emph{administer} do zadań tych zaliczają się m.in dodawanie, modyfikowanie i usuwanie rekordów tych modeli. Pełen kod kontrolera wygląda w tym momencie następująco:
+  Przejdźmy więc do wyżej wymienionego kontrolera \texttt{EntitiesController}. Jego głównym zadaniem jest obsługa żądań związanych z modelami biznesowymi istniejącymi w aplikacji, która korzysta z biblioteki \emph{administer} do zadań tych zaliczają się m.in dodawanie, modyfikowanie i usuwanie rekordów tych modeli. Pełen kod kontrolera wygląda w tym momencie następująco:
   
   \lstinputlisting[language=ruby]{examples/code/ch04/09}
   
   Kontroler ten definiuje akcje, które użytkownik może za jego pomocą wykonać, oprócz tego robi kilka innych ciekawych rzeczy. Przede wszystkim ustala informację o rodzaju modelu, na którym ma przeprowadzać operacje. Nazwa modelu jest przekazywana jako jeden z parametrów żądania (\verb+params[:model_name]+) i to na jej podstawie znajdowana jest właściwa klasa reprezentująca ten model, konkretne jego rekordy, lub cała ich kolekcja.
-  W tej chwili istnieją cztery akcje: \verb+new+, \verb+create+, \verb+edit+ oraz \verb+update+ brakuje (o czym zostaliśmy już poinformowani przez nieprzechodzący scenariusz) akcji \verb+destroy+, której implementacją zajmiemy się w tej chwili.
+  W tej chwili istnieją cztery akcje: \texttt{new}, \texttt{create}, \texttt{edit} oraz \texttt{update} brakuje (o czym zostaliśmy już poinformowani przez nieprzechodzący scenariusz) akcji \texttt{destroy}, której implementacją zajmiemy się w tej chwili.
   
-  Z treści naszego scenariusza wynika, że zadaniem akcji \verb+destroy+ jest usunięcie konkretnego rekordu z bazy danych oraz przekierowanie użytkownika z powrotem na listę wszystkich rekordów. Na wejściu akcja musi więc otrzymać dwa parametry: nazwę modelu oraz identyfikator rekordu a na podstawie tych danych wykonać polecenie które usunie rekord należący do tego modelu oraz noszący taki właśnie identyfikator. Kod spełniający taką specyfikacje może wyglądać następująco: 
+  Z treści naszego scenariusza wynika, że zadaniem akcji \texttt{destroy} jest usunięcie konkretnego rekordu z bazy danych oraz przekierowanie użytkownika z powrotem na listę wszystkich rekordów. Na wejściu akcja musi więc otrzymać dwa parametry: nazwę modelu oraz identyfikator rekordu a na podstawie tych danych wykonać polecenie które usunie rekord należący do tego modelu oraz noszący taki właśnie identyfikator. Kod spełniający taką specyfikacje może wyglądać następująco: 
   
   \lstinputlisting[language=ruby,numbers=left]{examples/code/ch04/10}
   
-  Po dodaniu metody \verb+destroy+ do kontrolera uruchamiamy testy raz jeszcze przy pomocy polecenia \verb+rake+. Tym razem wszystkie scenariusze przechodzą.
+  Po dodaniu metody \texttt{destroy} do kontrolera uruchamiamy testy raz jeszcze przy pomocy polecenia \texttt{rake}. Tym razem wszystkie scenariusze przechodzą.
   
   \clearpage
   
@@ -335,17 +317,14 @@
  		\end{center}
  	\end{figure}
  	
- 	Teoretycznie moglibyśmy w tym momencie uznać zadanie za zakończone, jednak pisząc metodę \verb+destroy+ wykroczyliśmy nieco poza to, co opisane zostało w scenariuszu, linie 3-5 definiują następujący blok kodu:
+ 	Teoretycznie moglibyśmy w tym momencie uznać zadanie za zakończone, jednak pisząc metodę \texttt{destroy} wykroczyliśmy nieco poza to, co opisane zostało w scenariuszu, linie 3-5 definiują następujący blok kodu:
  	
  	\lstinputlisting[language=ruby,firstline=3,lastline=5]{examples/code/ch04/10}
  	
- 	Jeśli usunięcie rekordu z jakiejś przyczyny nie zakończy się powodzeniem wyświetlony zostanie komunikat o treści:
+ 	Jeśli usunięcie rekordu z jakiejś przyczyny nie zakończy się powodzeniem wyświetlony zostanie komunikat o treści \emph{Could not destroy object}.
+ 	Zachowanie to jest jak najbardziej sensowne, zostało ono jednak dodane samowolnie i nie jest nigdzie przetestowane. Jako odpowiedzialni programiści nie powinniśmy dopuścić do takiej sytuacji i dopisać odpowiedni test. 
  	
- 	\begin{lstlisting}
- 	Could not destroy object.
- 	\end{lstlisting}
- 	
- 	Zachowanie to jest jak najbardziej sensowne, zostało ono jednak dodane samowolnie i nie jest nigdzie przetestowane. Jako odpowiedzialni programiści nie powinniśmy dopuścić do takiej sytuacji i dopisać odpowiedni test. Przetestowanie tego zachowania scenariuszem Cucumber jest trudne, trudno bowiem odtworzyć sytuację, w której usunięcie rekordu zakończy się niepowodzeniem - może się tak stać np. kiedy silnik bazy danych w której jest przechowywany nałożył na ten rekord blokadę, która trwa w momencie próby jego usunięcia. W tej sytuacji do testowania wykorzystamy bibliotekę RSpec i jej mechanizm oczekiwań oraz sztucznych obiektów. Odpowiedni zestaw testów zdefiniowany jest w pliku:
+ 	Przetestowanie tego zachowania scenariuszem Cucumber jest trudne, trudno bowiem odtworzyć sytuację, w której usunięcie rekordu zakończy się niepowodzeniem - może się tak stać np. kiedy silnik bazy danych w której jest przechowywany nałożył na ten rekord blokadę, która trwa w momencie próby jego usunięcia. W tej sytuacji do testowania wykorzystamy bibliotekę RSpec i jej mechanizm oczekiwań oraz sztucznych obiektów. Odpowiedni zestaw testów zdefiniowany jest w pliku:
  	
  	\begin{lstlisting}
  	spec/rails_root/spec/controllers/administer/entities_controller_spec.rb
@@ -366,3 +345,5 @@
  	\lstinputlisting[language=ruby]{examples/code/ch04/13}
   
   \section{Wnioski}
+  
+  W niniejszym
