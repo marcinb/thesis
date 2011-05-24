@@ -1,0 +1,8 @@
+$ bundle gem administer
+      create  administer/Gemfile
+      create  administer/Rakefile
+      create  administer/.gitignore
+      create  administer/administer.gemspec
+      create  administer/lib/administer.rb
+      create  administer/lib/administer/version.rb
+Initializating git repo in /Users/piotrj/Projects/testytest/administer
