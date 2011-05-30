@@ -35,4 +35,26 @@
         \item[add\_dependency] Adds other gem as dependency
         \item[add\_development\_dependency] Adds ohter gem as dependency for development
       \end{description}
-    
+      
+    \subsection{Gem building}
+      When the gem's code is ready it is necessary to create a package. It can be achieved by running 
+      
+       \begin{lstlisting}
+          gem build gem_name.gemspec
+        \end{lstlisting}
+        
+      This results in creating \texttt{.gem} package, which is a binary file.
+
+    \subsection{Gem publishing}
+      It is possible to distribute gem by sending the \texttt{.gem} file to other people via email or 
+      putting in on ftp server. But, there is unified way of distributing gems which is 
+      \texttt{rubygems.org} server. 
+      
+      Publishing gem on \texttt{rubygems.org} is as easy as running
+      
+      \begin{lstlisting}
+        gem push name_of_package.gem
+       \end{lstlisting}
+       
+      where \texttt{name\_of\_package.gem} is a file we got after building the gem. In order to be able to
+      push to rubygems developer has to have an account and will be prompted for login credentials.
