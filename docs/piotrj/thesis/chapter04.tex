@@ -3,58 +3,58 @@
 \chapter{Solution development}
   \section{Creating a RubyGem}
     The first step in creating the plugin is setting up the structure of directories and creating necessary
-    files for this plugin to be available for installation. Chapter 3.2 provided basic information about 
+    files for this plugin to be available for installation. Chapter 3.2 provided basic information about
     the RubyGems standard. This chapter will provide some further details on how the structure for particular
     RubyGem has been created.
-    
+
     \subsection{Structure of directories}
-      The essential structure of directories needed in RubyGem standard is a \texttt{gemspec} file in the 
-      root directory of the Gem and the \texttt{lib/} directory containing Ruby file with the name 
+      The essential structure of directories needed in RubyGem standard is a \texttt{gemspec} file in the
+      root directory of the Gem and the \texttt{lib/} directory containing Ruby file with the name
       corresponding to the name of the Gem. So in the case of the Gem described in the application,
-      which would be called Administer, the name of the file would be \texttt{lib/administer.rb}. This 
-      file is automatically loaded when the Gem is added to the program. You could put all the code 
-      in that file, but as the project gets bigger it is common practice to split the code into multiple 
+      which would be called Administer, the name of the file would be \texttt{lib/administer.rb}. This
+      file is automatically loaded when the Gem is added to the program. You could put all the code
+      in that file, but as the project gets bigger it is common practice to split the code into multiple
       files and require those files in the main (\texttt{administer.rb}) file.
-      
+
       Instead of creating the structure manually, there are plenty of options that would help create
       the structure automatically. The one to be considered the best recently is using bundler, which is
       a gem for managing other gems in the application. Bundler among others, provides \texttt{bundle gem}
       command which creates structure needed for the newly created Gem. Moreover, it initializes \texttt{git}
       repository in the Gem directory for Version Control:
-      
+
       \lstinputlisting{code/chapter04/gem01}
-      
+
     \subsection{Gemspec}
       The \texttt{bundle gem} command creates a template for gemspec file:
-      
+
       \lstinputlisting{code/chapter04/gem02}
-      
+
       The gemspec file defines the specification of the gem. In addition to the attributes visible
       above (which are self-explanatory) there are few other that may be pretty important:
-      \begin{description} 
+      \begin{description}
         \item[add\_dependency] Adds other gem as dependency
         \item[add\_development\_dependency] Adds ohter gem as dependency for development
       \end{description}
-      
+
     \subsection{Gem building}
-      When the gem's code is ready it is necessary to create a package. It can be achieved by running 
-      
+      When the gem's code is ready it is necessary to create a package. It can be achieved by running
+
        \begin{lstlisting}
           gem build gem_name.gemspec
         \end{lstlisting}
-        
+
       This results in creating \texttt{.gem} package, which is a binary file.
 
     \subsection{Gem publishing}
-      It is possible to distribute gem by sending the \texttt{.gem} file to other people via email or 
-      putting in on ftp server. But, there is unified way of distributing gems which is 
-      \texttt{rubygems.org} server. 
-      
+      It is possible to distribute gem by sending the \texttt{.gem} file to other people via email or
+      putting in on ftp server. But, there is unified way of distributing gems which is
+      \texttt{rubygems.org} server.
+
       Publishing gem on \texttt{rubygems.org} is as easy as running
-      
+
       \begin{lstlisting}
         gem push name_of_package.gem
        \end{lstlisting}
-       
+
       where \texttt{name\_of\_package.gem} is a file we got after building the gem. In order to be able to
       push to rubygems developer has to have an account and will be prompted for login credentials.
