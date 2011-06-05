@@ -6,7 +6,7 @@
   
   Spadek kosztów mocy obliczeniowej skutecznie rozwiązał problem wyboru technologii realizacji projektu informatycznego: wydajność narzędzi, których użyjemy do realizacji celu stała się w większości przypadków pomijalnym lub przynajmniej drugorzędnym problemem. Dziś najważniejszym kryterium wyboru jest stopień dopasowania możliwości oraz charakterystyki rozważanej technologii do potrzeb zespołu odpowiedzialnego za rozwój projektu. Oczywiście istnieją również skrajne przypadki, w których to oprogramowanie, z różnych przyczyn, musi zostać napisane w konkretnej technologii. Te smutne przypadki stanowią jednak kroplę w morzu wykraczającą daleko poza ramy niniejszej pracy.
   
-  W czasach, kiedy o wiele bardziej opłaca się dokupić nowy serwer niż pokrywać koszty optymalizacji ogromną furorę robi termin \"Przedwczesna optymalizacja\". Te dwa słowa mają dzisiaj znaczenie negatywne, które jest jednak jak najbardziej uzasadnione z ekonomicznego oraz użytkowego punktu widzenia. Dopóki niedostatki w wydajności oprogramowania można skompensować inwestycją w nowe zasoby sprzętowe zespół programistów powinien skupiać wszystkie swoje wysiłki na rozwój funkcjonalności. Optymalizacja kodu następuje dopiero w momencie, kiedy koszty inwestycji w sprzęt przewyższają koszt związane z optymalizacją albo w momencie kiedy oprogramowanie ze względu na swoją nie optymalność przestaje się skalować na nowe zasoby sprzętowe.
+  W czasach, kiedy o wiele bardziej opłaca się dokupić nowy serwer niż pokrywać koszty optymalizacji ogromną furorę robi termin \emph{Przedwczesna optymalizacja}. Te dwa słowa mają dzisiaj znaczenie negatywne, które jest jednak jak najbardziej uzasadnione z ekonomicznego oraz użytkowego punktu widzenia. Dopóki niedostatki w wydajności oprogramowania można skompensować inwestycją w nowe zasoby sprzętowe zespół programistów powinien skupiać wszystkie swoje wysiłki na rozwój funkcjonalności. Optymalizacja kodu następuje dopiero w momencie, kiedy koszty inwestycji w sprzęt przewyższają koszt związane z optymalizacją albo w momencie kiedy oprogramowanie ze względu na swoją nie optymalność przestaje się skalować na nowe zasoby sprzętowe.
   
   Na pierwszy rzut oka może wydawać się, że ten wstęp niewiele ma wspólnego z tematem pracy. Należy jednak uświadomić sobie, że to właśnie opisane powyżej zmiany w sposobie myślenia o metodach prowadzenia projektów IT stoją u podstaw rozwoju nowoczesnych narzędzi takich jak wymienione wcześniej dynamiczne języki, wysokopoziomowe frameworki programistyczne na nich oparte czy metodologie pokroju Behaviour Driven Development. Środki, które służą osiągnięciu założonego celu są jedną z najważniejszych zmiennych od których zależy sukces projektu, w przeszłości istniało wiele barier ograniczających ich wybór, dziś większość z nich została usunięta.
   
@@ -66,6 +66,7 @@
   
   Ilustracja \ref{blog_view} przedstawia stronę z listą artykułów, jest to widok pochodzący z aplikacji testowej. Ilustracja \ref{administer_edit} przedstawia widok edycji rekordu konkretnego artykułu, funkcja ta implementowana jest przez bibliotekę administer.
   
+  \vspace{5 mm}
   \begin{figure}[!h]
 		\begin{center}
 			\includegraphics[width=\linewidth]{images/blog.png}
@@ -100,7 +101,7 @@
     
     \begin{figure}
   		\begin{center}
-  			\includegraphics[width=\linewidth]{images/administer_stories_list.png}
+  			\includegraphics[width=0.8\linewidth]{images/administer_stories_list.png}
   			\caption{Lista zadań do wykonania}
   			\label{administer_stories}
   		\end{center}
@@ -122,6 +123,15 @@
     
     Podgląd ten informuje nas o wielu rzeczach związanych z zadaniem takich jak status ukończenia, estymacja pracochłonności czy informacja o osobach odpowiedzialnych za zadanie. W kontekście naszych rozważań najważniejszą informacją jaką możemy odczytać z niniejszego podglądu jest jednak opis funkcjonalności. 
     
+    \vspace{5 mm}
+    \begin{figure}[h]
+  		\begin{center}
+  			\includegraphics[width=0.8\linewidth]{images/administer_story_desc.png}
+  			\caption{Szczegółowy opis zadania}
+  			\label{administer_story_desc}
+  		\end{center}
+  	\end{figure}
+    
     \emph{Administer} rozwijany jest razem z prostą aplikacją testową - systemem blogowym, dlatego wszystkie funkcjonalności opisywane są w kontekście wykorzystania biblioteki przez ten właśnie system. Opis naszego zadania sformułowany jest następująco:
     
     \lstinputlisting{examples/code/ch04/01}
@@ -132,14 +142,6 @@
       \item[Niepodzielność] Dostarczone kroki stanowią minimum, jakie trzeba zaimplementować aby funkcjonalność usuwania rekordów była kompletna.
       \item[Osadzenie w kontekście] Zachowanie zostało opisane w konkretnych warunkach. Mamy informację o stanie początkowym w jakim funkcjonalność powinna działać (Istnieje rekord należący do modelu \texttt{Post}), miejscu oraz zachowaniu które wywoła usunięcie rekordu (Kliknięcie przycisku \texttt{Delete} na stronie z postami) oraz o warunkach końcowych, jakie muszą zostać spełnione w wyniku działania naszej nowej funkcji (Post powinien zniknąć z listy).
     \end{description}
-    
-    \begin{figure}[h]
-  		\begin{center}
-  			\includegraphics[width=\linewidth]{images/administer_story_desc.png}
-  			\caption{Szczegółowy opis zadania}
-  			\label{administer_story_desc}
-  		\end{center}
-  	\end{figure}
   	
   	\subsubsection{Czynności wstępne}
   	
@@ -163,7 +165,7 @@
     Projekt został tak skonfigurowany, że komenda \texttt{rake} wywołana bez dodatkowych parametrów uruchamia zestaw scenariuszy Cucumber oraz testów RSpec opisujących zachowanie biblioteki. 
     
     
-    
+    \vspace{5 mm}
     \begin{figure}[!h]
   		\begin{center}
   			\includegraphics[width=\linewidth]{images/spec_report.png}
@@ -367,3 +369,36 @@
   \subsubsection{Eliminacja czynnika ludzkiego z procesu testowania}
   Testy automatycznie mogą sprawdzać zarówno szczegóły implementacji, interfejs użytkownika jak i integrację poszczególnych modułów systemu. Czynnik ludzki jest zbędny w procesie testowania - wystarczą istniejące testy automatyczne. Oszczędza to czas, pieniądze oraz redukuje ilość niedopatrzeń i błędów jakie mógłby popełnić człowiek.
     
+  \subsection{Czynniki determinujące skuteczność testowo zorientowanych metodyk rozwoju oprogramowania}
+  Mechaniczne dopisywanie testów do każdej nowej linijki kodu nie ma dużego sensu. Istnieje wiele czynników, na które należy zwrócić uwagę jeśli chcemy rozwijać oprogramowanie w oparciu o testy i czerpać z tego maksymalne korzyści. Część z wymienionych przeze mnie poniżej punktów ma ogromne znaczenie dla prawidłowego wdrożenia metod testowania w ogóle, część z nich wpływa na jakość oprogramowania lub komfort jego rozwoju.
+  
+  \subsubsection{Wybór odpowiednich narzędzi}
+  Sposobów na testowanie kodu jest bardzo wiele. Na upartego działanie metody można przetestować nawet wewnątrz jej ciała, a istnieją również języki oraz techniki programowania, które z definicji sprzężone są z pewnymi mechanizmami testowania - przykładem jest język \emph{Eiffel\footnote{\url{http://en.wikipedia.org/wiki/Eiffel_(programming_language)}}}, który natywnie wspiera ideę \emph{Programowania Kontraktowego\footnote{\url{http://en.wikipedia.org/wiki/Design_by_contract}}}.
+  
+  Z drugiej strony dla każdego znanego języka programowania istnieją wyspecjalizowane biblioteki i narzędzia, z których możemy skorzystać. W przypadku języka \emph{Ruby} wybór narzędzi jest bardzo duży, jak więc wybrać najodpowiedniejsze? Odpowiedź na to pytanie nie jest jednoznaczna, często wynika również z indywidualnych upodobań członków zespołu jednak istnieje kilka wskazówek, które mogą pomóc nam podjąć decyzję.
+  
+  Narzędzia służące do testowania różnią się od siebie stopniem specjalizacji. Przykładowo biblioteka \emph{Test::Unit} dostarczana standardowo wraz z językiem \emph{Ruby} jest narzędziem bardzo ogólnym, które nadaje się do zastosowania w każdego rodzaju projekcie. Z drugiej strony barykady stoi biblioteka \emph{Cucumber}, która podchodzi do tematu testowania w szczególny sposób, który w założeniach wymaga ścisłego dostosowania stylu prowadzenia projektu do zasad \emph{BDD}. Należy dokładnie przeanalizować sytuację w jakiej się znajdujemy, rodzaj oprogramowania, które rozwijamy i skonfrontować tą informację z charakterem dostępnych narzędzi. 
+  
+  Przykładowo jeśli pracujemy nad projektem sklepu internetowego dla klienta, który bardzo chętnie włącza się w proces planowania i świetnie współpracuje z programistami a do jest skłonny wziąć na siebie obowiązek specyfikowania funkcjonalności \emph{Cucumber} będzie idealnym rozwiązaniem. Jeśli pracujemy nad projektem wewnętrznym, lub z ludźmi o dużej świadomości technicznej, a chcemy tworzyć system w zgodzie z zasadami \emph{BDD} lepszym rozwiązaniem okaże się \emph{Steak}, który nie wymaga od nas definiowania wzorców językowych. Nic też nie stoi na przeszkodzie aby pozostać w duchu \emph{Test Driven Development} korzystając z jednej z bibliotek wspierających testowanie jednostkowe jak wspomniany wcześniej \emph{Test::Unit}.
+  
+  \subsubsection{}
+  Przykładem niezbyt dobrego doboru narzędzi do testowania może być również biblioteka \emph{administer}. \emph{Cucumber} został tutaj użyty jako główne narzędzie służące do specyfikowania i testowania funkcjonalności, jednak po pewnym czasie okazało się, że w przypadku biblioteki \emph{administer} korzyści z użycia scenariuszy \emph{Cucumbera} w porównaniu na przykład ze scenariuszami definiowanymi przy pomocy biblioteki \emph{Steak} są żadne. \emph{Administer} rozwijany jest przez profesjonalnych programistów na ich własne potrzeby, nie ma tutaj osoby klienta, który mógłby wyciągnąć korzyści z istnienia scenariuszy pisanych naturalnym językiem. Adresatami biblioteki również są programiści, którzy mogą wdrożyć go do swoich własnych aplikacji. W tym wypadku dużo lepszym rozwiązaniem byłoby sformułowanie testów behawioralnych przy użyciu bardziej ogólnego narzędzia jak \emph{Steak} lub nawet ograniczenie się jedynie do wykorzystania biblioteki \emph{RSpec} - oszczędziłoby to wysiłku niepotrzebnie zmarnowanego na definiowanie oraz utrzymanie kroków i wzorców językowych.
+  
+  \subsubsection{Stopień pokrycia kodu testami}
+  Żadne testy nie będą skuteczne, jeśli stopień pokrycia nimi kodu nie będzie wystarczająco wysoki. Jeśli prowadzimy projekt na zasadach \emph{BDD} to należy pisać scenariusze dla każdej kluczowej funkcjonalności systemu oraz testy jednostkowe dla części systemu, których nie da się w prosty sposób opisać scenariuszami, lub z innych przyczyn użycie testów jednostkowych wydaje się bardziej naturalne. Testy jednostkowe piszemy również zawsze wtedy, kiedy szczegóły implementacji danej części systemu są ważne z punktu widzenia końcowego odbiorcy.
+  
+  W przypadku projektów, które nie są testowane behawioralnie testy jednostkowe powinny jak najdokładniej pokrywać publiczną część implementacji, do testowania całości systemu oraz symulowania różnych scenariuszy użycia powinniśmy również napisać odpowiednie testy integracyjne.
+  
+  Wysoki stopień pokrycia kodu testami daje nam pewność, że wyłapią one więcej usterek, które na pewno będą pojawiać się w procesie implementacji, dlatego też bardzo ważne jest aby \textbf{nigdy nie odkładać pisania testów na później} - zawsze należy dostarczać je wraz z testowanym kodem.
+  
+  \subsubsection{Sposób testowania, albo \emph{Pisanie kodu jest łatwe, pisanie testów jest trudne}}
+  Pisząc test czy scenariusz musimy przede wszystkim wiedzieć co naprawdę chcemy przetestować. Na tym etapie pojawić się może wiele pytań.
+  \begin{itemize}
+    \item Czy szczegóły implementacji są ważne? 
+    \item Czy interesuje nas sam wynik? 
+    \item Czy skorzystamy z testowych danych czy danych rzeczywistych? 
+    \item A może wykorzystamy imitację obiektów?
+  \end{itemize}
+  
+  \subsubsection{Unikaj nadmiarowego testowania}
+  

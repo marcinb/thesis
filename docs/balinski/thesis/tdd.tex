@@ -3,9 +3,17 @@
 \chapter[Test Driven Development]{Test Driven Development}
   \section{Czym jest TDD?}
     Test Driven Development jest praktyką, według założeń której każda modyfikacja systemu poprzedzona jest stworzeniem odpowiedniego testu opisującego tą modyfikację. Programista zaczyna od napisania testu, który z naturalnych przyczyn (testowany kod nie istnieje a tym etapie) daje wynik negatywny. Następnie napisany zostaje właściwy kod, którego zachowanie zgodne jest z testowanym. Kiedy testy przechodzą można wprowadzić ewentualne poprawki.
-    Proces rozwoju oprogramowania w zgodzie z filozofią TDD składa się z wielu takich cyklów, które zobrazować można diagramem:
+    Proces rozwoju oprogramowania w zgodzie z filozofią TDD składa się z wielu takich cyklów, które zobrazować można diagramem \ref{red_green_refactor}
     
-    \includegraphics[width=75mm]{images/tdd_red_green_refactor.png}
+     \begin{figure}[!h]
+   		\begin{center}
+   			\includegraphics[width=0.4\textwidth]{images/tdd_red_green_refactor.png}
+   			\caption{Red -> Green -> Refactor}
+   			\label{red_green_refactor}
+   		\end{center}
+   	\end{figure}
+   	
+   	\clearpage
     
     \begin{description}
       \item[Red] Pierwszy etap cyklu otrzymał swoją nazwę ze względu na to, że w większości środowisk służących do testowania oprogramowania testy, które zakończyły się niepowodzeniem oznaczane są czerwony kolorem. Etap ten polega na napisaniu testu przed rozpoczęciem implementacji właściwej funkcjonalności oraz na uruchomieniu go. Należy upewnić się, że w tym momencie test zakończy się niepowodzeniem - daje to pewność, że faktycznie testujemy nowe zachowanie, którego w tym momencie system jeszcze nie obsługuje a także że ewentualna przypadkowa modyfikacja tego zachowania zawsze zostanie wykryta przez nieprzechodzący test.
@@ -44,17 +52,32 @@
       Chicago Bulls vs. Los Angeles Lakers
     \end{lstlisting}
     
-    Po napisaniu uruchamiamy nasz zestaw testów, co kończy się porażką. Zakładając, że rozpoczęliśmy pracę z istniejącą, pustą definicją klasy \verb+SportsTable+ zdefiniowaną w pliku \verb+sports_table.rb+ wynik powinien wyglądać następująco:
-
-    \includegraphics[width=160mm]{images/example1_failure.png}
+    Po napisaniu uruchamiamy nasz zestaw testów, co kończy się porażką. Zakładając, że rozpoczęliśmy pracę z istniejącą, pustą definicją klasy \verb+SportsTable+ zdefiniowaną w pliku \verb+sports_table.rb+ wynik powinien wyglądać jak na ilustracji \ref{example1_failure}
+    
+    \vspace{5 mm}
+     \begin{figure}[!h]
+   		\begin{center}
+   			\includegraphics[width=\linewidth]{images/example1_failure.png}
+   			\caption{Nowo napisany test nie przechodzi.}
+   			\label{example1_failure}
+   		\end{center}
+   	\end{figure}
     
     Tym samym zakończyliśmy pierwszy etap: opisaliśmy wymagane zachowanie testem oraz upewniliśmy się, że test nie przechodzi. Następnym krokiem jest napisanie pierwszej wersji metody \verb+header+:
     
     \lstinputlisting[language=ruby]{examples/code/ch02/02.rb}
     
-    Ponowne uruchomienie zestawu testów kończy się sukcesem:
+    Ponowne uruchomienie zestawu testów kończy się sukcesem, ilustruje to rysunek \ref{example1_success}
     
-    \includegraphics[width=160mm]{images/example1_success.png}
+     \clearpage
+     
+     \begin{figure}[!h]
+   		\begin{center}
+   			\includegraphics[width=\linewidth]{images/example1_success.png}
+   			\caption{Po dostarczeniu wymaganej funkcjonalności test przechodzi.}
+   			\label{example1_success}
+   		\end{center}
+   	\end{figure}
     
     Nasza metoda spełnia wszystkie założenia opisane przez testy, wciąż jednak jest pole do poprawy jakości kodu. W języku Ruby każda metoda domyślnie zwraca ostatnią zdefiniowaną w swoim ciele wartość, możemy więc zrezygnować ze zbędnego słowa kluczowego \verb+return+. Oprócz tego zmienimy sposób konstrukcji wynikowego łańcucha: zrezygnujemy z operatora \verb+++ na rzecz metody \verb+join+ obiektu klasy \verb+Array+. Po modyfikacji metoda \verb+header+ wygląda następująco:
     
@@ -173,7 +196,7 @@
     
     Zakładamy tutaj, że metoda \verb+run+ obiektu klasy \verb+CoolPartUsingMathsModule+ korzysta z wyniku jaki zwraca metoda \verb+compute+ obiektu typu \verb+MathsModule+. Metoda \verb+mock+ zwraca imitacje obiektu. Klasę obiektu definiujemy jako pierwszy argument, następnie występuje opcjonalna lista komunikatów wraz ze zwracaną wartością, na te komunikaty atrapa będzie odpowiadać.
     
-    Test ten można skonstruować jeszcze lepiej. W aktualnej formie nie stawiamy w nim bowiem żadnych warunków jakie musi spełniać testowana metoda \verb+run+. Zdefiniowaliśmy w prawdzie imitację obiektu matematycznego, która odpowiada na wywołanie metody \verb+compute+ zwracając wartość \verb+1337+, nie sprawdzamy jednak, czy metoda ta kiedykolwiek zostaje wykonana. Chcąc upewnić się, że tak faktycznie jest możemy napisać powyższy test tak:
+    Test ten można skonstruować jeszcze lepiej. W aktualnej formie nie stawiamy w nim bowiem żadnych warunków jakie musi spełniać testowana metoda \verb+run+. Zdefiniowaliśmy wprawdzie imitację obiektu matematycznego, która odpowiada na wywołanie metody \verb+compute+ zwracając wartość \verb+1337+, nie sprawdzamy jednak, czy metoda ta kiedykolwiek zostaje wykonana. Chcąc upewnić się, że tak faktycznie jest możemy napisać powyższy test tak:
     
     \lstinputlisting[language=ruby]{examples/code/ch02/11.rb}
 
