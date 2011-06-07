@@ -400,5 +400,16 @@
     \item A może wykorzystamy imitację obiektów?
   \end{itemize}
   
-  \subsubsection{Unikaj nadmiarowego testowania}
+  Od tego w jaki sposób przetestujemy kod zależy czy nasze testy będą spełniać prawidłowo swoją funkcję jak również czy będą łatwe w utrzymaniu. Temat ten jest bardzo rozległy a pisanie dobrych testów to trudna sztuka, której programista uczy się wraz z doświadczeniem. W niektórych wypadkach wystarczy, że test sprawdza tylko wartość zwracaną przez metodę. Nawet jeśli jest ona dość skomplikowana, jednak szczegóły implementacji nie są istotne, to taki test spełni swoją rolę. 
+  
+  W innym wypadku może okazać się, że nawet najmniejsze szczegóły implementacji są dla nas bardzo ważne i będziemy chcieli je dokładnie przetestować. Takie testy są z reguły trudniejsze w utrzymaniu - będą kończyć się niepowodzeniem nawet po bardzo małych modyfikacjach testowanego kodu sygnalizując jego niezgodność ze specyfikacją.
+  
+  Tego typu decyzję programista podejmuje za każdym razem, kiedy pisze nowy test. Podobnie jest w przypadku pytań o rodzaj danych, jakich użyjemy do testów, wykorzystanie rzeczywistych składników systemu, bądź imitacji obiektów itd. Nie ma tutaj niestety żadnej złotej reguły a każdy przypadek należy rozpatrywać osobno. Sekcja ta ma na celu zwrócenie uwagi na to, że przemyślenie wszystkich tych szczegółów jest niezmiernie ważne, zależy od nich czy test będzie dobry, czy nie.
+  
+  \subsubsection{Testuj usterki}
+  Każda wykryta usterka w oprogramowaniu oznacza, że powinna pojawić się odpowiednia modyfikacja w istniejących testach bądź powinien zostać napisany zupełnie nowy test, który ją udokumentuje. Jeśli mamy usterkę w kodzie, której nie wykryły testy oznacza to, że nie są one kompletne i powinniśmy natychmiast je poprawić w taki sposób żeby nie przechodziły przed usunięciem problemu, a przechodziły po jego likwidacji. Da nam to pewność, że jeśli w przyszłości zdarzy się podobny problem zostanie on natychmiast wykryty.
+  
+  \subsection{Podsumowanie}
+  
+  Testowanie kodu nie jest dziś opcjonalną praktyką, a koniecznością. Automatyzacja testów pozwala znacząco oszczędzić czas oraz zminimalizować margines błędów oraz niedopatrzeń jakie mógłby popełnić człowiek. Metodyki takie jak \emph{TDD} czy \emph{BDD} pozwalają nie tylko pisać dobre testy, narzucają również sposób w jaki zespół myśli o projekcie oraz w jaki sposób go rozwija. Sprawia to, że odpowiednie stosowanie tych technik ma pozytywny wpływ nie tylko na pokrycie kodu testami ale również na wiele innych aspektów, które na pierwszy rzut oka mogą nie mieć z testowaniem nic wspólnego. Każdy programista powinien testować swój kod ponieważ kod nie przetestowany to kod, któremu nie można ufać. Opisane w tej pracy metodyki są tak naprawdę zbiorem zasad, narzędzi i dobrych praktyk, których skuteczność została wielokrotnie potwierdzona. Rozpoczynając nowy projekt należy zadać sobie nie pytanie o to, czy je wdrożyć, a raczej czy stać nas na to, aby tego nie zrobić.
   
