@@ -21,17 +21,19 @@
 	    \item[Stopień skomplikowania systemu]
 	    \item[Stopień integracji systemu] Czy łatwo oddzielić od siebie poszczególne wewnętrzne funkcje systemu? Czy konieczna jest integracja z zewnętrznym oprogramowaniem?
 	    \item[Wielkość zespołu programistów]
-	    \item[Stopień technicznej świadomości ludzi odpowiedzialnych za prowadzenie projektu] Wpływa na jakość komunikacji z programistami.
+	    \item[Stopień technicznej świadomości uczestników projektu] Wpływa na jakość komunikacji z programistami.
 	  \end{description}
 	  
 	  Powyższe czynniki wpływają bezpośrednio na problemy, które pojawiają się podczas implementacji systemu. Rozwojowi oprogramowania najczęściej towarzyszą problemy takie jak:
 	  
-	  \paragraph{Wzrost stopnia skomplikowania bazy kodu}
-	    Kod staje się coraz bardziej skomplikowany i trudniejszy w utrzymaniu, wynika to często z braku ustalonych konwencji, polityki włączania do projektu zewnętrznych rozwiązań lub słabej komunikacji w zespole programistów.
-	  \paragraph{Niepotrzebny wzrost stopnia integracji}
-	    Łamanie zasady modułowego tworzenia oprogramowania, poszczególne części systemu są ze sobą coraz bardziej związane i znacząco na siebie wpływają. Powoduje to sytuację, w której usterka w jednym module powoduję awarię w kilku innych częściach systemu.
-	  \paragraph{Trudność w utrzymaniu systemu zgodnie z dostarczoną specyfikacją}
-	    Wynikająca z niewłaściwej komunikacji lub z wcześniejszych błędów.
+	  \begin{description}
+  	  \item[Wzrost stopnia skomplikowania bazy kodu]
+  	    Kod staje się coraz bardziej skomplikowany i trudniejszy w utrzymaniu, wynika to często z braku ustalonych konwencji, polityki włączania do projektu zewnętrznych rozwiązań lub słabej komunikacji w zespole programistów.
+  	  \item[Niepotrzebny wzrost stopnia integracji]
+  	    Łamanie zasady modułowego tworzenia oprogramowania, poszczególne części systemu są ze sobą coraz bardziej związane i znacząco na siebie wpływają. Powoduje to sytuację, w której usterka w jednym module powoduję awarię w kilku innych częściach systemu.
+  	  \item[Trudność w utrzymaniu systemu zgodnie z dostarczoną specyfikacją]
+  	    Wynikająca z niewłaściwej komunikacji lub z wcześniejszych błędów.
+  	\end{description}
 	
 	\subsubsection{}
 	Dokładniejszą analizę przyczyn i skutków problemów napotykanych podczas procesu rozwoju oprogramowania znaleźć można między innymi w takich pozycjach jak \cite{pragmatic_programmer} oraz \cite{rspec_book}.  W świetle tych informacji logicznym wydaje się wprowadzenie narzędzia kontroli, dzięki któremu można by upewnić się co do jakości dostarczonych rozwiązań a także zminimalizować ryzyko pojawienia się podobnych problemów w przyszłości. Jednym z takich narzędzi są testy oprogramowania.
