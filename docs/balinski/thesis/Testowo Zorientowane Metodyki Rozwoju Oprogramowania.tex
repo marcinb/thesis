@@ -1,0 +1,64 @@
+% Copyright 2011, Marcin Baliński
+
+\documentclass[a4paper,12pt]{report}
+
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage[T1]{fontenc}
+\frenchspacing 
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{listings}
+\lstset{
+  showspaces=false,
+  showstringspaces=false,
+  breaklines=true
+  inputencoding=utf8x,
+  basicstyle= \ttfamily,
+  keywordstyle= \bf\itshape,
+  prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+  literate={ą}{{\k{a}}}1
+             {Ą}{{\k{A}}}1
+             {ę}{{\k{e}}}1
+             {Ę}{{\k{E}}}1
+             {ó}{{\'o}}1
+             {Ó}{{\'O}}1
+             {ś}{{\'s}}1
+             {Ś}{{\'S}}1
+             {ł}{{\l{}}}1
+             {Ł}{{\L{}}}1
+             {ż}{{\.z}}1
+             {Ż}{{\.Z}}1
+             {ź}{{\'z}}1
+             {Ź}{{\'Z}}1
+             {ć}{{\'c}}1
+             {Ć}{{\'C}}1
+             {ń}{{\'n}}1
+             {Ń}{{\'N}}1
+}
+
+\author{Marcin Baliński}
+\title{Testowo Zorientowane Metodyki Rozwoju Oprogramowania}
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black,
+  pdftitle={Testowo Zorientowane Metodyki Rozwoju Oprogramowania},
+  pdfauthor={Marcin Baliński}
+}
+
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\include{wstep}
+	\include{tdd}
+	\include{bdd}
+	\include{case_study}
+	
+	\bibliographystyle{plain}
+	\bibliography{bibliografia}
+\end{document}
