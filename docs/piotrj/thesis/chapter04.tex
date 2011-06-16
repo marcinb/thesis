@@ -1,4 +1,6 @@
 % Copyright 2011, Piotr Jakubowski
+\nocite{rspec}
+\nocite{testing}
 
 \chapter{Solution development}
   \section{Creating a RubyGem}
@@ -113,4 +115,124 @@
       Not surprisingly, such arrangement helped to keep me motivated throughout the entire process and
       helped me avoid stress of deadlines and the feeling of not knowing where to go next.
 
+  \section{Testing}
+    \subsection{Introduction}
+      The community gathered around Ruby language and especially framework Ruby on Rails is strongly
+      focused on creating software using test oriented methodologies. There are two results of such positive peer pressure.
+      First, most of applications and libraries that appear in the Ruby ecosystem come up with set of comprehensive
+      test suite that can instantly confirm correctness of the application. Second, there are a lot of tools
+      that developers can choose from in order to best satisfy their taste and needs.
+    
+    \subsection{Advantages of automatic tests}
+      Software can be tested either manually or automatically. Manual testing seems to be a good
+      choice at first as it seems you can test how the application interacts with real human and 
+      how it reacts to his input. However, after longer consideration, few drawbacks of such method
+      can be pointed out:
+        \begin{itemize}
+          \item If developers are used as testers they waste their time clicking through the application while
+          they could could have been doing productive work on the code.
+          \item If someone else is testing the project he needs firstly to spend a lot of time on 
+          getting to know the project assumptions and aims.
+          \item It is really hard to manually test every possible input and situation for every new feature.
+          \item It does not give possibility of testing the details of implementations.
+          \item Developers cannot get instant feedback
+        \end{itemize}
+      Moreover, those disadvantages rise along with the growth of the project. 
+      
+      That is why more and more projects introduces software that automatically tests the application and
+      that way diminishes the need of manual testing. One of advantages of this is the fact that not only
+      it is possible to test the end-to-end operation of the application but also test the internal implementation
+      by using \texttt{unit tests} for testing individual classes or methods and \texttt{integration tests} which
+      test the integration between components of the application.
+      
+      Automatic testing provides several advantages:
+        \begin{itemize}
+          \item Ability to run the test suite on every build of application
+          \item Instant notice when some part of the application (even remote from developer is currently working on)
+          fails
+          \item Ability to test components of application in isolation
+          \item Possibility of setting up appropriate state of application environment in order to test
+          every possible situation
+        \end{itemize}
+      
+    \subsection{Test Driven Development}
+    Test Driven Development (also abbreviated as TDD) is one of test oriented methodologies of software development. Its philosophy is
+    summarized as \texttt{Red-Green-Refactor-Repeat}, which means:
+      \begin{description}
+        \item[Red] Write a test for new feature that should not pass yet (usually denoted by red color)
+        \item[Green] Write the most simple code that would make the test pass (denoted by green color)
+        \item[Refactor] Rewrite the code so it is well-designed and easy to maintain while still keeping the test passing
+        \item[Repeat] Repeat those steps for next feature
+      \end{description}
+      
+      One of most important rules of TDD is that the test should be written before any code. That way, the developer
+      has to first understand the feature he needs to add and then write the code. Such approach results in higher
+      productivity.
+      
+      Test Driven Development suite usually consists of two types of tests: unit tests and integration tests.
+      
+      \subsubsection{Unit Tests}
+        Unit tests focus on testin one of components of code in isolation. This means that all components
+        that communicate with the component which is a subject of test, would get substituted by pseudo-implementations that give
+        predictable results. So for example for code like this:
 
+          \lstinputlisting[language=ruby]{code/chapter04/testing01.rb}
+
+        If the developer would be testing \texttt{method\_a} from class \texttt{A} we would substitute implementation of 
+        \texttt{method\_b} from class \texttt{B} with implementation that gives a result the developer expects. Such action
+        is called mocking or stubbing. That way, the behavior of \texttt{method\_a} is tested under known circumstances as it is not 
+        important at the moment how \texttt{method\_b}. In one of Ruby testing frameworks RSpec the test for \texttt{method\_a} could
+        look like that:
+      
+          \lstinputlisting[language=ruby]{code/chapter04/testing02.rb}
+      
+        Thanks to such approach if test fails it is instantly clear which part of the system behaves in a wrong way without
+        the need for lengthy debugging.
+      
+      \subsubsection{Integration Tests}
+        The reason of having integration test is to see whether the components in fact cooperate together as supposed.
+        As unit test focus on testing in isolation, some messages that come from other parts of the system may be not
+        taken into account by the developer so it is important to test the whole system to see whether everything is fine.
+        
+    \subsection{Behavior Driven Development}
+      Another test oriented methodology is Behavior Driven Development (abbreviated as BDD). The idea behind this is to 
+      first define the behavior of the application for given feature and then write the code needed for that feature to be working.
+      It sounds a lot like TDD, but the main difference is that the test is written for the interaction with end user - it does not
+      take into account details of implementation, but rather how the application behaves and interacts via user interface. Moreover,
+      those tests are usually written in language which is close to natural. This is caused by the fact, that Behavior Driven
+      Development aims to drag non-technical part of the team into process of testing the application. By defining tests in language
+      that may be understood by anyone we enable managers and product owners to write test cases or reading them in order to 
+      verify that the test case in fact satisfies the business need.
+      
+      Below example of test written for Cucumber (which is one of Ruby's BDD tool) shows how such tests can be written:
+      \lstinputlisting{code/chapter04/testing03.feature}
+      
+    
+    \subsection{Tools available for Ruby on Rails}
+      As said before the test-oriented community produced great amount of libraries, frameworks and tools for testing. The most
+      important ones are:
+        \begin{description}
+          \item[Test::Unit] Default test framework for Ruby 1.8
+          \item[MiniTest] Successor of Test::Unit, default for Ruby 1.9
+          \item[RSpec] Test framework that aims to substitute Test::Unit or MiniTest. It provides more BDD-like syntax
+            and has an incorporated mocking framework.
+          \item[Cucumber] BDD tool that enables developers to specify their features using
+            Gherkin\footnote{https://github.com/cucumber/cucumber/wiki/Gherkin} language.
+          \item[FactoryGirl] Tool that aims to substitute fixtures which are used by default in test frameworks.
+          \item[Capybara, Webrat] Tools for simulating user interaction with application via web browser
+          \item[Steak] Integrates Rspec and Capybara and makes it possible to write end-to-end tests in pure Rspec instead 
+            of Cucumber
+        \end{description}
+      
+    \subsection{Summary}
+      After considering the ideas and tools I have decided to use a mixture of TDD and BDD in order to grow my application.
+      All new features would be first described in terms of BDD in order to understand exactly how the application should
+      act. Then, while writing code unit test would be written in order to understand what is expected from the implementation
+      and in order to make the design modular and testable which leads to code that is easier to read and maintain.
+      
+      The tools that will be used are following: Rspec, Capybara, FactoryGirl and Capybara.
+    
+      
+    
+        
+    
