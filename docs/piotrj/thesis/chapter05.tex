@@ -1,0 +1,54 @@
+% Copyright 2011, Piotr Jakubowski
+
+\chapter{Implementation}
+  The aim of this chapter is to provide description of how the plugin codebase,
+  show how it has been designed and what decisions has been made. In addition it aims to indicate
+  interesting examples of usage of Ruby and Ruby on Rails API.
+  
+  \section{Overview}
+    The plugin has been developed as Rails Engine (details will be covered in next chapter). This
+    means that it is a Rails application that can be embedded into another one. The fact, that 
+    the plugin is a Rails application provides the ability of using whole power of Ruby on Rails.
+    So, it is possible to use the MVC pattern, set up routing for the application and so on.
+    
+    In order to get the plugin running following parts had to be developed:
+    \begin{itemize}
+      \item Setting the application as \texttt{Rails Engine} as said before.
+      \item Handling the \texttt{Models} - finding all models in the application as well as
+        getting the model class from string representation
+      \item Getting the list of \texttt{Fields} in the model along with their type and any
+        necessary attributes that would be necessary for generating the form for given model.
+        This includes not only fields such as text or integer fields, but also handling associations
+        between models which is the most challenging task.
+      \item Elaborate a convenient way of defining \texttt{Configuration} for the plugin that would be both flexible
+        and easy to use at the same time.
+      \item Develop the web part of the plugin - setting up the \texttt{Routing, Controllers and Html Templates} that 
+        would allow users to smoothly use the application.
+    \end{itemize}
+    
+    The plugin has been developed along and tested with a simple application that would act like a simple blogging
+    system. Appropriate features such as particular types of model associations has been added to the test application
+    when needed in order to see whether the plugin handles it in correct way. As test application is not integral 
+    part of the plugin it would not be described in details. In short, the models that would appear in the test application are
+    following:
+      \begin{description}
+        \item[Posts] used as main model to test all associations on. It has standard fields such as string field for title,
+          text field(long string) for body, date field for published at date.
+        \item[Categories] can be attached to Post in association one-to-many. Used to test belongs\_to association in Post.
+        \item[Comments] attached to Post in many-to-one association. Used to test has\_many association.
+        \item[Attachment] attached to Post in one-to-one association. Used to test has\_one association.
+      \end{description}
+      
+    Association testing has been shown from the Post model perspective, but the plugin would handle the associations
+    from both ends as it needs to be universal and be working for every application.
+    
+  \section{Rails Engine}
+    ToDo
+  \section{Models}
+    ToDo
+  \section{Fields}
+    ToDo
+  \section{Configuration}
+    ToDo
+  \section{Routing, Controllers and Html Templates}
+      
