@@ -1,7 +1,6 @@
 % Copyright 2010, Piotr Jakubowski
 
 \chapter{Introduction}
-  \section{Problem Description}
   Along with the huge popularization of the Internet there appeared enormous market for all sorts of web applications. Every month big companies, as well as small startups, try to get as much of this market by bringing in new features and shocking the crowd with innovative functionalities. Surprisingly, the market seems to be far from saturation as brilliant ideas except for fulfilling known demand create new needs as well.
 
   New tools started to emerge in order to meet the needs of Internet population. Dynamic languages started to supersede old and known. Python and Ruby became the new Java and C. The speed of development surpassed the speed of execution as technical limitations and price of servers are not the issue any more. Moreover, web development frameworks made it possible to code the application on the new level of abstraction - we can instantaneously start to implement our business logic, without the need to think about how we should persist our entities into database and how we should handle requests and respond to them. Java developers got Spring and Hibernate, but the noteworthy Ruby on Rails took web development to the whole new level. The threshold of making the ideas happen has been successfully shrunken.
@@ -20,12 +19,12 @@
   
   Thereby, the aim of this thesis is to create and demonstrate the process of creation of plugin that would enable automatic generation of administration part of the application. The plugin would be developed for Ruby on Rails framework mentioned before.
   
-  \section{Existing Solutions}
+\chapter{Market Research}
   Thanks to its rapidly growing popularity, Ruby and Ruby on Rails got very broad community. Not only does it result in a huge number of places you can ask for help, but also in all kind of libraries that would make the life of web developer easier. And as it seems I am not alone stating the issue described above. There are already several implementations attacking the problem of admin interface. Some of them are more successful than others, there are different kinds of approaches and different outcomes. 
   
   In order to see what market has to offer I looked through available solutions and chose 4 most popular ones in order to see what kind of functionalities they provide and what flaws they suffer from. 
   
-    \subsection[Active Scaffold] {Active Scaffold\footnote{http://activescaffold.com/}}
+    \section[Active Scaffold] {Active Scaffold\footnote{http://activescaffold.com/}}
       According to Ruby Toolbox\footnote{http://ruby-toolbox.com/categories/rails\_admin\_interfaces.html} it is the most popular plugin for admin interface generation. Unfortunately, it seems like the days of glory for this gem are long gone. The plugin does not support Rails in version 3, which despite being released very recently already became a standard for new applications. 
       
       Technicalities aside, it seems to be quite functional. The almost out-of-the-box look is presented on figures \ref{activescaffold1} and \ref{activescaffold2}
@@ -64,7 +63,7 @@
     
     It seems like Active Scaffold instead of being "stand-alone" solution for administration is a set of commands, that speeds up set up of administration interface. It gives flexibility, but is not as hassle-free as could be and as developers would like it to be.
     
-    \subsection[Typus] {Typus\footnote{http://core.typuscms.com/}}
+    \section[Typus] {Typus\footnote{http://core.typuscms.com/}}
     Typus is reported to be the second most popular Rails admin interface generator. As opposed to Active Scaffold, its development team is still active. Thanks to that, it has been adapted to Rails 3 already.
     
     Installation and set up is quick and effortless. We just need to install Typus and run one command. That way we get to the /admin path in our application. Its user interface is presented on figures \ref{typus1} and \ref{typus2}.
@@ -89,7 +88,7 @@
     
     But again, similiar as it was in Active Scaffold, Typus does not work entirely "on-the-fly". The generator we have to run in order to set Typus up, except for copying needed HTML, javascript and image files, creates controllers that serve particular Models of our application. As said before, this means that we can get full control on how given controller behaves - we can override Typus implementation with our own - but such approach is not as dynamic in terms of adapting to upcoming resources in the application. Of course, now it is just the sake of running simple command that would take care of everything once we introduce some new Model into application, but surely it is not something we just install and can forget about.
     
-    \subsection{admin\_data}
+    \section{admin\_data}
     Admin\_data is next one on the list. Again, the project seems to be still maintained and has been upgraded to Rails 3 already. Installation is very much alike to the one of Typus. But, after installation we do not need to run any generators or create any kind of files. We instantly get access to /admin\_data path and figure \ref{admindata1} presents what more or less we would see after trying it out.
      
     \begin{figure}[hbt!]
@@ -104,7 +103,7 @@
   
   On the other hand, you can clearly see that admin\_data has been created with programmers in mind. The user interface can be very hard to comprehend for people that do not know what is SQL or do not care how developers organized tables in the database. Therefore, it could be very hard to convince our business people that it is something they can use.
   
-  \subsection{rails\_admin}
+  \section{rails\_admin}
   Although rails\_admin is not present on the ruby-toolbox list it has been very popular lately. It has been developed during Ruby Summer of Code\footnote{http://rubysoc.org/}. It has been developed strictly for Rails 3 so it uses all the best features and the best practices from the newest version of the framework.
   
   Installation is very quick, although we need to go through few steps. Moreover, it depends on devise\footnote{https://github.com/plataformatec/devise} gem, which takes care of users authentication, as rails\_admin's default option is to make people to log in to the administration panel.
