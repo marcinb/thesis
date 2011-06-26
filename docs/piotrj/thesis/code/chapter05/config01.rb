@@ -1,0 +1,1 @@
+Administer::Config.set_display_name(Category, :name)
