@@ -448,7 +448,6 @@
        As said above, the functionality of \texttt{DashboardController} at the moment is just delivering
        the index action which, in fact, does not do anything in particular except for rendering the index
        view.
-      
       \subsubsection{EntitiesController}
         \texttt{EntitiesController} is the heart of administer web application. Its responsibility 
         is to handle managing of models. As seen in routes, it provides following actions:
@@ -474,9 +473,124 @@
         of controller are accessible from view.
 
     \subsection{Views}
-  
+      \subsubsection{Technology}
+        The views have been developed using Haml\footnote{http://haml-lang.com/} templating language. It has been chosen 
+        over standard ERB because of its cleanliness and conciseness. It requires much less code to produce the same output
+        than ERB. For example\footnote{Examples from HAML website} ERBs code:
+        
+        \lstinputlisting{code/chapter05/views01.erb}
+        
+        can be transfered to Haml like this:
+        
+        \lstinputlisting{code/chapter05/views02.haml}
+        
+        Much less code plus it automatically closes html tags, so it prevents the situation that somewhere in the partial
+        a \texttt{div} has not been closed and that affects totally different \texttt{div} somewhere in the layout.
+        Debugging of such errors is very tedious and troublesome.
+        
+      \subsubsection{Structure of views}
+        The most outer part of the webpage is held in the layout file that is loaded for every action in every controller.
+        So the layout consists of all tags that appear on every web page like \texttt{head} section, opening and closing
+        of \texttt{body} tag and so on. The layout has the \texttt{yield} clause. This is the place where templates
+        of particular actions are put in.
+        
+        Every action has its own template named after the name of the action. If some part of the template maybe extracted and used in 
+        few places it is put in partial. Partial are named with underscore at the end (eg. \texttt{\_partial.html.haml}). Then
+        the partial can be included in the template by using \texttt{render "path\_to\_partial"}.
+        
+    \subsubsection{Generating of forms}
+      The most interesting parts of forms is generating of forms for models. As said before, the controller puts 
+      the list of fields for given model in \texttt{@fields} instance variable. The \texttt{edit} and \texttt{new}
+      templates first create a form using \texttt{form\_for} method. It just creates the form tag and passes
+      the reference to form builder to the block. Then the routine for creating a form starts. 
+      
+      The list of fields is iterated and for every field \texttt{render field.partial} method is called. The
+      \texttt{Administer::Fields::Base} class defines the partial method so that it returns the string - a path
+      to the partial. The path is calculated by having the standard path \texttt{administer/fields/} and then
+      adding the name of the current class trasnformed to lowercase with underscores to the end of it.
+      \texttt{HasMany} becomes \texttt{"administer/fields/has\_many"}. Then, partials for all
+      available fields are defined in that path. Every partial defines appropriate html tags
+      for given field.
+      
+    \subsubsection{Styling}
+      The administer plugin does not ship any fancy layout. The markup uses appropriate
+      ids and classes so that it can be easily customized by the end user. This makes it
+      stand out from the collection of available plugins as all of them impose
+      some layout. 
+      
+      Nevertheless, even without setting up any CSS rules the administer plugin looks
+      clean, readable and is fully usable. This is because it uses semantic markup, which means
+      that it does not use arbitrary tags but those that are the most suitable for the part of 
+      the website they describes. Therefore, even if the web browser uses its 
+      default rendering rules, the website would be well arranged.
+      
   \section{Discussion}
-    \subsection{Problems}
-    
+    \subsection{General outcome}
+      \label{ch:implementation:general_outcome}
+      In general, the project has turned out to be a success. The plugin is functional
+      and works as intended. Moreover, the most important aim of making it
+      working out of the box (with the little configuration that has been discussed before)
+      has been met. 
+      
+      After creating a Rails application and having \texttt{administer} in the Gemfile
+      the application gets \texttt{/administer} path and the user is welcomed with screen
+      seen in figure \ref{outcome1}. 
+      
+      \begin{figure}[hbt!]
+    		\begin{center}
+    			\includegraphics[width = 0.8\linewidth]{images/chapter05/outcome1.png}
+    			\caption{Administer Dashboard}
+    			\label{outcome1}
+    		\end{center}
+    	\end{figure}
+      
+      
+      Then while browsing the plugin, the user may browse (fig. \ref{outcome2} p. \pageref{outcome2}) 
+      and manage(fig. \ref{outcome3} p. \pageref{outcome3}) his
+      models. All actions that have been established at the beginning of the project: 
+      browsing, creating, editing and deleting of model records are available and work as intended. 
+      
+      \begin{figure}[hbt!]
+    		\begin{center}
+    			\includegraphics[width = 0.8\linewidth]{images/chapter05/outcome2.png}
+    			\caption{Administer list of records}
+    			\label{outcome2}
+    		\end{center}
+    	\end{figure}
+    	
+    	\begin{figure}[hbt!]
+    		\begin{center}
+    			\includegraphics[width = 0.8\linewidth]{images/chapter05/outcome3.png}
+    			\caption{Administer: editing record}
+    			\label{outcome3}
+    		\end{center}
+    	\end{figure}
+      
+    \subsection{Unsolved problems}
+      \label{ch:implementation:unsolved_problems}
+      There are still some unsolved problems in the application. Fortunately, none of them
+      cause the plugin to be non-functional and they are rather wishes for the improvement.
+      
+      First of all, it still in some places is bound to ActiveRecord. 
+      Though, it was not an aim of the project to make it totally independent of ActiveRecord 
+      and the plugin has been developed for ActiveRecord based test application, it would be nice
+      to decouple it and introduce totally modular binding to ORM. 
+      
+      Moreover, the configuration is very simple at the moment. It is really hard to
+      guess all the options people would want. But, the implementation of configuration
+      is pretty open and it would be easy to introduce new options to the DSL once
+      people start using it and posting requests.
+      
+      The list of records could have been improved. As the rendering of forms
+      have been thought through, and a lot effort has been put into making it
+      work, the view that lists records is using very simple implementation. Probably
+      some thought should be put there in order to make it more error prone and more 
+      easily customizable.
+      
+      In the end, handling of \texttt{:through} associations would be a nice feature.
+      Through associations are defined when one model is associated to another one 
+      via some intermediate model. Such associations are not yet handled here as
+      some additional research would need to be conducted in order to find out
+      how people would like to use it.
       
       
