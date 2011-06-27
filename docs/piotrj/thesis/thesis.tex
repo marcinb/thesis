@@ -1,7 +1,8 @@
 % Copyright 2010, Piotr Jakubowski
-\documentclass[a4paper, 12pt, twoside]{report}
+\documentclass[a4paper, 12pt, twoside, openright]{report}
 
 \usepackage [english, polish]{babel}
+\usepackage{polski}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{acronym}
@@ -47,8 +48,10 @@
 \begin{document}
   \onehalfspace
   \bibliographystyle{ieeepes}
-  \maketitle
+  \include{title}
   \include{abstract}
+  \setcounter{page}{4}
+  \include{acknowledgments}
   \tableofcontents
   \listoffigures
   \include{chapter01}
@@ -58,4 +61,5 @@
   \include{chapter05}
   \include{chapter06}
   \bibliography{bibliography}
+  \addcontentsline{toc}{chapter}{Bibliography}
 \end{document}
