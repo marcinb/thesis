@@ -150,9 +150,9 @@
     
     Aby uruchomić pełen zestaw testów biblioteki \emph{administer} wydajemy z głównego katalogu projektu polecenie:
     
-    \begin{lstlisting}
-      rake
-    \end{lstlisting}
+\begin{lstlisting}
+rake
+\end{lstlisting}
     
     Projekt został tak skonfigurowany, że komenda \texttt{rake} wywołana bez dodatkowych parametrów uruchamia zestaw scenariuszy Cucumber oraz testów RSpec opisujących zachowanie biblioteki. 
     
@@ -201,16 +201,16 @@
   	
   	Oprócz informacji o błędzie, dostajemy również informacje o tym, że jeden z kroków scenariusza jest nie zdefiniowany:
   	
-  	\begin{lstlisting}
-    Undefined step: "the post should disappear from posts list" (Cucumber::Undefined)
-    features/administer/posts.feature:53:in `Then the post should disappear from posts list'
-    \end{lstlisting}
+\begin{lstlisting}
+Undefined step: "the post should disappear from posts list" (Cucumber::Undefined)
+features/administer/posts.feature:53:in `Then the post should disappear from posts list'
+\end{lstlisting}
     
     Z problemem tym można poradzić sobie na dwa sposoby: dodać nową definicję dla kroku \emph{the post should disappear from posts list} lub zmodyfikować scenariusz tak, aby korzystał z istniejących kroków nie zmieniając jednocześnie jego sensu. Generalnie rzecz biorąc niepotrzebne tworzenie nowych bytów nie jest dobrym pomysłem, należy przyjrzeć się więc czy możliwe jest wykorzystanie już istniejących definicji kroków, żeby opisać interesujące nas zachowanie. Plik
     
-    \begin{lstlisting}
-    spec/rails_root/features/step_definitions/post_steps.rb
-    \end{lstlisting}
+\begin{lstlisting}
+spec/rails_root/features/step_definitions/post_steps.rb
+\end{lstlisting}
     
     definiuje następujące kroki:
     
@@ -236,15 +236,15 @@
    
    Nasze następne działania polegać będą na zaspokajaniu oczekiwań kolejnych kroków zdefiniowanego przez nas scenariusza aż do momentu ich wyczerpania i tym samym dostarczenia wymaganej funkcjonalności. Jak widać na ilustracjach \ref{scenario_failure} oraz \ref{scenario_failure_2} dwa pierwsze kroki są zielone, skupmy się więc na trzecim z nich. Wszystko co musimy wiedzieć o przyczynach jego niepowodzenia zawarte jest w raporcie z przebiegu scenariusza:
    
-   \begin{lstlisting}
-   And I press "Delete"   # features/step_definitions/web_steps.rb:27
-   
-   no button with value or id or text 'Delete' found (Capybara::ElementNotFound)
-   ./features/step_definitions/web_steps.rb:29
-   ./features/step_definitions/web_steps.rb:14:in `with_scope'
-   ./features/step_definitions/web_steps.rb:28:in `/^(?:|I )press "([^"]*)"(?: within "([^"]*)")?$/'
-   features/administer/posts.feature:52:in `And I press "Delete"'
-   \end{lstlisting}
+\begin{lstlisting}
+And I press "Delete"   # features/step_definitions/web_steps.rb:27
+
+no button with value or id or text 'Delete' found (Capybara::ElementNotFound)
+./features/step_definitions/web_steps.rb:29
+./features/step_definitions/web_steps.rb:14:in `with_scope'
+./features/step_definitions/web_steps.rb:28:in `/^(?:|I )press "([^"]*)"(?: within "([^"]*)")?$/'
+features/administer/posts.feature:52:in `And I press "Delete"'
+\end{lstlisting}
    
    Przycisk \texttt{Delete} nie istnieje, dodajmy go do odpowiedniego widoku. Plik, którego szukamy to \texttt{app/views/administer/entities/index.html.haml} - definiuje on widok panelu administracyjnego zobrazowany na ilustracji \ref{administer_index}
    
@@ -276,15 +276,15 @@
   
   Kod ten składa się z metod implementowanych przez framework Rails oraz metod specyficznych dla samego projektu \emph{administer}. W wyniku jego działania wygenerowany zostanie przycisk o etykiecie \texttt{Delete} powiązany z metodą \texttt{destroy} kontrolera, który odpowiedzialny jest za zarządzanie rekordami modeli biznesowych przez bibliotekę \emph{administer}. W kontekście naszych rozważań na temat testowo zorientowanych metod rozwoju oprogramowania istotne jest, że modyfikacja ta zaspokaja wymaganie kroku scenariusza, nad którym aktualnie pracujemy. Uruchommy ponownie zestaw testów, aby przekonać się, że mimo iż przycisk \texttt{Delete} w tej chwili istnieje, to jednak ciągle są problemy z tym samym krokiem, informacja o niepowodzeniu jest jednak inna niż poprzednio:
   
-  \begin{lstlisting}
-  And I press "Delete"  # features/step_definitions/web_steps.rb:27
-  
-  The action 'destroy' could not be found for Administer::EntitiesController (AbstractController::ActionNotFound)
-  ./features/step_definitions/web_steps.rb:29
-  ./features/step_definitions/web_steps.rb:14:in `with_scope'
-  ./features/step_definitions/web_steps.rb:28:in `/^(?:|I )press "([^"]*)"(?: within "([^"]*)")?$/'
-  features/administer/posts.feature:52:in `And I press "Delete"'
-  \end{lstlisting}
+\begin{lstlisting}
+And I press "Delete"  # features/step_definitions/web_steps.rb:27
+
+The action 'destroy' could not be found for Administer::EntitiesController (AbstractController::ActionNotFound)
+./features/step_definitions/web_steps.rb:29
+./features/step_definitions/web_steps.rb:14:in `with_scope'
+./features/step_definitions/web_steps.rb:28:in `/^(?:|I )press "([^"]*)"(?: within "([^"]*)")?$/'
+features/administer/posts.feature:52:in `And I press "Delete"'
+\end{lstlisting}
   
   Wyświetlamy przycisk \texttt{Delete} oraz jest on prawidłowo skojarzony z akcją \texttt{destroy} kontrolera \texttt{Administer::EntitiesController}. Problem w tym, że akcja \texttt{destroy} nie została jeszcze zaimplementowana co skutkuje błędem - próbą uruchomienia nieistniejącej akcji w momencie kiedy użytkownik (W tym wypadku symulowany przez bibliotekę Capybara) klika w przycisk.
   
@@ -320,19 +320,19 @@
  	
  	Przetestowanie tego zachowania scenariuszem Cucumber jest trudne, trudno bowiem odtworzyć sytuację, w której usunięcie rekordu zakończy się niepowodzeniem - może się tak stać np. kiedy silnik bazy danych w której jest przechowywany nałożył na ten rekord blokadę, która trwa w momencie próby jego usunięcia. W tej sytuacji do testowania wykorzystamy bibliotekę RSpec i jej mechanizm oczekiwań oraz sztucznych obiektów. Odpowiedni zestaw testów zdefiniowany jest w pliku:
  	
- 	\begin{lstlisting}
- 	spec/rails_root/spec/controllers/administer/entities_controller_spec.rb
- 	\end{lstlisting}
- 	
+\begin{lstlisting}
+spec/rails_root/spec/controllers/administer/entities_controller_spec.rb
+\end{lstlisting}
+	
  	W którym następująco opiszemy interesujące nas zachowanie:
  	
  	\lstinputlisting[language=ruby]{examples/code/ch04/12}
  	
  	Upewniliśmy się, że informacja o błędzie została ustawiona w kontrolerze. To jednak nie wszystko, musimy sprawdzić, czy jest ona wyświetlona w odpowiednim widoku. \emph{Administer} wyświetla informacje o błędach w głównym widoku zdefiniowanym w pliku:
  	
- 	\begin{lstlisting}
- 	app/views/layouts/administer.html.haml
- 	\end{lstlisting}
+\begin{lstlisting}
+app/views/layouts/administer.html.haml
+\end{lstlisting}
  	
  	Odpowiedni test ma sprawdzać, czy ustawiony komunikat zostanie wyświetlony:
  	

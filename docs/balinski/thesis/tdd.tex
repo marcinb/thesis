@@ -42,15 +42,15 @@
     
     Sednem tego konkretnego testu jest jednak upewnienie się, że dla przykładowych danych wejściowych otrzymamy poprawny wynik. W tym wypadku sprawdzamy, czy wywołanie metody 
     
-    \begin{lstlisting} 
-      header('Chicago Bulls', 'Los Angeles Lakers')
-    \end{lstlisting}
+\begin{lstlisting} 
+header('Chicago Bulls', 'Los Angeles Lakers')
+\end{lstlisting}
     
     na obiekcie klasy \verb+SportsTable+ zwróci łańcuch znaków:
     
-    \begin{lstlisting} 
-      Chicago Bulls vs. Los Angeles Lakers
-    \end{lstlisting}
+\begin{lstlisting} 
+Chicago Bulls vs. Los Angeles Lakers
+\end{lstlisting}
     
     Po napisaniu uruchamiamy nasz zestaw testów, co kończy się porażką. Zakładając, że rozpoczęliśmy pracę z istniejącą, pustą definicją klasy \verb+SportsTable+ zdefiniowaną w pliku \verb+sports_table.rb+ wynik powinien wyglądać jak na ilustracji \ref{example1_failure}
     
@@ -139,17 +139,17 @@
     
     Teraz, jeśli wykonamy polecenie:
     
-    \begin{lstlisting} 
-      ruby test/full_suite.rb
-    \end{lstlisting}
+\begin{lstlisting} 
+ruby test/full_suite.rb
+\end{lstlisting}
     
     uruchomione zostaną wszystkie testy zdefiniowane w plikach:
     
-    \begin{lstlisting} 
-      test/test_suite1.rb
-      test/test_suite2.rb
-      test/test_suite3.rb
-    \end{lstlisting}
+\begin{lstlisting} 
+test/test_suite1.rb
+test/test_suite2.rb
+test/test_suite3.rb
+\end{lstlisting}
     
     \subsection[RSpec]{RSpec\footnote{\url{http://rspec.info/}\nocite{rspec}}}
     % dokładniejszy opis, trochę więcej o tym, dlaczego powstał RSPEC
@@ -158,9 +158,9 @@
     
     Bibliotekę RSpec najłatwiej zainstalować przy pomocy narzędzia ruby gems, które jest standardowo dostarczane wraz z każdą dystrybucją języka Ruby. Proces instalacji jest trywialny, wystarczy z konsoli systemowej wydać polecenie:
     
-    \begin{lstlisting}
-    gem install rspec
-    \end{lstlisting}
+\begin{lstlisting}
+gem install rspec
+\end{lstlisting}
     
     \subsubsection{Przykłady}
     W RSpec każdy test nazywany jest przykładem (ang. example). RSpec definiuje własny dialekt języka Ruby, dzięki czemu przykłady wyglądają bardziej jak naturalny język. W początkowej części tego rozdziału zdefiniowaliśmy już przykłady dla oprogramowania obsługującego sportową tablicę wyników:
@@ -169,9 +169,9 @@
     
     Pierwsze co powyższy kod robi, to dołącza plik z klasą \verb+SportsTable+, którą mamy zamiar przetestować. Zaraz później znajduje się linia:
     
-    \begin{lstlisting}
-    describe SportsTable do
-    \end{lstlisting}
+\begin{lstlisting}
+describe SportsTable do
+\end{lstlisting}
     
     Metoda \verb+describe+ zwraca tak zwaną grupę przykładów, która w bibliotece RSpec implementowana jest przez klasę \verb+ExampleGroup+. Jako parametry przyjmuje ona testowaną klasę oraz opcjonalny opis. Metoda \verb+describe+ przyjmuje też blok kodu, który programista definiuje pomiędzy słowami kluczowymi \verb+do ... end+.
     
