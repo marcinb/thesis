@@ -16,6 +16,15 @@
 \widowpenalty=10000
 \clubpenalty=10000
 
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\fontsize{10}{11}\it\selectfont \leftmark}
+  \fancyhead[R]{\fontsize{12}{13}\selectfont {\textbf{\thepage}}}
+  \fancyfoot[LR]{}
+}
+\pagestyle{plain}
+
 \lstset{
   showspaces=false,
   showstringspaces=false,
