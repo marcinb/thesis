@@ -1,6 +1,6 @@
 % Copyright 2011, Marcin Baliński
 
-\documentclass[a4paper,12pt]{report}
+\documentclass[a4paper, 12pt, twoside, openright]{report}
 
 \usepackage[polish]{babel}
 \usepackage[utf8]{inputenc}
@@ -10,6 +10,12 @@
 \usepackage{indentfirst}
 \usepackage{graphicx}
 \usepackage{listings}
+
+\usepackage{setspace} 
+\usepackage[top=2.5cm, bottom=3cm, inner=3cm, outer=2.5cm]{geometry}
+\widowpenalty=10000
+\clubpenalty=10000
+
 \lstset{
   showspaces=false,
   showstringspaces=false,
@@ -52,7 +58,7 @@
 }
 
 \begin{document}
-	\maketitle
+  \include{title}
 	\tableofcontents
 	\include{wstep}
 	\include{tdd}
