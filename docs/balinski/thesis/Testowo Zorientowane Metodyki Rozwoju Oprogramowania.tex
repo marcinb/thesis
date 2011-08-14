@@ -13,8 +13,11 @@
 
 \usepackage{setspace} 
 \usepackage[top=2.5cm, bottom=3cm, inner=3cm, outer=2.5cm]{geometry}
+
 \widowpenalty=10000
 \clubpenalty=10000
+
+\usepackage{parskip}
 
 \usepackage{fancyhdr}
 \fancypagestyle{plain}{
@@ -30,6 +33,7 @@
   showstringspaces=false,
   breaklines=true
   inputencoding=utf8x,
+  frame=single,
   basicstyle= \ttfamily,
   keywordstyle= \bf\itshape,
   prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
@@ -67,6 +71,7 @@
 }
 
 \begin{document}
+  \onehalfspace
   \include{title}
 	\tableofcontents
 	\listoffigures
@@ -75,7 +80,7 @@
 	\include{bdd}
 	\include{case_study}
 	
-	\bibliographystyle{plain}
+	\bibliographystyle{ieeepes}
 	\bibliography{bibliografia}
 	\addcontentsline{toc}{chapter}{Bibliografia}
 \end{document}
