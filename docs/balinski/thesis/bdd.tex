@@ -2,12 +2,12 @@
 
 \chapter[Behavior Driven Development]{Behavior Driven Development}
   \section{Czym jest BDD?}
-    Behavior Driven Development jest metodyką rozwoju oprogramowania, w której główny nacisk położony jest na zacieśnienie współpracy między programistami i nie technicznymi uczestnikami projektu. Podobnie jak w przypadku TDD implementację konkretnej funkcjonalności poprzedza zdefiniowanie jej zachowania w teście. Różnica polega na tym, że scenariusze BDD pisane są w naturalnym języku, tak aby były zrozumiałe nie tylko dla programistów. Idealną sytuacją jest kiedy scenariusze takie powstają w wyniku ścisłej współpracy programistów oraz właścicieli projektu. BDD jak sama nazwa wskazuje kładzie nacisk na zdefiniowanie i zrozumienie zachowania aplikacji a szczegóły implementacji są tutaj mniej istotne. W tym rozdziale przybliżę najważniejsze cechy oraz przykładowe narzędzia, jakie można wykorzystać w procesie \emph{Behavior Driven Development}. W celu dokładniejszego zgłębienia tematu jeszcze raz polecam książkę \emph{The RSpec Book\footnote{\cite{rspec_book}}}.
+    Behavior Driven Development jest metodyką rozwoju oprogramowania, w której główny nacisk położony jest na zacieśnienie współpracy między programistami i nie technicznymi uczestnikami projektu. Podobnie jak w przypadku TDD implementację konkretnej funkcjonalności poprzedza zdefiniowanie jej zachowania w teście. Różnica polega na tym, że scenariusze BDD pisane są w naturalnym języku, tak aby były zrozumiałe nie tylko dla programistów. Idealną sytuacją jest kiedy scenariusze takie powstają w wyniku ścisłej współpracy programistów oraz właścicieli projektu. BDD jak sama nazwa wskazuje kładzie nacisk na zdefiniowanie i zrozumienie zachowania aplikacji a szczegóły implementacji są tutaj mniej istotne. W tym rozdziale przybliżone zostaną najważniejsze cechy oraz przykładowe narzędzia jakie można wykorzystać w procesie \emph{Behavior Driven Development}. W celu dokładniejszego zgłębienia tematu jeszcze raz warto poleciś książkę \emph{The RSpec Book\footnote{\cite{rspec_book}}}.
     
     \subsection{BDD jako narzędzie dokumentacji. Funkcjonalności i scenariusze}
       Każdy program tak naprawdę składa się z zestawu funkcjonalności. Każda funkcjonalność wnosi konkretną wartość dodaną z punktu widzenia grupy docelowej, dla której oprogramowanie powstaje. Przykładowo program do obsługi księgowości powinien pozwalać zarządzać rachunkiem zysków i strat oraz sporządzać bilans (to oczywiście tylko niektóre z funkcji). Każda z wyżej wymienionych czynności to pojedyncza funkcjonalność, która w zgodzie z filozofią BDD powinna zostać opisana zestawem scenariuszy.
       
-      Scenariusze opisują zachowanie się programu w kontekście konkretnej funkcjonalności w precyzyjnie zdefiniowanej sytuacji a dla każdej funkcjonalności możemy zdefiniować dowolną ilość scenariuszy użycia. Na przykład dla funkcjonalności Zarządzanie rachunkiem zysków i strat mogą być zdefiniowane następujące scenariusze:
+      Scenariusze opisują zachowanie się programu w kontekście konkretnej funkcjonalności w precyzyjnie zdefiniowanej sytuacji. Dla każdej funkcjonalności możemy zdefiniować dowolną ilość scenariuszy użycia. Na przykład dla funkcjonalności Zarządzanie rachunkiem zysków i strat mogą być zdefiniowane następujące scenariusze:
       
       \begin{itemize}
         \item Wprowadzenie nowej poprawnej pozycji
@@ -16,16 +16,16 @@
         \item Próba wprowadzenia nowej pozycji przez nieautoryzowanego użytkownika
       \end{itemize}
       
-      Narzędzia BDD pozwalają na bardzo dużą swobodę jeśli chodzi o język definiowania scenariuszy, przykładowy plik definiujący powyższą funkcjonalność wraz ze scenariuszem \emph{Wprowadzenie nowej nie poprawnej pozycji} mógłby wyglądać tak:
+      Narzędzia BDD pozwalają na bardzo dużą swobodę jeśli chodzi o język definiowania scenariuszy. Przykładowy plik definiujący powyższą funkcjonalność wraz ze scenariuszem \emph{Wprowadzenie nowej nie poprawnej pozycji} mógłby wyglądać tak:
       
 \lstinputlisting{examples/code/ch03/01}
 
     Powyższy przykład opisuje zachowanie aplikacji w sposób na tyle naturalny, że nikt nie będzie miał trudności w jego zrozumieniu, a po poznaniu kilku prostych zasad językowych, którymi należy się kierować również nie techniczny uczestnicy projektu mogą opisywać nowe funkcjonalności w ten sposób.
     
-    Tworzenie specyfikacji projektu w postaci scenariuszy BDD jest bardzo pożądane. Zmniejsza to ilość niepotrzebnej dokumentacji, powoduje zacieśnienie współpracy w zespole oraz, o czym więcej w następnym podrozdziale, zwiększa pokrycie kodu testami.
+    Tworzenie specyfikacji projektu w postaci scenariuszy BDD jest bardzo pożądane. Zmniejsza to ilość niepotrzebnej dokumentacji, powoduje zacieśnienie współpracy w zespole oraz (o czym więcej w następnym podrozdziale) zwiększa pokrycie kodu testami.
     
     \subsection{BDD jako narzędzie testowania}
-      Prawdziwą mocą bibliotek wspierających Behavior Driven Development jest to, że traktują one specyfikacje dostarczoną w postaci scenariuszy jako zestaw testów. Dołączając więc scenariusze do naszego zestawu testów automatycznych mamy pewność, że oprogramowanie zachowuje się zgodnie z opisanymi w nich założeniami. W tym podrozdziale chciałbym opisać w jaki sposób, z technicznego punktu widzenia przebiega proces translacji specyfikacji (będącej plikiem tekstowym składającym się z pojedynczych scenariuszy) na zestaw automatycznych testów.
+      Prawdziwą mocą bibliotek wspierających Behavior Driven Development jest to, że traktują one specyfikacje dostarczoną w postaci scenariuszy jako zestaw testów. Dołączając więc scenariusze do zestawu testów automatycznych mamy pewność, że oprogramowanie zachowuje się zgodnie z opisanymi w nich założeniami. Podrozdział ten opisuje w jaki sposób, z technicznego punktu widzenia przebiega proces translacji specyfikacji (będącej plikiem tekstowym składającym się z pojedynczych scenariuszy) na zestaw automatycznych testów.
       \subsubsection[Definicje kroków na przykładzie biblioteki Cucumber]{Definicje kroków na przykładzie biblioteki Cucumber\footnote{\url{http://cukes.info/}\nocite{cucumber}}}
         Aby skutecznie uruchomić scenariusze w formie testów należy skonstruować plik tekstowy je zawierający w zgodzie z pewnymi zasadami. Przykładowy plik definiujący funkcjonalność \emph{Zarządzanie rachunkiem zysków i strat} rządzi się pewnymi prawami:
         
@@ -41,26 +41,26 @@
       
       \lstinputlisting[language=ruby]{examples/code/ch03/02}
       
-      Kiedy cucumber spróbuje przetworzyć krok \emph{Kiedy wybieram z menu głównego pozycję \textquotedblleft Wprowadź nową pozycję\textquotedblright} dopasuje go do pierwszego odpowiadającego wzorca, który zdefiniowaliśmy oraz uruchomi blok kodu zdefiniowany pomiędzy słowami kluczowymi \verb+do+ oraz \verb+end+. Przekaże do tego bloku również wszelkie zmienne zdefiniowane we wzorcu. Powyższy przykład jest na razie bezużyteczny ponieważ jedyne co znajduje się w bloku kodu to komentarz.
+      Kiedy cucumber spróbuje przetworzyć krok \emph{Kiedy wybieram z menu głównego pozycję \textquotedblleft Wprowadź nową pozycję\textquotedblright} dopasuje go do pierwszego odpowiadającego wzorca oraz uruchomi blok kodu zdefiniowany pomiędzy słowami kluczowymi \verb+do+ oraz \verb+end+. Przekaże do tego bloku również wszelkie zmienne zdefiniowane we wzorcu. Powyższy przykład jest na razie bezużyteczny ponieważ jedyne co znajduje się w bloku kodu to komentarz.
       
       Krok scenariusza najczęściej definiuje jedną z trzech rzeczy: założenie co do stanu środowiska w jakim uruchomione jest oprogramowanie, konkretną akcję wykonywaną na oprogramowaniu (taką jak np. kliknięcie przycisku) lub rezultat, jakiego się spodziewamy. Cucumber sam w sobie jest narzędziem które dopasowuje krok do odpowiadającej mu definicji, wszelkie interakcje z działającym programem, modyfikowanie środowiska działania czy też testowanie otrzymywanych wyników muszą zostać wykonywane przez zewnętrzne biblioteki, które należy samodzielnie skonfigurować.
       
-      Aby lepiej zobrazować w jaki sposób może wyglądać działające środowisko BDD poczynię kilka założeń co do aplikacji, którą testujemy, oraz bibliotek, których użyjemy. Pominę szczegóły konfiguracji, jest to treścią jednego z kolejnych rozdziałów tej pracy.
+      Aby lepiej zobrazować w jaki sposób może wyglądać działające środowisko BDD poczynione zostanie kilka założeń co do testowanej aplikacji oraz bibliotek, które zostaną w tym procesie wykorzystane. Szczegóły konfiguracji są tutaj pominięte - jest to treścią jednego z kolejnych rozdziałów tej pracy.
       
       \begin{itemize}
-        \item Interfejs naszej aplikacji zdefiniowany jest językiem opisu dokumentów HTML.
+        \item Interfejs aplikacji zdefiniowany jest językiem opisu dokumentów HTML.
         \item Aplikacja napisana jest w języku Ruby, przy pomocy frameworka Ruby on Rails
         \item Narzędzie RSpec zostało zainstalowane i skonfigurowane
         \item Narzędzie Capybara zostało zainstalowane i skonfigurowane
       \end{itemize}
       
-      O bibliotece RSpec pisałem już w poprzednim rozdziale, tutaj użyjemy go w podobnym celu, to jest do testowania wyników działania aplikacji. Biblioteka Capybara służy do symulacji interakcji użytkownika z aplikacją używającą jako interfejsu HTML. Używając powyższych narzędzi mogę opisać pełen zestaw definicji kroków dla scenariusza \emph{Wprowadzenie nowej nie poprawnej pozycji}:
+      Biblioteka RSpec była opisana w poprzednim rozdziale, tutaj zostanie użyta w podobnym celu - to jest do testowania wyników działania aplikacji. Biblioteka Capybara służy do symulacji interakcji użytkownika z aplikacją używającą jako interfejsu HTML. Używając powyższych narzędzi można opisać pełen zestaw definicji kroków dla scenariusza \emph{Wprowadzenie nowej nie poprawnej pozycji}:
       
       \lstinputlisting[language=ruby]{examples/code/ch03/03}
       
     \subsubsection{Rola programisty}
     
-      Jak widać definiowanie kroków wymaga podstawowej wiedzy z zakresu programowania oraz budowy opisywanego systemu, dlatego też zadanie to najczęściej wykonują programiści pracujący nad projektem.  Klient w tym wypadku dostarcza specyfikacji w postaci scenariuszy użycia, programiści zaś definiują brakujące kroki. Na szczęście problem ten jest uciążliwy tylko na początku życia projektu. Wraz z rosnącą ilością scenariuszy rośnie też ilość definicji kroków, a w pewnym momencie życia projektu definicje kroków zaczynają gęsto pokrywać większość funkcjonalności systemu tak, że w większości wypadków nawet do nowych funkcjonalności można bez problemu dopasować istniejące już kroki.
+      Jak widać definiowanie kroków wymaga wiedzy z zakresu programowania oraz budowy opisywanego systemu, dlatego też zadanie to najczęściej wykonują programiści pracujący nad projektem. Klient w tym wypadku dostarcza specyfikację w postaci scenariuszy użycia, programiści zaś definiują brakujące kroki. Na szczęście problem ten jest uciążliwy tylko na początku życia projektu. Wraz z rosnącą ilością scenariuszy rośnie też ilość definicji kroków, a w pewnym momencie życia projektu definicje kroków zaczynają gęsto pokrywać większość funkcjonalności systemu tak, że w większości wypadków nawet do nowych funkcjonalności można bez problemu dopasować istniejące już kroki.
       
       Ważne jest aby scenariusze były jak najbardziej zestandaryzowane, to znaczy, aby w miarę możliwości korzystać z już zdefiniowanych kroków w procesie ich tworzenia. Aby to osiągnąć osoba odpowiedzialna  za dostarczenie specyfikacji w postaci scenariuszy powinna poświęcić trochę czasu na zapoznanie się z dostępnymi definicjami kroków.
       
@@ -78,7 +78,7 @@
       
       Kiedy nowa funkcjonalność jest skończona klient zawsze powinien ją przetestować i zaakceptować jeśli spełnia jego oczekiwania, lub odrzucić w przeciwnym wypadku. W tradycyjnym podejściu do rozwoju oprogramowania testy akceptacyjne wyglądają najczęściej tak, że klient ręcznie sprawdza nową funkcjonalność. Minusy manualnego testowania zostały szczegółowo opisane w rozdziale dotyczącym TDD. Behavior Driven Development pozwala w dużym stopniu wyeliminować czasochłonne manualne testy akceptacyjne. W momencie, kiedy mamy gotowy dobry zestaw scenariuszy użycia, który jednocześnie jest specyfikacją funkcjonalności sam fakt, że wszystkie scenariusze zostają uruchomione z pozytywnym skutkiem jest wystarczającym testem akceptacyjnym.
       
-      Jeśli chcemy zastąpić testy akceptacyjne z żywym klientem na scenariusze BDD należy pamiętać, że środowisko testowe (w tym definicje kroków) muszą zostać zaprojektowane tak, aby działały w identycznej konfiguracji jak konfiguracja produkcyjna (czyli taka, w jakiej działa nasze oprogramowanie po dostarczeniu do klienta). Szczególnie nie należy używać imitacji (ang. mock) obiektów, których bardzo często używa się w testach jednostkowych, scenariusze powinny testować zachowanie się aplikacji w naturalnym środowisku.
+      Jeśli chcemy zastąpić testy akceptacyjne z żywym klientem scenriuszami BDD należy pamiętać, że środowisko testowe (w tym definicje kroków) muszą zostać zaprojektowane tak, aby działały w identycznej konfiguracji jak konfiguracja produkcyjna (czyli taka, w jakiej działa nasze oprogramowanie po dostarczeniu do klienta). Szczególnie nie należy używać imitacji (ang. mock) obiektów, których bardzo często używa się w testach jednostkowych, scenariusze powinny testować zachowanie się aplikacji w naturalnym środowisku.
       
   \section[Narzędzia BDD dostępne dla języka Ruby]{Narzędzia BDD dostępne dla języka Ruby\footnote{\url{http://cukes.info/}\nocite{cucumber}}}
     \subsection{Cucumber}
@@ -92,7 +92,7 @@
 gem install cucumber
 \end{lstlisting}
 
-      Jako, że techniki prezentowane w tym rozdziale opisane i zaprezentowane zostały na przykładzie biblioteki Cucumber powtórny szczegółowy opis tego narzędzia jest w tym miejscu zbędny. Szczegółowa dokumentacja dostępna jest pod adresem: http://cukes.info
+      Jako, że techniki prezentowane w tym rozdziale opisane i zaprezentowane zostały na przykładzie biblioteki Cucumber powtórny szczegółowy opis tego narzędzia jest w tym miejscu zbędny. Szczegółowa dokumentacja dostępna jest pod adresem: \url{http://cukes.info}
       
     \subsection[Steak]{Steak\footnote{\url{http://github.com/cavalle/steak/wiki}}}
       Steak podobnie jak Cucumber jest narzędziem, które służy do opisywania zachowania aplikacji w formie automatycznych testów, główny nacisk jest tutaj jednak kładziony na wygodę programisty oraz szybkość powstawania testów. Ograniczenia w stosunku do tego co oferuje Cucumber są następujące:
@@ -121,7 +121,7 @@ gem install cucumber
 gem install steak
 \end{lstlisting}
       
-      W przypadku, kiedy nasza aplikacja oparta jest o framework Rails, Steak oferuje dodatkowe udogodnienia, ale wymaga również minimalnie więcej konfiguracji. Wszelkie kroki są jasno opisane pod adresem http://github.com/cavalle/steak
+      W przypadku, kiedy aplikacja oparta jest o framework Rails Steak oferuje dodatkowe udogodnienia ale wymaga również minimalnie więcej konfiguracji. Wszelkie kroki są jasno opisane pod adresem \url{http://github.com/cavalle/steak}
       
       Steak jest dobrym rozwiązaniem jeśli projekt prowadzony jest przez stricte techniczny zespół lub zarząd projektu nie jest przekonany do uczestniczenia w procesie specyfikowania oprogramowania w formie testów. Minusem rezygnacji z takiej formy współpracy jest niestety spadek znaczenia tworzonej w Steaku specyfikacji jako testów akceptacyjnych: jeśli właściciele projektu nie będą rozumieli specyfikacji w formie jaką oferuje to najprawdopodobniej testy akceptacyjne będą chcieli przeprowadzić osobiście.
     
@@ -129,8 +129,8 @@ gem install steak
 
       Capybara ułatwia integracyjne testowanie aplikacji działających w przeglądarce www symulując akcję jakie wykonywałby żywy użytkownik. Nie jest to narzędzie związane stricte z BDD, jednak świetnie uzupełnia i wspomaga biblioteki takie jak Cucumber czy Steak.
       
-      Chcąc opisać krok po kroku zachowanie aplikacji internetowej, naturalnym jest łączenie akcji, które wykonuje w przeglądarce użytkownik z ich konsekwencjami. Przykładowo w celu zalogowania się należy najpierw wypełnić pole tekstowe \emph{Login}, następnie wpisać hasło do pola \emph{Hasło} oraz ostatecznie kliknąć przycisk \emph{Zaloguj}. Capybara pozwala symulować interakcje użytkownika z naszą aplikacją w przeglądarce i wykonywać na niej takie akcje jak kliknięcie w link, wypełnienie pola czy odświeżenie strony.
-      Informacją zwrotną, która często służy do określenia efektu naszych działań jest obiekt \verb+page+, który przechowuje ostatnią wyświetloną użytkownikowi stronę. Przykładowo kod:
+      Chcąc opisać krok po kroku zachowanie aplikacji internetowej, naturalnym jest łączenie akcji, które wykonuje w przeglądarce użytkownik z ich konsekwencjami. Przykładowo w celu zalogowania się należy najpierw wypełnić pole tekstowe \emph{Login}, następnie wpisać hasło do pola \emph{Hasło} oraz ostatecznie kliknąć przycisk \emph{Zaloguj}. Capybara pozwala symulować interakcje użytkownika z aplikacją w przeglądarce i wykonywać na niej takie akcje jak kliknięcie w link, wypełnienie pola czy odświeżenie strony.
+      Informacją zwrotną, która często służy do określenia efektu naszych działań jest obiekt \texttt{page}, który przechowuje ostatnią wyświetloną użytkownikowi stronę. Przykładowo kod:
       
       \lstinputlisting[language=ruby]{examples/code/ch03/05}
       
@@ -142,5 +142,5 @@ gem install steak
 gem install capybara
 \end{lstlisting}
       
-      Tak jak w przypadku Cucumbera, funkcje Capybary wykorzystywane były w tym rozdziale w celu zobrazowania założeń BDD. Dokładna dokumentacja bardzo bogatych możliwości biblioteki wykracza poza ramy tej pracy, można ją jednak odnaleźć wraz ze szczegółami konfiguracji dla różnych środowisk na stronie http://github.com/jnicklas/capybara.
+      Tak jak w przypadku Cucumbera, funkcje Capybary wykorzystywane były w tym rozdziale w celu zobrazowania założeń BDD. Dokładna dokumentacja bardzo bogatych możliwości biblioteki wykracza poza ramy tej pracy, można ją jednak odnaleźć wraz ze szczegółami konfiguracji dla różnych środowisk na stronie \url{http://github.com/jnicklas/capybara}.
       

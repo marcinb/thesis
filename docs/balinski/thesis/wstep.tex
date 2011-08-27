@@ -7,12 +7,12 @@
 \chapter[Wstęp]{Wstęp}
   Metodyka to ustandaryzowane dla wybranego obszaru podejście do rozwiązywania problemów. Praca ta ma na celu szczegółowe omówienie dwóch najbardziej znanych metodyk rozwoju oprogramowania w oparciu o testy: \emph{Test Driven Development} oraz \emph{Behavior Driven Development} wraz ze szczegółowym opisem narzędzi wspomagających rozwój oprogramowania napisanego w języku \emph{Ruby} w zgodzie z tymi metodykami.
   
-  Kolejnym nie mniej ważnym celem jest pokazanie jak niezmiernie istotne jest testowanie kodu. Opiszę zarówno problemy wynikające z braku odpowiedniego pakietu testów jak i korzyści płynące z prawidłowego wdrożenia testowo zorientowanych metod rozwoju do projektu informatycznego. Nie zabraknie również wskazówek odnośnie najlepszych praktyk jakie należy stosować przy wdrażaniu testowo zorientowanych metodyk.
+  Kolejnym nie mniej ważnym celem jest pokazanie jak niezmiernie istotne jest testowanie kodu. Opisane zostaną zarówno problemy wynikające z braku odpowiedniego pakietu testów jak i korzyści płynące z prawidłowego wdrożenia testowo zorientowanych metod rozwoju do projektu informatycznego. Nie zabraknie również wskazówek odnośnie najlepszych praktyk jakie należy stosować przy wdrażaniu testowo zorientowanych metodyk.
   
-  We wstępie omówię krótko powszechne problemy i trudności związane z rozwojem oprogramowania oraz bardzo ogólnie opiszę ideę jego testowania. Kolejne dwa rozdziały to szczegółowy opis technik \emph{Test Driven Development} oraz \emph{Behavior Driven Development} oraz narzędzi wspomagających ich wdrożenie w projektach tworzonych przy pomocy języka \emph{Ruby}. Rozdział czwarty to studium przypadku - praktyczny opis tego jak w praktyce wygląda \emph{Behavior Driven Development} na przykładzie rozwoju projektu Open Source. Rozdział czwarty kończy się podsumowaniem zalet testowo zorientowanych metodyk rozwoju oprogramowania oraz czynników determinujących powodzenie ich wdrożenia wraz z krótkimi wnioskami.
+  We wstępie znajduje się ogólny opis idei testowania oprogramowania oraz omówienie najpowszechniejszych problemów i trudności związanych z procesem jego rozwoju. Kolejne dwa rozdziały to szczegółowy opis technik \emph{Test Driven Development}, \emph{Behavior Driven Development} oraz narzędzi wspomagających ich wdrożenie w projektach tworzonych przy pomocy języka \emph{Ruby}. Rozdział czwarty to studium przypadku - praktyczny opis tego jak w praktyce wygląda \emph{Behavior Driven Development} na przykładzie rozwoju projektu Open Source. Rozdział czwarty kończy się podsumowaniem zalet testowo zorientowanych metodyk rozwoju oprogramowania oraz czynników determinujących powodzenie ich wdrożenia wraz z krótkimi wnioskami.
   
 	\section{Problemy napotykane w procesie wytwarzania oprogramowania}
-	  Na każdy projekt informatyczny można patrzeć z różnych perspektyw, w tej pracy chciałby jednak skupić się na technicznym aspekcie, jakim jest faza jego rozwoju w wybranym języku programowania, zaczynając od opisania częstych problemów podczas tej fazy.
+	  Na każdy projekt informatyczny można patrzeć z różnych perspektyw. Praca ta omawia techniczny aspekt rozwoju oprogramowania w wybranym języku programowania, zaczynając od przybliżenia najczęstszych problemów napotykanych podczas tej fazy.
 	  
 	  Rozwój oprogramowania nie jest rzeczą trywialną. Po dogłębnej analizie potrzeb, wybraniu narzędzi, które posłużą do budowy systemu następuje faza implementacji, której trudność zależy od wielu czynników takich jak:
 	  
@@ -28,9 +28,9 @@
 	  
 	  \begin{description}
   	  \item[Wzrost stopnia skomplikowania bazy kodu]
-  	    Kod staje się coraz bardziej skomplikowany i trudniejszy w utrzymaniu, wynika to często z braku ustalonych konwencji, polityki włączania do projektu zewnętrznych rozwiązań lub słabej komunikacji w zespole programistów.
+  	    Kod staje się coraz bardziej skomplikowany i trudniejszy w utrzymaniu. Wynika to często z braku ustalonych konwencji, polityki włączania do projektu zewnętrznych rozwiązań lub słabej komunikacji w zespole programistów.
   	  \item[Niepotrzebny wzrost stopnia integracji]
-  	    Łamanie zasady modułowego tworzenia oprogramowania, poszczególne części systemu są ze sobą coraz bardziej związane i znacząco na siebie wpływają. Powoduje to sytuację, w której usterka w jednym module powoduję awarię w kilku innych częściach systemu.
+  	    Łamanie zasady modułowego tworzenia oprogramowania. Poszczególne części systemu są ze sobą coraz bardziej związane i znacząco na siebie wpływają. Powoduje to sytuację, w której usterka w jednym module powoduję awarię w kilku innych częściach systemu.
   	  \item[Trudność w utrzymaniu systemu zgodnie z dostarczoną specyfikacją]
   	    Wynikająca z niewłaściwej komunikacji lub z wcześniejszych błędów.
   	\end{description}
@@ -40,7 +40,7 @@
 	  
 	\section{Testowanie oprogramowania}
 	  \subsection{Wady manualnego testowania}
-  	  Testowanie oprogramowania może odbywać się w sposób manualny lub automatyczny. Testy manualne przeprowadzane są przez żywego testera, który korzystając z oprogramowania, krok po kroku sprawdza jego zgodność ze specyfikacją, następnie wskazuje i opisuje ewentualne braki lub błędy. Każda nowa funkcjonalność lub poprawka wprowadzona do oprogramowania wymaga osobnej sesji z udziałem testera. 
+  	  Testowanie oprogramowania może odbywać się w sposób manualny lub automatyczny. Testy manualne przeprowadzane są przez żywego testera, który korzystając z oprogramowania krok po kroku sprawdza jego zgodność ze specyfikacją a następnie wskazuje i opisuje ewentualne braki lub błędy. Każda nowa funkcjonalność lub poprawka wprowadzona do oprogramowania wymaga osobnej sesji z udziałem testera. 
 	  
   	  Podejście manualne ma wiele wad, wśród których do najważniejszych należą:
 	  
@@ -53,26 +53,26 @@
   	   	\item Brak możliwości dokładnego przetestowania szczegółów implementacji danej funkcjonalności
   	  \end{itemize}
 	  
-  	  Waga powyższych niedogodności rośnie wykładniczo wraz ze wzrostem poziomu skomplikowania oprogramowania, dlatego też manualne testowanie sprawdza się w zasadzie tylko w projektach o małej złożoności. W innych przypadkach istnieje potrzeba uzupełnienia lub zastąpienia żywego testera przez testy automatyczne.
+  	  Waga powyższych niedogodności rośnie wykładniczo wraz ze wzrostem poziomu skomplikowania oprogramowania dlatego też manualne testowanie sprawdza się w zasadzie tylko w projektach o małej złożoności. W innych przypadkach istnieje potrzeba uzupełnienia lub zastąpienia żywego testera przez testy automatyczne.
 	  
 	  \subsection{Testy automatyczne}
-	    Automatyzacja procesu testowania odbywa się poprzez zastąpienie testera oprogramowaniem, które przejmie jego rolę. Automatyczne metody testowania umożliwiają sprawdzenie działania kodu programu, jak również graficznego interfejsu użytkownika.
+	    Automatyzacja procesu testowania odbywa się poprzez zastąpienie testera oprogramowaniem, które przejmie jego rolę. Automatyczne metody testowania umożliwiają sprawdzenie działania kodu programu jak również graficznego interfejsu użytkownika.
 	    \subsubsection{Testowanie kodu}
 	    
-	      W procesie tym testujemy szczegóły implementacji systemu. Oprócz kodu potrzebnego do zrealizowania danej funkcjonalności programiści piszą również testy weryfikujące jej implementację. Testy takie mogą mieć różne funkcje, wymienię tylko niektóre z nich:
+	      W procesie tym testujemy szczegóły implementacji systemu. Oprócz kodu potrzebnego do zrealizowania danej funkcjonalności programiści piszą również testy weryfikujące jej implementację. Testy takie mogą mieć różne funkcje, przykładowo:
 	      
 	      \begin{description}
 	        \item[Testy jednostkowe] Sprawdzają pojedynczy, niepodzielny element implementacji taki jak metoda lub funkcja
 	        \item[Testy integracyjne] Sprawdzają interakcję między składowymi elementami systemu
         \end{description}
         
-        Celem testu może być wynik działania danej części kodu, może być nim również chęć upewnienia się, że wynik działania osiągnięty jest w konkretny sposób. Dla przykładu testując funkcję, której zadaniem jest wyświetlić na ekranie monitora napis \emph{Witaj Świecie!} możliwe jest, że prócz samego faktu pojawienia się treści na ekranie chcemy również upewnić się, że do jej wyświetlenia użyta została jakaś konkretna metoda pochodząca z biblioteki standardowej. Jest to duża przewaga w stosunku to manualnego testowania oprogramowania, które nie daje nam takiej możliwości kontrolowania procesów prowadzących do widzialnych rezultatów.
+        Celem testu może być sprawdzenie wyniku działania danej części kodu, może być nim również chęć upewnienia się, że wynik działania osiągnięty jest w konkretny sposób. Dla przykładu testując funkcję, której zadaniem jest wyświetlić na ekranie monitora napis \emph{Witaj Świecie!} możliwe jest, że prócz samego faktu pojawienia się treści na ekranie chcemy również upewnić się, że do jej wyświetlenia użyta została jakaś konkretna metoda pochodząca z biblioteki standardowej. Jest to duża przewaga w stosunku to manualnego testowania oprogramowania, które nie daje nam takiej możliwości kontrolowania procesów prowadzących do widzialnych rezultatów.
 
         W chwili obecnej istnieją dziesiątki gotowych narzędzi pozwalających testować kod napisany w każdym szerzej używanym języku programowania. Ich używanie należy do podstaw każdej nowoczesnej metodyki prowadzenia projektów informatycznych.
         
       \subsubsection{Testowanie interfejsu użytkownika}
         
-        Istnieje szereg narzędzi pozwalających testować zachowanie, oraz wygląd interfejsów użytkownika, ich działanie opiera się najczęściej na nagrywaniu i późniejszym odtwarzaniu testowanych interakcji oraz porównywaniu ich rezultatów z naszymi oczekiwaniami. W taki sposób można testować tradycyjne aplikacje, jak również aplikacje www, działające w przeglądarce\footnote{w tym  przypadku szczegóły działania narzędzi testujących są inne, interfejs użytkownika jest bowiem najczęściej zdefiniowany przez znaczniki HTML.}
+        Istnieje szereg narzędzi pozwalających testować zachowanie, oraz wygląd interfejsów użytkownika, ich działanie opiera się najczęściej na nagrywaniu i późniejszym odtwarzaniu testowanych interakcji oraz porównywaniu ich rezultatów z naszymi oczekiwaniami. W taki sposób można testować tradycyjne aplikacje, jak również aplikacje www działające w przeglądarce\footnote{w tym  przypadku szczegóły działania narzędzi testujących są inne, interfejs użytkownika jest bowiem najczęściej zdefiniowany przez znaczniki HTML.}
         
         W kwestii testowania interfejsu użytkownika przewaga automatycznych testów nie jest już tak druzgocąca jak w przypadku testowania kodu, jednak i tutaj jesteśmy w stanie znacząco skorzystać na automatyzacji, zyskiem jest przede wszystkim czas oraz zerowy koszt powtórzenia testu.
         
@@ -80,12 +80,12 @@
 
         Decydując się na automatyzacje procesu testowania oprogramowania należy pamiętać, że nadal kluczowym elementem jest konieczność dogłębnego zrozumienia specyfikacji oprogramowania przez osobę odpowiedzialną za pisanie testów. Równie ważnym wymogiem jest to, że pakiet testów powinien być kompletny, to znaczy pokrywać wszystkie kluczowe elementy systemu. Im większy procent kodu pokryty jest testami tym lepiej. Oznacza to również, że każdy nowy kod musi być dostarczony wraz z odpowiednimi testami.
         
-        Jeśli spełnimy te warunki proces utrzymania oprogramowania stanie się dużo łatwiejszy, oto niektóre z korzyści:
+        Jeśli spełnimy te warunki proces utrzymania oprogramowania stanie się dużo łatwiejszy. Oto niektóre z korzyści:
         
          \begin{itemize}
      	    \item Mamy pewność, że system działa zgodnie z założeniami
      	    \item Proces modyfikacji oprogramowania staje się łatwiejszy i bezpieczniejszy: jeśli nowy kod spowoduje defekt w którejś z bieżących funkcjonalności zostaniemy o tym niezwłocznie poinformowani przez nie przechodzący test
      	  \end{itemize}
      	  
-     	  Na temat automatyzacji procesu testowania oprogramowania napisano niezliczoną ilość książek oraz artykułów. Dobrym punktem startu dla tych, którzy chcieliby zgłębić temat bardziej będzie strona wikipedii\footnote{http://en.wikipedia.org/wiki/Test\_automation} \nocite{wiki_test_automation} poświęcona temu tematowi.
+     	  Na temat automatyzacji procesu testowania oprogramowania napisano ogromną ilość książek oraz artykułów. Dobrym punktem startu dla tych, którzy chcieliby zgłębić temat będzie strona wikipedii\footnote{http://en.wikipedia.org/wiki/Test\_automation} \nocite{wiki_test_automation} poświęcona temu tematowi.
 

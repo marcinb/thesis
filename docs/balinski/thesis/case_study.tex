@@ -4,30 +4,30 @@
   \section{Wstęp}
   Świat technologii informatycznych zmienia się bardzo szybko. Ogromnemu skokowi mocy obliczeniowej sprzętu komputerowego towarzyszył w ostatnich kilku latach znaczący spadek cen związanych z jego wykorzystaniem. Stało się to katalizatorem rozwoju nowych trendów między innymi w dziedzinie wytwarzania oprogramowania. Gwałtowny wzrost zainteresowania dynamicznymi językami programowania takimi jak Ruby, Python czy JavaScript oraz pojawienie się nowych metodyk rozwoju produktów informatycznych, które coraz częściej ujmują ten proces bardziej z filozoficznego aniżeli technicznego lub biznesowego punktu widzenia jest bez wątpienia jednym z owoców tego procesu.
   
-  Spadek kosztów mocy obliczeniowej skutecznie rozwiązał problem wyboru technologii realizacji projektu informatycznego: wydajność narzędzi, których użyjemy do realizacji celu stała się w większości przypadków pomijalnym lub przynajmniej drugorzędnym problemem. Dziś najważniejszym kryterium wyboru jest stopień dopasowania możliwości oraz charakterystyki rozważanej technologii do potrzeb zespołu odpowiedzialnego za rozwój projektu. Oczywiście istnieją również skrajne przypadki, w których to oprogramowanie, z różnych przyczyn, musi zostać napisane w konkretnej technologii. Te smutne przypadki stanowią jednak kroplę w morzu wykraczającą daleko poza ramy niniejszej pracy.
+  Spadek kosztów mocy obliczeniowej skutecznie rozwiązał problem wyboru technologii realizacji projektu informatycznego: wydajność narzędzi, których użyjemy do realizacji celu stała się w większości przypadków pomijalnym lub przynajmniej drugorzędnym problemem. Dziś najważniejszym kryterium wyboru jest stopień dopasowania możliwości oraz charakterystyki rozważanej technologii do potrzeb zespołu odpowiedzialnego za rozwój projektu. Oczywiście istnieją również skrajne przypadki, w których to oprogramowanie z różnych przyczyn musi zostać napisane w konkretnej technologii. Te smutne przypadki stanowią jednak kroplę w morzu wykraczającą poza ramy niniejszej pracy.
   
-  W czasach, kiedy o wiele bardziej opłaca się dokupić nowy serwer niż pokrywać koszty optymalizacji ogromną furorę robi termin \emph{Przedwczesna optymalizacja}. Te dwa słowa mają dzisiaj znaczenie negatywne, które jest jednak jak najbardziej uzasadnione z ekonomicznego oraz użytkowego punktu widzenia. Dopóki niedostatki w wydajności oprogramowania można skompensować inwestycją w nowe zasoby sprzętowe zespół programistów powinien skupiać wszystkie swoje wysiłki na rozwój funkcjonalności. Optymalizacja kodu następuje dopiero w momencie, kiedy koszty inwestycji w sprzęt przewyższają koszt związane z optymalizacją albo w momencie kiedy oprogramowanie ze względu na swoją nie optymalność przestaje się skalować na nowe zasoby sprzętowe.
+  W czasach kiedy o wiele bardziej opłaca się dokupić nowy serwer niż pokrywać koszty optymalizacji ogromną furorę robi termin \emph{Przedwczesna optymalizacja}. Te dwa słowa mają dzisiaj znaczenie negatywne, które jest jednak jak najbardziej uzasadnione z ekonomicznego oraz użytkowego punktu widzenia. Dopóki niedostatki w wydajności oprogramowania można skompensować inwestycją w nowe zasoby sprzętowe zespół programistów powinien skupiać wszystkie swoje wysiłki na rozwój funkcjonalności. Optymalizacja kodu następuje dopiero w momencie, kiedy koszty inwestycji w sprzęt przewyższają koszt związane z optymalizacją albo w momencie kiedy oprogramowanie ze względu na swoją nie optymalność przestaje się skalować na nowe zasoby sprzętowe.
   
-  Na pierwszy rzut oka może wydawać się, że ten wstęp niewiele ma wspólnego z tematem pracy. Należy jednak uświadomić sobie, że to właśnie opisane powyżej zmiany w sposobie myślenia o metodach prowadzenia projektów IT stoją u podstaw rozwoju nowoczesnych narzędzi takich jak wymienione wcześniej dynamiczne języki, wysokopoziomowe frameworki programistyczne na nich oparte czy metodologie pokroju Behaviour Driven Development. Środki, które służą osiągnięciu założonego celu są jedną z najważniejszych zmiennych od których zależy sukces projektu, w przeszłości istniało wiele barier ograniczających ich wybór, dziś większość z nich została usunięta.
+  Na pierwszy rzut oka może wydawać się, że ten wstęp niewiele ma wspólnego z tematem pracy. Należy jednak uświadomić sobie, że to właśnie opisane powyżej zmiany w sposobie myślenia o metodach prowadzenia projektów IT stoją u podstaw rozwoju nowoczesnych narzędzi takich jak wymienione wcześniej dynamiczne języki programowania, wysokopoziomowe frameworki programistyczne na nich oparte czy metodologie pokroju \emph{Behaviour Driven Development}. Środki, które służą osiągnięciu założonego celu są jedną z najważniejszych zmiennych od których zależy sukces projektu - w przeszłości istniało wiele barier ograniczających ich wybór, dziś większość z nich została usunięta.
   
   \section{Założenia projektu}
-  Celem niniejszego rozdziału jest pokazanie czytelnikowi w jaki sposób rozwija się konkretny projekt prowadzony w zgodzie z metodologią BDD oraz jakie płyną z tego korzyści. Wybrany temat projektu to dynamiczny panel administracyjny dla aplikacji internetowych opartych na bibliotece \emph{Ruby on Rails\footnote{\url{http://rubyonrails.org/}}}, jego główne założenia to:
+  Celem niniejszego rozdziału jest pokazanie w jaki sposób rozwija się konkretny projekt prowadzony w zgodzie z metodologią BDD oraz jakie płyną z tego korzyści. Wybrany temat projektu to dynamiczny panel administracyjny dla aplikacji internetowych opartych na bibliotece \emph{Ruby on Rails\footnote{\url{http://rubyonrails.org/}}}, jego główne założenia to:
   
   \begin{description}
     \item[Uniwersalność] Panel powinien współpracować z większością aplikacji napisanych w Ruby on Rails. W praktyce oznacza to, że modele biznesowe powinny być klasami pochodnymi klasy \texttt{ActiveRecord} a sposób budowy aplikacji jest zgodny z konwencjami przyjętymi dla aplikacji Ruby on Rails.
     \item[CRUD] W teorii baz danych istnieją cztery podstawowe operacje jakie możemy wykonać na zasobie: Tworzenie, odczytanie, aktualizacja, usunięcie (ang. Create, read, update and delete). Biblioteka ma pozwalać na zarządzanie modelami biznesowymi aplikacji przy użyciu jedynie tych czterech standardowych metod.
     \item[Dynamiczność] Po instalacji panel powinien sam wykryć rodzaje zasobów na jakich operuje aplikacja oraz wygenerować odpowiednie widoki i formularze do zarządzania nimi. Zmiany w budowie modeli biznesowych, które wymuszają konieczność zmian w zarządzaniu nimi, jak również pojawienie się nowych modeli również powinno być odzwierciedlone w zachowaniu panelu automatycznie, bez konieczności jakiejkolwiek ingerencji.
     \item[Proste wdrożenie] Podstawowe wdrożenie rozwiązania wymaga jedynie aby aplikacja kliencka korzystała z biblioteki Ruby on Rails w wersji co najmniej 3.0.3. Po dodaniu biblioteki panelu do listy \emph{gemów\footnote{\url{http://docs.rubygems.org/}}} wykorzystywanych przez aplikację możliwe jest natychmiastowe korzystanie.
-    \item[Wygoda użytkowania] Proces zarządzania aplikacją powinien być jak najwygodniejszy. Oznacza to między innymi, że pola formularzy służących do tworzenia lub edycji rekordów powinny być dostosowane do rodzaju danych jakie przechowują a próby wprowadzenia nieprawidłowych wartości powinny być sygnalizowane czytelną informacją o błędzie. Jeśli istnieją powiązania pomiędzy kilkoma modelami biznesowymi, to powinna istnieć bardzo szybka możliwość zarządzania każdym z powiązanych rekordów.
+    \item[Wygoda użytkowania] Proces zarządzania aplikacją powinien być jak najwygodniejszy. Oznacza to między innymi, że pola formularzy służących do tworzenia lub edycji rekordów powinny być dostosowane do rodzaju danych jakie przechowują a próby wprowadzenia nieprawidłowych wartości powinny być sygnalizowane czytelną informacją o błędzie. Jeśli istnieją powiązania pomiędzy kilkoma modelami biznesowymi to powinna istnieć bardzo szybka możliwość zarządzania każdym z powiązanych rekordów.
   \end{description}
   
   \subsection{Open Source}
-    Biblioteka jest dostępna za darmo na zasadach licencji MIT.\footnote{\url{http://en.wikipedia.org/wiki/MIT_License}} Filozofia rozwoju oprogramowania na zasadach open source jest bardzo bliska środowisku programistów Ruby. Sam język udostępniony jest na licencji GPL, biblioteka Ruby on Rails korzysta z licencji MIT. Użycie licencji MIT oznacza, że każdy otrzymuje prawo do nielimitowanego wykorzystania kopii oprogramowania w dowolny sposób, sprawia to, że jest to najchętniej wykorzystywana przez programistów Ruby licencja.
+    Biblioteka jest dostępna za darmo na zasadach licencji MIT.\footnote{\url{http://en.wikipedia.org/wiki/MIT_License}} Filozofia rozwoju oprogramowania na zasadach open source jest bardzo bliska środowisku programistów Ruby. Sam język udostępniony jest na licencji GPL, biblioteka Ruby on Rails korzysta z licencji MIT. Użycie licencji MIT oznacza, że każdy otrzymuje prawo do nielimitowanego wykorzystania kopii oprogramowania w dowolny sposób. Sprawia to, że MIT jest  najchętniej wykorzystywaną przez programistów Ruby licencją.
     
   \subsection{Sposób prowadzenia projektu}
-  Projekt prowadzony jest według bardzo uproszczonych zasad metodologii SCRUM.\footnote{\url{http://en.wikipedia.org/wiki/Scrum_(development)}} \nocite{wiki_scrum} Rozwój projektu podzielony jest na tygodniowe sprinty, przed każdym z nich następuje spotkanie zespołu, podczas którego wybierane i przydzielane są konkretne zadania do wykonania w następnej iteracji. Spotkania te służą również omówieniu bieżących spraw związanych z projektem.
+  Projekt prowadzony jest według bardzo uproszczonych zasad metodologii SCRUM.\footnote{\url{http://en.wikipedia.org/wiki/Scrum_(development)}} \nocite{wiki_scrum} Rozwój projektu podzielony jest na tygodniowe sprinty. Przed każdym sprintem następuje spotkanie zespołu, podczas którego wybierane i przydzielane są konkretne zadania do wykonania w następnej iteracji. Spotkania te służą również omówieniu bieżących spraw związanych z projektem.
   
-  Zespół zaangażowany w projekt składa się z trzech osób: dwóch programistów, oraz osoby dzielącej rolę Scrum Mastera, który odpowiedzialny jest za przygotowanie i prowadzenie spotkań oraz Product Ownera, który reprezentuje oczekiwania końcowego użytkownika dotyczące kwestii funkcjonalności oraz ekonomicznych kwestii związanych z rozwojem projektu.
+  Podstawowy zespół zaangażowany w projekt składa się z trzech osób: dwóch programistów, oraz osoby dzielącej rolę Scrum Mastera, który odpowiedzialny jest za przygotowanie i prowadzenie spotkań oraz Product Ownera, który reprezentuje oczekiwania końcowego użytkownika dotyczące kwestii funkcjonalności oraz ekonomicznych kwestii związanych z rozwojem projektu.
   
   Duży nacisk kładziony jest na testowanie oprogramowania, testy akceptacyjne istnieją w formie zautomatyzowanych scenariuszy BDD. Każda funkcjonalność lub modyfikacja oprogramowania akceptowana jest jedynie jeśli dostarczona jest wraz z pełnym zestawem testów ją dokumentujących.
   
@@ -39,9 +39,9 @@
   % może inna nazwa?
   \section{Proces implementacji}
   
-  Jak zostało to wspomniane wcześniej implementacja podzielona jest na tygodniowe iteracje zwane również sprintami. Każda planowana funkcjonalność zanim zostanie zaimplementowana i stanie się częścią projektu musi zostać krytycznie oceniona pod względem użyteczności oraz opisana w formie krótkiej specyfikacji.
+  Jak zostało wcześniej wspomniane implementacja podzielona jest na tygodniowe iteracje zwane sprintami. Każda planowana funkcjonalność zanim zostanie zaimplementowana i stanie się częścią projektu musi zostać krytycznie oceniona pod względem użyteczności oraz opisana w formie krótkiej specyfikacji.
   
-  W wypadku kiedy mamy do czynienia z rozbudowaną funkcjonalnością należy podzielić jej implementację na jak najmniejsze, spójne kawałki a każdy z tych fragmentów powinien zostać jasno opisany. Idealnie jest, kiedy fragmenty danej funkcjonalności są od siebie niezależne, to znaczy, jeśli nad każdym z nich można pracować osobno w tym samym czasie. Taka sytuacja niestety zdarza się rzadko. Jeśli dany fragment zależy od innych, należy załączyć taką informację w jego opisie.
+  W wypadku kiedy mamy do czynienia z rozbudowaną funkcjonalnością należy podzielić jej implementację na jak najmniejsze, spójne kawałki a każdy z tych fragmentów powinien zostać jasno opisany. Idealnie jest kiedy fragmenty danej funkcjonalności są od siebie niezależne, to znaczy, jeśli nad każdym z nich można pracować osobno w tym samym czasie. Taka sytuacja niestety zdarza się rzadko. Jeśli dany fragment zależy od innych, należy załączyć taką informację w jego opisie.
   
   Każde nowe zachowanie opisane jest testem w postaci odpowiedniego scenariusza Cucumber. Jest to warunek konieczny, scenariusze powstają przed rozpoczęciem procesu właściwej implementacji, po zaakceptowaniu przez Product Ownera pełnią one rolę testów akceptacyjnych. Testy jednostkowe w postaci specyfikacji RSpec powstają dla części systemu, których szczegóły implementacji są istotne dla prawidłowego jego działania.
   
@@ -64,7 +64,7 @@
   % PRZEREDAGOWAĆ
   Blog świetnie nadaje się do testowania biblioteki typu \emph{administer} - wszystkie powyższe funkcje, prócz pierwszej, są tak naprawdę funkcjami, które wykonywać ma panel administracyjny. W kontekście tego przykładu cel biblioteki \emph{administer} jest jasny: Twórca bloga ze swojej strony musi jedynie dołączyć gem \emph{administer} do projektu, zdefiniować modele biznesowe typu \texttt{Post} czy \texttt{Category}, oraz dopisać akcję odpowiedzialną za wyświetlanie artykułów, cała część odpowiedzialna za akcję zarządzania modelami ma być dynamicznie wykonywana przez gem \emph{administer}. 
   
-  Ilustracja \ref{blog_view} przedstawia stronę z listą artykułów, jest to widok pochodzący z aplikacji testowej. Ilustracja \ref{administer_edit} przedstawia widok edycji rekordu konkretnego artykułu, funkcja ta implementowana jest przez bibliotekę administer.
+  Ilustracja \ref{blog_view} przedstawia stronę z listą artykułów, jest to widok pochodzący z aplikacji testowej. Ilustracja \ref{administer_edit} przedstawia widok edycji rekordu konkretnego artykułu, funkcja ta implementowana jest przez bibliotekę \emph{administer}.
   
   \vspace{5 mm}
   \begin{figure}[!h]
@@ -106,14 +106,14 @@
       \item Display validation errors in administer
     \end{itemize}
     
-    Skupmy się na rozwiązaniu pierwszego z nich. W momencie pisania tego rozdziału gem \emph{administer} potrafi już tworzyć, modyfikować oraz wyświetlać informacje o rekordach modeli biznesowych aplikacji, która z niego korzysta. Jedną z brakujących funkcji jest usuwanie istniejących rekordów. W tym podrozdziale przeanalizujemy krok po kroku cały cykl wdrażania tej nowej funkcji do istniejącego systemu. Przeanalizowanie tego procesu pomoże nam lepiej zrozumieć sposób w jaki rozwijane jest oprogramowanie w zgodzie z zasadami BDD oraz jakie są korzyści z tego płynące.
+    Skupmy się na rozwiązaniu pierwszego z nich. W momencie pisania tego rozdziału gem \emph{administer} potrafi już tworzyć, modyfikować oraz wyświetlać informacje o rekordach modeli biznesowych aplikacji, która z niego korzysta. Jedną z brakujących funkcji jest usuwanie istniejących rekordów. W tym podrozdziale przeanalizowany zostanie krok po kroku cały cykl wdrażania tej nowej funkcji do istniejącego systemu. Przeanalizowanie tego procesu pomoże lepiej zrozumieć sposób w jaki rozwijane jest oprogramowanie w zgodzie z zasadami BDD oraz jakie są korzyści z tego płynące.
     
     \subsubsection{Zrozumienie problemu}
     Pierwszy etap pracy to rozpoznanie, z czym tak właściwie mamy do czynienia. Jeśli problem, który mamy rozwiązać został wcześniej udokumentowany, tak jak miało to miejsce w tym wypadku, należy zacząć od dokładnego zaznajomienia się z jego opisem.
     
-    Ilustracja \ref{administer_story_desc} przedstawia szczegółowy widok naszego zadania prezentowany przez aplikację Pivotal Tracker, która używana jest jako narzędzie wspomagające proces zarządzania projektem \emph{administer}.
+    Ilustracja \ref{administer_story_desc} przedstawia szczegółowy widok zadania prezentowany przez aplikację Pivotal Tracker, która używana jest jako narzędzie wspomagające proces zarządzania projektem \emph{administer}.
     
-    Podgląd ten informuje nas o wielu rzeczach związanych z zadaniem takich jak status ukończenia, estymacja pracochłonności czy informacja o osobach odpowiedzialnych za zadanie. W kontekście naszych rozważań najważniejszą informacją jaką możemy odczytać z niniejszego podglądu jest jednak opis funkcjonalności. 
+    Podgląd ten informuje nas o wielu rzeczach związanych z zadaniem takich jak status ukończenia, estymacja pracochłonności czy informacja o osobach odpowiedzialnych za zadanie. W kontekście naszych rozważań najważniejszą informacją jaką można odczytać z niniejszego podglądu jest jednak opis funkcjonalności. 
     
     \vspace{5 mm}
     \begin{figure}[h]
@@ -132,7 +132,7 @@
     
     \begin{description}
       \item[Niepodzielność] Dostarczone kroki stanowią minimum, jakie trzeba zaimplementować aby funkcjonalność usuwania rekordów była kompletna.
-      \item[Osadzenie w kontekście] Zachowanie zostało opisane w konkretnych warunkach. Mamy informację o stanie początkowym w jakim funkcjonalność powinna działać (Istnieje rekord należący do modelu \texttt{Post}), miejscu oraz zachowaniu które wywoła usunięcie rekordu (Kliknięcie przycisku \texttt{Delete} na stronie z postami) oraz o warunkach końcowych, jakie muszą zostać spełnione w wyniku działania naszej nowej funkcji (Post powinien zniknąć z listy).
+      \item[Osadzenie w kontekście] Zachowanie zostało opisane w konkretnych warunkach. Mamy informację o stanie początkowym w jakim funkcjonalność powinna działać (Istnieje rekord należący do modelu \texttt{Post}), miejscu oraz zachowaniu które wywoła usunięcie rekordu (Kliknięcie przycisku \texttt{Delete} na stronie z postami) oraz o warunkach końcowych, jakie muszą zostać spełnione w wyniku działania nowej funkcji (Post powinien zniknąć z listy).
     \end{description}
   	
   	\subsubsection{Czynności wstępne}
@@ -144,7 +144,7 @@
         \item[Uruchomienie pełnego zestawu testów] Przed rozpoczęciem pracy należy upewnić się, że wszystkie testy kończą się sukcesem.
       \end{description}
       
-    Kod biblioteki \emph{administer} przechowywany jest w rozproszonym systemie kontroli wersji GIT, spełnienie pierwszego punktu wymaga więc od programisty jedynie synchronizacji swojego lokalnego repozytorium z najnowszą wersją rozwojowej gałęzi kodu znajdującej się w głównym repozytorium. Szczegóły dotyczące operacji na systemie kontroli wersji wykraczają poza ramy tej pracy i zostaną tutaj pominięte. Przyjmijmy jednak, że synchronizacja została wykonana i mamy u siebie najnowszą wersję kodu biblioteki \emph{administer}. 
+    Kod biblioteki \emph{administer} przechowywany jest w rozproszonym systemie kontroli wersji GIT, spełnienie pierwszego punktu wymaga więc od programisty jedynie synchronizacji swojego lokalnego repozytorium z najnowszą wersją rozwojowej gałęzi kodu znajdującej się w głównym repozytorium. Szczegóły dotyczące operacji na systemie kontroli wersji wykraczają poza ramy tej pracy i zostaną tutaj pominięte. Wszystkie informacje potrzebne do pracy z systemem GIT znaleźć można na stronach \url{http://help.github.com/}. Przyjmijmy, że synchronizacja została wykonana i mamy najnowszą wersję kodu biblioteki \emph{administer}. 
     
     Uruchomienie pełnego zestawu testów daje nam pewność, że wersja oprogramowania, na której będziemy pracować spełnia warunki specyfikacji. Nie wolno rozpoczynać pracy jeśli testy z jakiegoś powodu nie przechodzą. W takim wypadku należy najpierw znaleźć przyczynę problemu i zlikwidować go a pracę nad nową funkcjonalnością rozpocząć dopiero kiedy wszystkie testy automatyczne sygnalizują sukces.
     
@@ -206,7 +206,7 @@ Undefined step: "the post should disappear from posts list" (Cucumber::Undefined
 features/administer/posts.feature:53:in `Then the post should disappear from posts list'
 \end{lstlisting}
     
-    Z problemem tym można poradzić sobie na dwa sposoby: dodać nową definicję dla kroku \emph{the post should disappear from posts list} lub zmodyfikować scenariusz tak, aby korzystał z istniejących kroków nie zmieniając jednocześnie jego sensu. Generalnie rzecz biorąc niepotrzebne tworzenie nowych bytów nie jest dobrym pomysłem, należy przyjrzeć się więc czy możliwe jest wykorzystanie już istniejących definicji kroków, żeby opisać interesujące nas zachowanie. Plik
+    Z problemem tym można poradzić sobie na dwa sposoby: dodać nową definicję dla kroku \emph{the post should disappear from posts list} lub zmodyfikować scenariusz tak, aby korzystał z istniejących kroków nie zmieniając jednocześnie jego sensu. Niepotrzebne tworzenie nowych bytów nie jest dobrym pomysłem, należy przyjrzeć się więc czy możliwe jest wykorzystanie już istniejących definicji kroków, żeby opisać interesujące nas zachowanie. Plik
     
 \begin{lstlisting}
 spec/rails_root/features/step_definitions/post_steps.rb
@@ -216,11 +216,11 @@ spec/rails_root/features/step_definitions/post_steps.rb
     
     \lstinputlisting[language=ruby]{examples/code/ch04/05}
     
-    Krok opisujący zniknięcie rekordu z listy można tak naprawdę opisać przy pomocy dwóch innych kroków, po pierwsze po kliknięciu przycisku \texttt{Delete} powinniśmy upewnić się, że nadal jesteśmy na liście Postów, po drugie wiedząc, że istniał tylko jeden post, po wciśnięciu \texttt{Delete} nie powinien istnieć żaden. Wykorzystamy więc dwa już zdefiniowane kroki: \emph{I should be on administer posts list} oraz \emph{there should be no posts}. Zmodyfikowany scenariusz wygląda następująco:
+    Krok opisujący zniknięcie rekordu z listy można tak naprawdę opisać przy pomocy dwóch innych kroków, po pierwsze po kliknięciu przycisku \texttt{Delete} należy upewnić się, że nadal jesteśmy na liście Postów, po drugie wiedząc, że istniał tylko jeden post, po wciśnięciu \texttt{Delete} nie powinien istnieć żaden. Wykorzystamy więc dwa już zdefiniowane kroki: \emph{I should be on administer posts list} oraz \emph{there should be no posts}. Zmodyfikowany scenariusz wygląda następująco:
     
     \lstinputlisting{examples/code/ch04/06}
     
-    Powtórne uruchomienie testów nadal sygnalizuje niepowodzenie, jednak wszystkie kroki są zdefiniowane. Jedyne nad czym musimy się teraz skupić to dostarczenie funkcjonalności, która spełni warunki nowego scenariusza.
+    Powtórne uruchomienie testów nadal sygnalizuje niepowodzenie, jednak wszystkie kroki są zdefiniowane. Jedyne nad czym należy się teraz skupić to dostarczenie funkcjonalności, która spełni warunki nowego scenariusza.
      
      \clearpage
      
@@ -234,7 +234,7 @@ spec/rails_root/features/step_definitions/post_steps.rb
    	
    \subsubsection{Dostarczenie wymaganej funkcjonalności}
    
-   Nasze następne działania polegać będą na zaspokajaniu oczekiwań kolejnych kroków zdefiniowanego przez nas scenariusza aż do momentu ich wyczerpania i tym samym dostarczenia wymaganej funkcjonalności. Jak widać na ilustracjach \ref{scenario_failure} oraz \ref{scenario_failure_2} dwa pierwsze kroki są zielone, skupmy się więc na trzecim z nich. Wszystko co musimy wiedzieć o przyczynach jego niepowodzenia zawarte jest w raporcie z przebiegu scenariusza:
+   Następne działania polegać będą na zaspokajaniu oczekiwań kolejnych kroków nowo zdefiniowanego scenariusza aż do momentu ich wyczerpania i tym samym dostarczenia wymaganej funkcjonalności. Jak widać na ilustracjach \ref{scenario_failure} oraz \ref{scenario_failure_2} dwa pierwsze kroki są zielone, skupmy się więc na trzecim z nich. Wszystko co trzeba wiedzieć o przyczynach jego niepowodzenia zawarte jest w raporcie z przebiegu scenariusza:
    
 \begin{lstlisting}
 And I press "Delete"   # features/step_definitions/web_steps.rb:27
@@ -258,15 +258,15 @@ features/administer/posts.feature:52:in `And I press "Delete"'
   		\end{center}
   	\end{figure}
   	
-  Jest to ten sam widok, o którym mowa w scenariuszu. Naszym zadaniem będzie dodać przycisk \verb+Delete+ w kolumnie \verb+Actions+ dla każdego wyświetlanego rekordu. Przyjrzyjmy się naszemu widokowi od środka:
+  Jest to ten sam widok, o którym mowa w scenariuszu. Naszym zadaniem będzie dodać przycisk \verb+Delete+ w kolumnie \verb+Actions+ dla każdego wyświetlanego rekordu. Przyjrzyjmy się widokowi od środka:
   
   \lstinputlisting[numbers=left]{examples/code/ch04/07}
   
-  Powyższy kod to prosty język szablonów HAML, który jest dynamicznie przetwarzany do postaci HTML zrozumiałej dla przeglądarki. Jeśli zlokalizujemy w nim kod odpowiedzialny za wyświetlenie linka \texttt{Edit} to prawdopodobnie bardzo łatwo będzie nam dodać pod nim przycisk \texttt{Delete}. Interesujący nas fragment znajdziemy w 17 linii:
+  Powyższy kod to prosty język szablonów HAML, który jest dynamicznie przetwarzany do postaci HTML zrozumiałej dla przeglądarki. Jeśli zlokalizujemy w nim kod odpowiedzialny za wyświetlenie linka \texttt{Edit} to prawdopodobnie bardzo łatwo będzie dodać pod nim przycisk \texttt{Delete}. Interesujący nas fragment znajdziemy w 17 linii:
   
   \lstinputlisting[firstline=17,lastline=17]{examples/code/ch04/07}
   
-  Modyfikujemy kod szablonu dodając brakujący przycisk, który połączony jest z akcją odpowiedzialną za usunięcie odpowiedniego rekordu. Po modyfikacji interesujący nas fragment kodu wygląda następująco:
+  Modyfikujemy kod szablonu dodając brakujący przycisk, który połączony jest z akcją odpowiedzialną za usunięcie odpowiedniego rekordu. Po modyfikacji kod wygląda następująco:
   
   \lstinputlisting{examples/code/ch04/08}
   
@@ -274,7 +274,7 @@ features/administer/posts.feature:52:in `And I press "Delete"'
   
   \lstinputlisting[firstline=4,lastline=4]{examples/code/ch04/08}
   
-  Kod ten składa się z metod implementowanych przez framework Rails oraz metod specyficznych dla samego projektu \emph{administer}. W wyniku jego działania wygenerowany zostanie przycisk o etykiecie \texttt{Delete} powiązany z metodą \texttt{destroy} kontrolera, który odpowiedzialny jest za zarządzanie rekordami modeli biznesowych przez bibliotekę \emph{administer}. W kontekście naszych rozważań na temat testowo zorientowanych metod rozwoju oprogramowania istotne jest, że modyfikacja ta zaspokaja wymaganie kroku scenariusza, nad którym aktualnie pracujemy. Uruchommy ponownie zestaw testów, aby przekonać się, że mimo iż przycisk \texttt{Delete} w tej chwili istnieje, to jednak ciągle są problemy z tym samym krokiem, informacja o niepowodzeniu jest jednak inna niż poprzednio:
+  Kod ten składa się z metod implementowanych przez framework Rails oraz metod specyficznych dla samego projektu \emph{administer}. W wyniku jego działania wygenerowany zostanie przycisk o etykiecie \texttt{Delete} powiązany z metodą \texttt{destroy} kontrolera, który odpowiedzialny jest za zarządzanie rekordami modeli biznesowych przez bibliotekę \emph{administer}. W kontekście rozważań na temat testowo zorientowanych metod rozwoju oprogramowania istotne jest, że modyfikacja ta zaspokaja wymaganie kroku scenariusza, nad którym aktualnie pracujemy. Uruchamiając ponownie zestaw testów, przekonamy się, że mimo iż przycisk \texttt{Delete} w tej chwili istnieje, to jednak ciągle są problemy z tym samym krokiem. Informacja o niepowodzeniu jest jednak inna niż poprzednio:
   
 \begin{lstlisting}
 And I press "Delete"  # features/step_definitions/web_steps.rb:27
@@ -286,14 +286,14 @@ The action 'destroy' could not be found for Administer::EntitiesController (Abst
 features/administer/posts.feature:52:in `And I press "Delete"'
 \end{lstlisting}
   
-  Wyświetlamy przycisk \texttt{Delete} oraz jest on prawidłowo skojarzony z akcją \texttt{destroy} kontrolera \texttt{Administer::EntitiesController}. Problem w tym, że akcja \texttt{destroy} nie została jeszcze zaimplementowana co skutkuje błędem - próbą uruchomienia nieistniejącej akcji w momencie kiedy użytkownik (W tym wypadku symulowany przez bibliotekę Capybara) klika w przycisk.
+  Przycisk \texttt{Delete} istnieje oraz jest on prawidłowo skojarzony z akcją \texttt{destroy} kontrolera \texttt{Administer::EntitiesController}. Problem w tym, że akcja \texttt{destroy} nie została jeszcze zaimplementowana co skutkuje błędem - próbą uruchomienia nieistniejącej akcji w momencie kiedy użytkownik (W tym wypadku symulowany przez bibliotekę Capybara) klika w przycisk.
   
   Przejdźmy więc do wyżej wymienionego kontrolera \texttt{EntitiesController}. Jego głównym zadaniem jest obsługa żądań związanych z modelami biznesowymi istniejącymi w aplikacji, która korzysta z biblioteki \emph{administer} do zadań tych zaliczają się m.in dodawanie, modyfikowanie i usuwanie rekordów tych modeli. Pełen kod kontrolera wygląda w tym momencie następująco:
   
   \lstinputlisting[language=ruby]{examples/code/ch04/09}
   
   Kontroler ten definiuje akcje, które użytkownik może za jego pomocą wykonać, oprócz tego robi kilka innych ciekawych rzeczy. Przede wszystkim ustala informację o rodzaju modelu, na którym ma przeprowadzać operacje. Nazwa modelu jest przekazywana jako jeden z parametrów żądania (\verb+params[:model_name]+) i to na jej podstawie znajdowana jest właściwa klasa reprezentująca ten model, konkretne jego rekordy, lub cała ich kolekcja.
-  W tej chwili istnieją cztery akcje: \texttt{new}, \texttt{create}, \texttt{edit} oraz \texttt{update} brakuje (o czym zostaliśmy już poinformowani przez nieprzechodzący scenariusz) akcji \texttt{destroy}, której implementacją zajmiemy się w tej chwili.
+  W tej chwili istnieją cztery akcje: \texttt{new}, \texttt{create}, \texttt{edit} oraz \texttt{update} brakuje (o czym zostaliśmy już poinformowani przez nieprzechodzący scenariusz) akcji \texttt{destroy}.
   
   Z treści naszego scenariusza wynika, że zadaniem akcji \texttt{destroy} jest usunięcie konkretnego rekordu z bazy danych oraz przekierowanie użytkownika z powrotem na listę wszystkich rekordów. Na wejściu akcja musi więc otrzymać dwa parametry: nazwę modelu oraz identyfikator rekordu a na podstawie tych danych wykonać polecenie które usunie rekord należący do tego modelu oraz noszący taki właśnie identyfikator. Kod spełniający taką specyfikacje może wyglądać następująco: 
   
@@ -311,7 +311,7 @@ features/administer/posts.feature:52:in `And I press "Delete"'
  		\end{center}
  	\end{figure}
  	
- 	Teoretycznie moglibyśmy w tym momencie uznać zadanie za zakończone, jednak pisząc metodę \texttt{destroy} wykroczyliśmy nieco poza to, co opisane zostało w scenariuszu. Linie 3-5 definiują następujący blok kodu:
+ 	Teoretycznie można by w tym momencie uznać zadanie za zakończone, jednak pisząc metodę \texttt{destroy} wykroczyliśmy nieco poza to, co opisane zostało w scenariuszu. Linie 3-5 definiują następujący blok kodu:
  	
  	\lstinputlisting[language=ruby,firstline=3,lastline=5]{examples/code/ch04/10}
  	
@@ -328,7 +328,7 @@ spec/rails_root/spec/controllers/administer/entities_controller_spec.rb
  	
  	\lstinputlisting[language=ruby]{examples/code/ch04/12}
  	
- 	Upewniliśmy się, że informacja o błędzie została ustawiona w kontrolerze. To jednak nie wszystko, musimy sprawdzić, czy jest ona wyświetlona w odpowiednim widoku. \emph{Administer} wyświetla informacje o błędach w głównym widoku zdefiniowanym w pliku:
+ 	Upewniliśmy się, że informacja o błędzie została ustawiona w kontrolerze. To jednak nie wszystko - należy sprawdzić, czy jest ona wyświetlona w odpowiednim widoku. \emph{Administer} wyświetla informacje o błędach w głównym widoku zdefiniowanym w pliku:
  	
 \begin{lstlisting}
 app/views/layouts/administer.html.haml
@@ -340,23 +340,23 @@ app/views/layouts/administer.html.haml
   
   \section{Podsumowanie}
   
-  W niniejszym rozdziale prześledziliśmy krok po kroku proces tworzenia oprogramowania w zgodzie z zasadami \emph{Behavior Driven Development}. Nadszedł czas aby wyciągnąć wnioski oraz podsumować ten sposób prowadzenia projektów informatycznych.
+  W niniejszym rozdziale prześledzony został krok po kroku proces tworzenia oprogramowania w zgodzie z zasadami \emph{Behavior Driven Development}. Nadszedł czas aby wyciągnąć wnioski oraz podsumować ten sposób prowadzenia projektów informatycznych.
   
   \subsection{Zalety zastosowania testowo zorientowanych metodyk rozwoju oprogramowania}
   
   \subsubsection{Oprogramowanie odporne na błędy}
-    Dobre pokrycie kodu testami zapewnia, że system informatyczny jest dużo bardziej odporny na błędy, szczególnie podczas procesu jego modyfikacji. Jeśli programista przez przypadek zmieni charakter już istniejącej funkcjonalności zostanie o tym natychmiast poinformowany przez jeden lub więcej nieprzechodzących testów. Jest to szczególnie istotne kiedy system jest skomplikowany i zmiana w jednym jego module może spowodować niepożądane zmiany w modułach współzależnych. Nieprzechodzące testy uświadamiają programiście jakie dokładnie części systemu zostały dotknięte wprowadzonymi przez niego zmianami, pomagają mu rozeznać się w sytuacji oraz podjąć decyzję na temat następnych kroków.
+    Dobre pokrycie kodu testami zapewnia, że system informatyczny jest dużo bardziej odporny na błędy - szczególnie podczas procesu jego modyfikacji. Jeśli programista przez przypadek zmieni charakter już istniejącej funkcjonalności zostanie o tym natychmiast poinformowany przez jeden lub więcej nieprzechodzących testów. Jest to szczególnie istotne kiedy system jest skomplikowany i zmiana w jednym jego module może spowodować niepożądane zmiany w modułach współzależnych. Nieprzechodzące testy uświadamiają programiście jakie dokładnie części systemu zostały dotknięte wprowadzonymi przez niego zmianami, pomagają mu rozeznać się w sytuacji oraz podjąć decyzję na temat następnych kroków.
     
   \subsubsection{Funkcjonalność jest najważniejsza}
   Zasady \emph{BDD} nakazują, żeby każde nowe zadanie rozpoczynać od napisania odpowiedniego scenariusza użycia. Scenariusz ten od tej chwili staje się częścią specyfikacji systemu. Odpowiedzialnością programisty jest doprowadzić system do stanu, który spełnia specyfikację, a więc do momentu kiedy wszystkie testy i scenariusze przechodzą. Można powiedzieć, że w testowo zorientowanych metodykach testy automatyczne wyznaczają rytm i kierunek działań programistów. 
     
-  W poprzednich podrozdziałach pokazałem, w jaki sposób scenariusz zdefiniowany dla danej funkcji determinował kolejne kroki, jakie musiał podjąć programista, zawsze skupiając się na pierwszym nieprzechodzącym kroku i robiąc tylko tyle, ile trzeba, aby spełnić jego wymagania. Taki rytm pracy ma dwie ważne zalety: po pierwsze wymaga przemyślenia przyszłych zadań już na etapie pisania testów, po drugie bardzo ułatwia skupienie się tylko na tym co ważne, a więc jedynie na kolejnej czynności, która przybliży nas do celu.
+  W poprzednich podrozdziałach pokazałem, w jaki sposób scenariusz zdefiniowany dla danej funkcji determinował kolejne kroki, które musiał podjąć programista zawsze skupiając się na pierwszym nieprzechodzącym kroku i robiąc tylko tyle ile trzeba aby spełnić jego wymagania. Taki rytm pracy ma dwie ważne zalety: po pierwsze wymaga przemyślenia przyszłych zadań już na etapie pisania testów, po drugie bardzo ułatwia skupienie się tylko na tym co ważne, a więc jedynie na kolejnej czynności, która przybliży nas do celu.
     
   \subsubsection{Oszczędność czasu i pieniędzy}
-  Co prawda na samym początku życia projektu pisanie zestawu testów do każdej nowej funkcjonalności może w istocie wydłużać czas pracy, jednak zmienia się to wraz z dojrzewaniem systemu. Przy dobrym pokryciu kodu testami większość usterek wynikających z modyfikacji zostanie wykryta i naprawiona od razu. Procent ukrytych usterek w przypadku oprogramowania dobrze pokrytego testami również jest znikomy, tak samo jest w przypadku nowych funkcjonalności - jeśli są dostarczane z odpowiednim zestawem testów, oraz nie psują już istniejących. Wszystko to sprawia, że z czasem oszczędność w porównaniu z systemami nie pokrytymi testami zaczyna być widoczna.
+  Co prawda na samym początku życia projektu pisanie zestawu testów do każdej nowej funkcjonalności może w istocie wydłużać czas pracy, jednak zmienia się to wraz z dojrzewaniem systemu. Przy dobrym pokryciu kodu testami większość usterek wynikających z modyfikacji zostanie wykryta i naprawiona od razu. Procent ukrytych usterek w przypadku oprogramowania dobrze pokrytego testami również jest znikomy. Tak samo jest w przypadku nowych funkcjonalności - jeśli są dostarczane z odpowiednim zestawem testów oraz nie psują już istniejących. Wszystko to sprawia, że z czasem oszczędność w porównaniu z systemami nie pokrytymi testami zaczyna być widoczna.
   
   \subsubsection{Pewność, że system zawsze działa według specyfikacji}
-  Wynika to z tego, że testy pełnią jednocześnie rolę specyfikacji i testów automatycznych. Każda istotna zmiana w systemie musi zostać opisana testem, oraz żadna modyfikacja nie zostanie przyjęta, jeśli nie jest dostarczona z pełnym zestawem przechodzących testów. W praktyce oznacza to, że jeśli mamy dobry zestaw testów, możemy być spokojni, że nasza aplikacja działa prawidłowo.
+  Wynika to z tego, że testy pełnią jednocześnie rolę specyfikacji i testów automatycznych. Każda istotna zmiana w systemie musi zostać opisana testem oraz żadna modyfikacja nie zostanie przyjęta jeśli nie jest dostarczona z pełnym zestawem przechodzących testów. W praktyce oznacza to, że jeśli mamy dobry zestaw testów możemy być spokojni, że nasza aplikacja działa prawidłowo.
   
   \subsubsection{Eliminacja czynnika ludzkiego z procesu testowania}
   Testy automatycznie mogą sprawdzać zarówno szczegóły implementacji, interfejs użytkownika jak i integrację poszczególnych modułów systemu. Czynnik ludzki jest zbędny w procesie testowania - wystarczą istniejące testy automatyczne. Oszczędza to czas, pieniądze oraz redukuje ilość niedopatrzeń i błędów jakie mógłby popełnić człowiek.
@@ -367,7 +367,7 @@ app/views/layouts/administer.html.haml
   \subsubsection{Wybór odpowiednich narzędzi}
   Sposobów na testowanie kodu jest bardzo wiele. Na upartego działanie metody można przetestować nawet wewnątrz jej ciała, a istnieją również języki oraz techniki programowania, które z definicji sprzężone są z pewnymi mechanizmami testowania - przykładem jest język \emph{Eiffel\footnote{\url{http://en.wikipedia.org/wiki/Eiffel_(programming_language)}}}, który natywnie wspiera ideę \emph{Programowania Kontraktowego\footnote{\url{http://en.wikipedia.org/wiki/Design_by_contract}}}.
   
-  Z drugiej strony dla każdego znanego języka programowania istnieją wyspecjalizowane biblioteki i narzędzia, z których możemy skorzystać. W przypadku języka \emph{Ruby} wybór narzędzi jest bardzo duży, jak więc wybrać najodpowiedniejsze? Odpowiedź na to pytanie nie jest jednoznaczna, często wynika również z indywidualnych upodobań członków zespołu jednak istnieje kilka wskazówek, które mogą pomóc nam podjąć decyzję.
+  Z drugiej strony dla każdego znanego języka programowania istnieją wyspecjalizowane biblioteki i narzędzia, z których możemy skorzystać. W przypadku języka \emph{Ruby} wybór narzędzi jest bardzo duży. Jak więc wybrać najodpowiedniejsze? Odpowiedź na to pytanie nie jest jednoznaczna, często wynika również z indywidualnych upodobań członków zespołu jednak istnieje kilka wskazówek, które mogą pomóc nam podjąć decyzję.
   
   Narzędzia służące do testowania różnią się od siebie stopniem specjalizacji. Przykładowo biblioteka \emph{Test::Unit} dostarczana standardowo wraz z językiem \emph{Ruby} jest narzędziem bardzo ogólnym, które nadaje się do zastosowania w każdego rodzaju projekcie. Z drugiej strony barykady stoi biblioteka \emph{Cucumber}, która podchodzi do tematu testowania w szczególny sposób, który w założeniach wymaga ścisłego dostosowania stylu prowadzenia projektu do zasad \emph{BDD}. Należy dokładnie przeanalizować sytuację w jakiej się znajdujemy, rodzaj oprogramowania, które rozwijamy i skonfrontować tą informację z charakterem dostępnych narzędzi. 
   
@@ -396,12 +396,14 @@ app/views/layouts/administer.html.haml
   
   W innym wypadku może okazać się, że nawet najmniejsze szczegóły implementacji są dla nas bardzo ważne i będziemy chcieli je dokładnie przetestować. Takie testy są z reguły trudniejsze w utrzymaniu - będą kończyć się niepowodzeniem nawet po bardzo małych modyfikacjach testowanego kodu sygnalizując jego niezgodność ze specyfikacją.
   
-  Tego typu decyzję programista podejmuje za każdym razem, kiedy pisze nowy test. Podobnie jest w przypadku pytań o rodzaj danych, jakich użyjemy do testów, wykorzystanie rzeczywistych składników systemu, bądź imitacji obiektów itd. Nie ma tutaj niestety żadnej złotej reguły a każdy przypadek należy rozpatrywać osobno. Sekcja ta ma na celu zwrócenie uwagi na to, że przemyślenie wszystkich tych szczegółów jest niezmiernie ważne, zależy od nich czy test będzie dobry, czy nie.
+  Tego typu decyzję programista podejmuje za każdym razem, kiedy pisze nowy test. Podobnie jest w przypadku pytań o rodzaj danych jakich użyjemy do testów, wykorzystanie rzeczywistych składników systemu, bądź imitacji obiektów itd. Nie ma tutaj niestety żadnej złotej reguły a każdy przypadek należy rozpatrywać osobno. Sekcja ta ma na celu zwrócenie uwagi na to, że przemyślenie wszystkich tych szczegółów jest niezmiernie ważne, zależy od nich czy test będzie dobry, czy nie.
   
   \subsubsection{Testuj usterki}
   Każda wykryta usterka w oprogramowaniu oznacza, że powinna pojawić się odpowiednia modyfikacja w istniejących testach bądź powinien zostać napisany zupełnie nowy test, który ją udokumentuje. Jeśli mamy usterkę w kodzie, której nie wykryły testy oznacza to, że nie są one kompletne i powinniśmy natychmiast je poprawić w taki sposób żeby nie przechodziły przed usunięciem problemu, a przechodziły po jego likwidacji. Da nam to pewność, że jeśli w przyszłości zdarzy się podobny problem zostanie on natychmiast wykryty.
   
   \subsection{Wnioski}
   
-  Testowanie kodu nie jest dziś opcjonalną praktyką, a koniecznością. Automatyzacja testów pozwala znacząco oszczędzić czas oraz zminimalizować margines błędów oraz niedopatrzeń jakie mógłby popełnić człowiek. Metodyki takie jak \emph{TDD} czy \emph{BDD} pozwalają nie tylko pisać dobre testy, narzucają również sposób w jaki zespół myśli o projekcie oraz w jaki sposób go rozwija. Sprawia to, że odpowiednie stosowanie tych technik ma pozytywny wpływ nie tylko na pokrycie kodu testami ale również na wiele innych aspektów, które na pierwszy rzut oka mogą nie mieć z testowaniem nic wspólnego. Każdy programista powinien testować swój kod ponieważ kod nie przetestowany to kod, któremu nie można ufać. Opisane w tej pracy metodyki są tak naprawdę zbiorem zasad, narzędzi i dobrych praktyk, których skuteczność została wielokrotnie potwierdzona. Rozpoczynając nowy projekt należy zadać sobie nie pytanie o to, czy je wdrożyć, a raczej czy stać nas na to, aby tego nie zrobić.
+  Testowanie kodu nie jest dziś opcjonalną praktyką, a koniecznością. Automatyzacja testów pozwala znacząco oszczędzić czas oraz zminimalizować margines błędów oraz niedopatrzeń jakie mógłby popełnić człowiek. Metodyki takie jak \emph{TDD} czy \emph{BDD} pozwalają nie tylko pisać dobre testy, narzucają również sposób w jaki zespół myśli o projekcie oraz w jaki sposób go rozwija. Sprawia to, że odpowiednie stosowanie tych technik ma pozytywny wpływ nie tylko na pokrycie kodu testami ale również na wiele innych aspektów, które na pierwszy rzut oka mogą nie mieć z testowaniem nic wspólnego. Każdy programista powinien testować swój kod ponieważ kod nie przetestowany to kod, któremu nie można ufać. 
+  
+  Opisane w tej pracy metodyki są tak naprawdę zbiorem zasad, narzędzi i dobrych praktyk, których skuteczność została wielokrotnie potwierdzona. Rozpoczynając nowy projekt należy zadać sobie nie pytanie o to, czy je wdrożyć, a raczej czy stać nas na to, aby tego nie zrobić.
   
