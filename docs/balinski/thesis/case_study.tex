@@ -6,16 +6,16 @@
   
   Spadek kosztów mocy obliczeniowej skutecznie rozwiązał problem wyboru technologii realizacji projektu informatycznego: wydajność narzędzi, których użyjemy do realizacji celu stała się w większości przypadków pomijalnym lub przynajmniej drugorzędnym problemem. Dziś najważniejszym kryterium wyboru jest stopień dopasowania możliwości oraz charakterystyki rozważanej technologii do potrzeb zespołu odpowiedzialnego za rozwój projektu. Oczywiście istnieją również skrajne przypadki, w których to oprogramowanie z różnych przyczyn musi zostać napisane w konkretnej technologii. Te smutne przypadki stanowią jednak kroplę w morzu wykraczającą poza ramy niniejszej pracy.
   
-  W czasach kiedy o wiele bardziej opłaca się dokupić nowy serwer niż pokrywać koszty optymalizacji ogromną furorę robi termin \emph{Przedwczesna optymalizacja}. Te dwa słowa mają dzisiaj znaczenie negatywne, które jest jednak jak najbardziej uzasadnione z ekonomicznego oraz użytkowego punktu widzenia. Dopóki niedostatki w wydajności oprogramowania można skompensować inwestycją w nowe zasoby sprzętowe zespół programistów powinien skupiać wszystkie swoje wysiłki na rozwój funkcjonalności. Optymalizacja kodu następuje dopiero w momencie, kiedy koszty inwestycji w sprzęt przewyższają koszt związane z optymalizacją albo w momencie kiedy oprogramowanie ze względu na swoją nie optymalność przestaje się skalować na nowe zasoby sprzętowe.
+  W czasach kiedy o wiele bardziej opłaca się dokupić nowy serwer niż pokrywać koszty optymalizacji, ogromną furorę robi termin \emph{Przedwczesna optymalizacja}. Te dwa słowa mają dzisiaj znaczenie negatywne, które jest jednak jak najbardziej uzasadnione z ekonomicznego oraz użytkowego punktu widzenia. Dopóki niedostatki w wydajności oprogramowania można skompensować inwestycją w nowe zasoby sprzętowe, zespół programistów powinien skupiać wszystkie swoje wysiłki na rozwój funkcjonalności. Optymalizacja kodu następuje dopiero w momencie, kiedy koszty inwestycji w sprzęt przewyższają koszt związane z optymalizacją albo w momencie, kiedy oprogramowanie ze względu na swoją nie optymalność przestaje się skalować na nowe zasoby sprzętowe.
   
-  Na pierwszy rzut oka może wydawać się, że ten wstęp niewiele ma wspólnego z tematem pracy. Należy jednak uświadomić sobie, że to właśnie opisane powyżej zmiany w sposobie myślenia o metodach prowadzenia projektów IT stoją u podstaw rozwoju nowoczesnych narzędzi takich jak wymienione wcześniej dynamiczne języki programowania, wysokopoziomowe frameworki programistyczne na nich oparte czy metodologie pokroju \emph{Behaviour Driven Development}. Środki, które służą osiągnięciu założonego celu są jedną z najważniejszych zmiennych od których zależy sukces projektu - w przeszłości istniało wiele barier ograniczających ich wybór, dziś większość z nich została usunięta.
+  Na pierwszy rzut oka może wydawać się, że ten wstęp niewiele ma wspólnego z tematem pracy. Należy jednak uświadomić sobie, że to właśnie opisane powyżej zmiany w sposobie myślenia o metodach prowadzenia projektów IT stoją u podstaw rozwoju nowoczesnych narzędzi, takich jak wymienione wcześniej dynamiczne języki programowania, wysokopoziomowe frameworki programistyczne na nich oparte czy metodologie pokroju \emph{Behaviour Driven Development}. Środki, które służą osiągnięciu założonego celu są jedną z najważniejszych zmiennych, od których zależy sukces projektu - w przeszłości istniało wiele barier ograniczających ich wybór, dziś większość z nich została usunięta.
   
   \section{Założenia projektu}
   Celem niniejszego rozdziału jest pokazanie w jaki sposób rozwija się konkretny projekt prowadzony w zgodzie z metodologią BDD oraz jakie płyną z tego korzyści. Wybrany temat projektu to dynamiczny panel administracyjny dla aplikacji internetowych opartych na bibliotece \emph{Ruby on Rails\footnote{\url{http://rubyonrails.org/}}}, jego główne założenia to:
   
   \begin{description}
     \item[Uniwersalność] Panel powinien współpracować z większością aplikacji napisanych w Ruby on Rails. W praktyce oznacza to, że modele biznesowe powinny być klasami pochodnymi klasy \texttt{ActiveRecord} a sposób budowy aplikacji jest zgodny z konwencjami przyjętymi dla aplikacji Ruby on Rails.
-    \item[CRUD] W teorii baz danych istnieją cztery podstawowe operacje jakie możemy wykonać na zasobie: Tworzenie, odczytanie, aktualizacja, usunięcie (ang. Create, read, update and delete). Biblioteka ma pozwalać na zarządzanie modelami biznesowymi aplikacji przy użyciu jedynie tych czterech standardowych metod.
+    \item[CRUD] W teorii baz danych istnieją cztery podstawowe operacje, jakie możemy wykonać na zasobie: Tworzenie, odczytanie, aktualizacja, usunięcie (ang. Create, read, update and delete). Biblioteka ma pozwalać na zarządzanie modelami biznesowymi aplikacji przy użyciu jedynie tych czterech standardowych metod.
     \item[Dynamiczność] Po instalacji panel powinien sam wykryć rodzaje zasobów na jakich operuje aplikacja oraz wygenerować odpowiednie widoki i formularze do zarządzania nimi. Zmiany w budowie modeli biznesowych, które wymuszają konieczność zmian w zarządzaniu nimi, jak również pojawienie się nowych modeli również powinno być odzwierciedlone w zachowaniu panelu automatycznie, bez konieczności jakiejkolwiek ingerencji.
     \item[Proste wdrożenie] Podstawowe wdrożenie rozwiązania wymaga jedynie aby aplikacja kliencka korzystała z biblioteki Ruby on Rails w wersji co najmniej 3.0.3. Po dodaniu biblioteki panelu do listy \emph{gemów\footnote{\url{http://docs.rubygems.org/}}} wykorzystywanych przez aplikację możliwe jest natychmiastowe korzystanie.
     \item[Wygoda użytkowania] Proces zarządzania aplikacją powinien być jak najwygodniejszy. Oznacza to między innymi, że pola formularzy służących do tworzenia lub edycji rekordów powinny być dostosowane do rodzaju danych jakie przechowują a próby wprowadzenia nieprawidłowych wartości powinny być sygnalizowane czytelną informacją o błędzie. Jeśli istnieją powiązania pomiędzy kilkoma modelami biznesowymi to powinna istnieć bardzo szybka możliwość zarządzania każdym z powiązanych rekordów.
@@ -32,7 +32,7 @@
   Duży nacisk kładziony jest na testowanie oprogramowania, testy akceptacyjne istnieją w formie zautomatyzowanych scenariuszy BDD. Każda funkcjonalność lub modyfikacja oprogramowania akceptowana jest jedynie jeśli dostarczona jest wraz z pełnym zestawem testów ją dokumentujących.
   
   \subsection{Dodatkowe narzędzia}
-  Repozytorium projektu zarządzane jest przez system kontroli wersji GIT\footnote{\url{http://git-scm.com}} a hostowane jest przez serwis GitHub.\footnote{\url{http://github.com}} Źródła projektu dostępne są publicznie pod adresem https://github.com/piotrj/administer.
+  Repozytorium projektu zarządzane jest przez system kontroli wersji GIT\footnote{\url{http://git-scm.com}}, a hostowane jest przez serwis GitHub.\footnote{\url{http://github.com}} Źródła projektu dostępne są publicznie pod adresem https://github.com/piotrj/administer.
   
   Jako narzędzie wspomagające proces zarządzania projektem użyta została darmowa wersja Pivotal Tracker\footnote{\url{http://www.pivotaltracker.com}}, który został zaprojektowany aby wspomagać zarządzanie projektem prowadzonym według zasad SCRUM.
   
@@ -41,14 +41,14 @@
   
   Jak zostało wcześniej wspomniane implementacja podzielona jest na tygodniowe iteracje zwane sprintami. Każda planowana funkcjonalność zanim zostanie zaimplementowana i stanie się częścią projektu musi zostać krytycznie oceniona pod względem użyteczności oraz opisana w formie krótkiej specyfikacji.
   
-  W wypadku kiedy mamy do czynienia z rozbudowaną funkcjonalnością należy podzielić jej implementację na jak najmniejsze, spójne kawałki a każdy z tych fragmentów powinien zostać jasno opisany. Idealnie jest kiedy fragmenty danej funkcjonalności są od siebie niezależne, to znaczy, jeśli nad każdym z nich można pracować osobno w tym samym czasie. Taka sytuacja niestety zdarza się rzadko. Jeśli dany fragment zależy od innych, należy załączyć taką informację w jego opisie.
+  W wypadku kiedy mamy do czynienia z rozbudowaną funkcjonalnością, należy podzielić jej implementację na jak najmniejsze, spójne kawałki, a każdy z tych fragmentów powinien zostać jasno opisany. Idealnie jest, kiedy fragmenty danej funkcjonalności są od siebie niezależne, to znaczy, jeśli nad każdym z nich można pracować osobno w tym samym czasie. Taka sytuacja niestety zdarza się rzadko. Jeśli dany fragment zależy od innych, należy załączyć taką informację w jego opisie.
   
   Każde nowe zachowanie opisane jest testem w postaci odpowiedniego scenariusza Cucumber. Jest to warunek konieczny, scenariusze powstają przed rozpoczęciem procesu właściwej implementacji, po zaakceptowaniu przez Product Ownera pełnią one rolę testów akceptacyjnych. Testy jednostkowe w postaci specyfikacji RSpec powstają dla części systemu, których szczegóły implementacji są istotne dla prawidłowego jego działania.
   
   \subsection{Aplikacja testowa}
-  Specyfika projektu dynamicznego panelu administracyjnego utrudnia nieco pisanie scenariuszy jego użycia. Myśląc o panelu administracyjnym nigdy nie myślimy o nim jako o odrębnym bycie, jest raczej nieodłącznie związany z aplikacją, którą administruje. Aby proces testowania i specyfikowania systemu był jak najbardziej naturalny biblioteka \emph{administer} rozwijana jest wraz z małą aplikacją testową.
+  Specyfika projektu dynamicznego panelu administracyjnego utrudnia nieco pisanie scenariuszy jego użycia. Myśląc o panelu administracyjnym nigdy nie myślimy o nim jako o odrębnym bycie, jest raczej nieodłącznie związany z aplikacją, którą administruje. Aby proces testowania i specyfikowania systemu był jak najbardziej naturalny, biblioteka \emph{administer} rozwijana jest wraz z małą aplikacją testową.
   
-  Prosty system blogowy został stworzony, aby opisać i przetestować zachowanie właściwego oprogramowania. Jedynym celem istnienia aplikacji blogowej jest przetestowanie integracji biblioteki \emph{administer} z zewnętrzną aplikacją. Z technicznego punktu widzenia wszystkie testy behawioralne opisują zachowanie aplikacji testowej, która dołącza bibliotekę \emph{administer} do puli wykorzystywanych przez siebie gemów. W przypadku oprogramowania, które działa na zasadzie integracji z zewnętrznym systemem taka konfiguracja środowiska testowego jest najlepsza, odpowiada bowiem faktycznemu scenariuszowi użycia. Sam blog jest niezwykle prostą aplikacją, w założeniach ma pozwalać na:
+  Prosty system blogowy został stworzony, aby opisać i przetestować zachowanie właściwego oprogramowania. Jedynym celem istnienia aplikacji blogowej jest przetestowanie integracji biblioteki \emph{administer} z zewnętrzną aplikacją. Z technicznego punktu widzenia wszystkie testy behawioralne opisują zachowanie aplikacji testowej, która dołącza bibliotekę \emph{administer} do puli wykorzystywanych przez siebie gemów. W przypadku oprogramowania, które działa na zasadzie integracji z zewnętrznym systemem, taka konfiguracja środowiska testowego jest najlepsza, odpowiada bowiem faktycznemu scenariuszowi użycia. Sam blog jest niezwykle prostą aplikacją, w założeniach ma pozwalać na:
   
   \begin{itemize}
     \item Wyświetlanie artykułów
@@ -62,9 +62,9 @@
   \end{itemize}
   
   % PRZEREDAGOWAĆ
-  Blog świetnie nadaje się do testowania biblioteki typu \emph{administer} - wszystkie powyższe funkcje, prócz pierwszej, są tak naprawdę funkcjami, które wykonywać ma panel administracyjny. W kontekście tego przykładu cel biblioteki \emph{administer} jest jasny: Twórca bloga ze swojej strony musi jedynie dołączyć gem \emph{administer} do projektu, zdefiniować modele biznesowe typu \texttt{Post} czy \texttt{Category}, oraz dopisać akcję odpowiedzialną za wyświetlanie artykułów, cała część odpowiedzialna za akcję zarządzania modelami ma być dynamicznie wykonywana przez gem \emph{administer}. 
+  Blog świetnie nadaje się do testowania biblioteki typu \emph{administer} - wszystkie powyższe funkcje, prócz pierwszej, są tak naprawdę funkcjami, które wykonywać ma panel administracyjny. W kontekście tego przykładu cel biblioteki \emph{administer} jest jasny: Twórca bloga ze swojej strony musi jedynie dołączyć gem \emph{administer} do projektu, zdefiniować modele biznesowe typu \texttt{Post} czy \texttt{Category}, oraz dopisać akcję odpowiedzialną za wyświetlanie artykułów. Cała część odpowiedzialna za akcję zarządzania modelami ma być dynamicznie wykonywana przez gem \emph{administer}. 
   
-  Ilustracja \ref{blog_view} przedstawia stronę z listą artykułów, jest to widok pochodzący z aplikacji testowej. Ilustracja \ref{administer_edit} przedstawia widok edycji rekordu konkretnego artykułu, funkcja ta implementowana jest przez bibliotekę \emph{administer}.
+  Ilustracja \ref{blog_view} przedstawia stronę z listą artykułów. Jest to widok pochodzący z aplikacji testowej. Ilustracja \ref{administer_edit} przedstawia widok edycji rekordu konkretnego artykułu, funkcja ta implementowana jest przez bibliotekę \emph{administer}.
   
   \vspace{5 mm}
   \begin{figure}[!h]
@@ -113,7 +113,7 @@
     
     Ilustracja \ref{administer_story_desc} przedstawia szczegółowy widok zadania prezentowany przez aplikację Pivotal Tracker, która używana jest jako narzędzie wspomagające proces zarządzania projektem \emph{administer}.
     
-    Podgląd ten informuje nas o wielu rzeczach związanych z zadaniem takich jak status ukończenia, estymacja pracochłonności czy informacja o osobach odpowiedzialnych za zadanie. W kontekście naszych rozważań najważniejszą informacją jaką można odczytać z niniejszego podglądu jest jednak opis funkcjonalności. 
+    Podgląd ten informuje nas o wielu rzeczach związanych z zadaniem, takich jak status ukończenia, estymacja pracochłonności czy informacja o osobach odpowiedzialnych za zadanie. W kontekście naszych rozważań najważniejszą informacją jaką można odczytać z niniejszego podglądu jest jednak opis funkcjonalności. 
     
     \vspace{5 mm}
     \begin{figure}[h]
@@ -146,7 +146,7 @@
       
     Kod biblioteki \emph{administer} przechowywany jest w rozproszonym systemie kontroli wersji GIT, spełnienie pierwszego punktu wymaga więc od programisty jedynie synchronizacji swojego lokalnego repozytorium z najnowszą wersją rozwojowej gałęzi kodu znajdującej się w głównym repozytorium. Szczegóły dotyczące operacji na systemie kontroli wersji wykraczają poza ramy tej pracy i zostaną tutaj pominięte. Wszystkie informacje potrzebne do pracy z systemem GIT znaleźć można na stronach \url{http://help.github.com/}. Przyjmijmy, że synchronizacja została wykonana i mamy najnowszą wersję kodu biblioteki \emph{administer}. 
     
-    Uruchomienie pełnego zestawu testów daje nam pewność, że wersja oprogramowania, na której będziemy pracować spełnia warunki specyfikacji. Nie wolno rozpoczynać pracy jeśli testy z jakiegoś powodu nie przechodzą. W takim wypadku należy najpierw znaleźć przyczynę problemu i zlikwidować go a pracę nad nową funkcjonalnością rozpocząć dopiero kiedy wszystkie testy automatyczne sygnalizują sukces.
+    Uruchomienie pełnego zestawu testów daje nam pewność, że wersja oprogramowania, na której będziemy pracować spełnia warunki specyfikacji. Nie wolno rozpoczynać pracy jeśli testy z jakiegoś powodu nie przechodzą. W takim wypadku należy najpierw znaleźć przyczynę problemu i zlikwidować go, a pracę nad nową funkcjonalnością rozpocząć dopiero kiedy wszystkie testy automatyczne sygnalizują sukces.
     
     Aby uruchomić pełen zestaw testów biblioteki \emph{administer} wydajemy z głównego katalogu projektu polecenie:
     
@@ -206,7 +206,7 @@ Undefined step: "the post should disappear from posts list" (Cucumber::Undefined
 features/administer/posts.feature:53:in `Then the post should disappear from posts list'
 \end{lstlisting}
     
-    Z problemem tym można poradzić sobie na dwa sposoby: dodać nową definicję dla kroku \emph{the post should disappear from posts list} lub zmodyfikować scenariusz tak, aby korzystał z istniejących kroków nie zmieniając jednocześnie jego sensu. Niepotrzebne tworzenie nowych bytów nie jest dobrym pomysłem, należy przyjrzeć się więc czy możliwe jest wykorzystanie już istniejących definicji kroków, żeby opisać interesujące nas zachowanie. Plik
+    Z problemem tym można poradzić sobie na dwa sposoby: dodać nową definicję dla kroku \emph{the post should disappear from posts list} lub zmodyfikować scenariusz tak, aby korzystał z istniejących kroków nie zmieniając jednocześnie jego sensu. Niepotrzebne tworzenie nowych bytów nie jest dobrym pomysłem. Należy przyjrzeć się więc czy możliwe jest wykorzystanie już istniejących definicji kroków, żeby opisać interesujące nas zachowanie. Plik
     
 \begin{lstlisting}
 spec/rails_root/features/step_definitions/post_steps.rb
@@ -216,7 +216,7 @@ spec/rails_root/features/step_definitions/post_steps.rb
     
     \lstinputlisting[language=ruby]{examples/code/ch04/05}
     
-    Krok opisujący zniknięcie rekordu z listy można tak naprawdę opisać przy pomocy dwóch innych kroków, po pierwsze po kliknięciu przycisku \texttt{Delete} należy upewnić się, że nadal jesteśmy na liście Postów, po drugie wiedząc, że istniał tylko jeden post, po wciśnięciu \texttt{Delete} nie powinien istnieć żaden. Wykorzystamy więc dwa już zdefiniowane kroki: \emph{I should be on administer posts list} oraz \emph{there should be no posts}. Zmodyfikowany scenariusz wygląda następująco:
+    Krok opisujący zniknięcie rekordu z listy można tak naprawdę opisać przy pomocy dwóch innych kroków. Po pierwsze po kliknięciu przycisku \texttt{Delete} należy upewnić się, że nadal jesteśmy na liście Postów, po drugie wiedząc, że istniał tylko jeden post, po wciśnięciu \texttt{Delete} nie powinien istnieć żaden. Wykorzystamy więc dwa już zdefiniowane kroki: \emph{I should be on administer posts list} oraz \emph{there should be no posts}. Zmodyfikowany scenariusz wygląda następująco:
     
     \lstinputlisting{examples/code/ch04/06}
     
@@ -234,7 +234,7 @@ spec/rails_root/features/step_definitions/post_steps.rb
    	
    \subsubsection{Dostarczenie wymaganej funkcjonalności}
    
-   Następne działania polegać będą na zaspokajaniu oczekiwań kolejnych kroków nowo zdefiniowanego scenariusza aż do momentu ich wyczerpania i tym samym dostarczenia wymaganej funkcjonalności. Jak widać na ilustracjach \ref{scenario_failure} oraz \ref{scenario_failure_2} dwa pierwsze kroki są zielone, skupmy się więc na trzecim z nich. Wszystko co trzeba wiedzieć o przyczynach jego niepowodzenia zawarte jest w raporcie z przebiegu scenariusza:
+   Następne działania polegać będą na zaspokajaniu oczekiwań kolejnych kroków nowo zdefiniowanego scenariusza, aż do momentu ich wyczerpania i tym samym dostarczenia wymaganej funkcjonalności. Jak widać na ilustracjach \ref{scenario_failure} oraz \ref{scenario_failure_2} dwa pierwsze kroki są zielone, skupmy się więc na trzecim z nich. Wszystko co trzeba wiedzieć o przyczynach jego niepowodzenia zawarte jest w raporcie z przebiegu scenariusza:
    
 \begin{lstlisting}
 And I press "Delete"   # features/step_definitions/web_steps.rb:27
@@ -262,7 +262,7 @@ features/administer/posts.feature:52:in `And I press "Delete"'
   
   \lstinputlisting[numbers=left]{examples/code/ch04/07}
   
-  Powyższy kod to prosty język szablonów HAML, który jest dynamicznie przetwarzany do postaci HTML zrozumiałej dla przeglądarki. Jeśli zlokalizujemy w nim kod odpowiedzialny za wyświetlenie linka \texttt{Edit} to prawdopodobnie bardzo łatwo będzie dodać pod nim przycisk \texttt{Delete}. Interesujący nas fragment znajdziemy w 17 linii:
+  Powyższy kod to prosty język szablonów HAML, który jest dynamicznie przetwarzany do postaci HTML zrozumiałej dla przeglądarki. Jeśli zlokalizujemy w nim kod odpowiedzialny za wyświetlenie linka \texttt{Edit}, to prawdopodobnie bardzo łatwo będzie dodać pod nim przycisk \texttt{Delete}. Interesujący nas fragment znajdziemy w 17 linii:
   
   \lstinputlisting[firstline=17,lastline=17]{examples/code/ch04/07}
   
@@ -292,10 +292,10 @@ features/administer/posts.feature:52:in `And I press "Delete"'
   
   \lstinputlisting[language=ruby]{examples/code/ch04/09}
   
-  Kontroler ten definiuje akcje, które użytkownik może za jego pomocą wykonać, oprócz tego robi kilka innych ciekawych rzeczy. Przede wszystkim ustala informację o rodzaju modelu, na którym ma przeprowadzać operacje. Nazwa modelu jest przekazywana jako jeden z parametrów żądania (\verb+params[:model_name]+) i to na jej podstawie znajdowana jest właściwa klasa reprezentująca ten model, konkretne jego rekordy, lub cała ich kolekcja.
+  Kontroler ten definiuje akcje, które użytkownik może za jego pomocą wykonać, oprócz tego robi kilka innych ważnych rzeczy. Przede wszystkim ustala informację o rodzaju modelu, na którym ma przeprowadzać operacje. Nazwa modelu jest przekazywana jako jeden z parametrów żądania (\verb+params[:model_name]+) i to na jej podstawie znajdowana jest właściwa klasa reprezentująca ten model, konkretne jego rekordy, lub cała ich kolekcja.
   W tej chwili istnieją cztery akcje: \texttt{new}, \texttt{create}, \texttt{edit} oraz \texttt{update} brakuje (o czym zostaliśmy już poinformowani przez nieprzechodzący scenariusz) akcji \texttt{destroy}.
   
-  Z treści naszego scenariusza wynika, że zadaniem akcji \texttt{destroy} jest usunięcie konkretnego rekordu z bazy danych oraz przekierowanie użytkownika z powrotem na listę wszystkich rekordów. Na wejściu akcja musi więc otrzymać dwa parametry: nazwę modelu oraz identyfikator rekordu a na podstawie tych danych wykonać polecenie które usunie rekord należący do tego modelu oraz noszący taki właśnie identyfikator. Kod spełniający taką specyfikacje może wyglądać następująco: 
+  Z treści naszego scenariusza wynika, że zadaniem akcji \texttt{destroy} jest usunięcie konkretnego rekordu z bazy danych oraz przekierowanie użytkownika z powrotem na listę wszystkich rekordów. Na wejściu akcja musi więc otrzymać dwa parametry: nazwę modelu oraz identyfikator rekordu, a na podstawie tych danych wykonać polecenie, które usunie rekord należący do tego modelu oraz noszący taki właśnie identyfikator. Kod spełniający taką specyfikacje może wyglądać następująco: 
   
   \lstinputlisting[language=ruby,numbers=left]{examples/code/ch04/10}
   
@@ -318,7 +318,7 @@ features/administer/posts.feature:52:in `And I press "Delete"'
  	Jeśli usunięcie rekordu z jakiejś przyczyny nie zakończy się powodzeniem wyświetlony zostanie komunikat o treści \emph{Could not destroy object}.
  	Zachowanie to jest jak najbardziej sensowne, zostało ono jednak dodane samowolnie i nie jest nigdzie przetestowane. Jako odpowiedzialni programiści nie powinniśmy dopuścić do takiej sytuacji i dopisać odpowiedni test. 
  	
- 	Przetestowanie tego zachowania scenariuszem Cucumber jest trudne, trudno bowiem odtworzyć sytuację, w której usunięcie rekordu zakończy się niepowodzeniem - może się tak stać np. kiedy silnik bazy danych w której jest przechowywany nałożył na ten rekord blokadę, która trwa w momencie próby jego usunięcia. W tej sytuacji do testowania wykorzystamy bibliotekę RSpec i jej mechanizm oczekiwań oraz sztucznych obiektów. Odpowiedni zestaw testów zdefiniowany jest w pliku:
+ 	Przetestowanie tego zachowania scenariuszem Cucumber jest trudne, trudno bowiem odtworzyć sytuację, w której usunięcie rekordu zakończy się niepowodzeniem, może się tak stać np. kiedy silnik bazy danych, w której jest przechowywany nałożył na ten rekord blokadę, która trwa w momencie próby jego usunięcia. W tej sytuacji do testowania wykorzystamy bibliotekę RSpec i jej mechanizm oczekiwań oraz sztucznych obiektów. Odpowiedni zestaw testów zdefiniowany jest w pliku:
  	
 \begin{lstlisting}
 spec/rails_root/spec/controllers/administer/entities_controller_spec.rb
@@ -340,7 +340,7 @@ app/views/layouts/administer.html.haml
   
   \section{Podsumowanie}
   
-  W niniejszym rozdziale prześledzony został krok po kroku proces tworzenia oprogramowania w zgodzie z zasadami \emph{Behavior Driven Development}. Nadszedł czas aby wyciągnąć wnioski oraz podsumować ten sposób prowadzenia projektów informatycznych.
+  W niniejszym rozdziale prześledzony został krok po kroku proces tworzenia oprogramowania w zgodzie z zasadami \emph{Behavior Driven Development}. Nadszedł czas, aby wyciągnąć wnioski oraz podsumować ten sposób prowadzenia projektów informatycznych.
   
   \subsection{Zalety zastosowania testowo zorientowanych metodyk rozwoju oprogramowania}
   
@@ -350,38 +350,38 @@ app/views/layouts/administer.html.haml
   \subsubsection{Funkcjonalność jest najważniejsza}
   Zasady \emph{BDD} nakazują, żeby każde nowe zadanie rozpoczynać od napisania odpowiedniego scenariusza użycia. Scenariusz ten od tej chwili staje się częścią specyfikacji systemu. Odpowiedzialnością programisty jest doprowadzić system do stanu, który spełnia specyfikację, a więc do momentu kiedy wszystkie testy i scenariusze przechodzą. Można powiedzieć, że w testowo zorientowanych metodykach testy automatyczne wyznaczają rytm i kierunek działań programistów. 
     
-  W poprzednich podrozdziałach pokazałem, w jaki sposób scenariusz zdefiniowany dla danej funkcji determinował kolejne kroki, które musiał podjąć programista zawsze skupiając się na pierwszym nieprzechodzącym kroku i robiąc tylko tyle ile trzeba aby spełnić jego wymagania. Taki rytm pracy ma dwie ważne zalety: po pierwsze wymaga przemyślenia przyszłych zadań już na etapie pisania testów, po drugie bardzo ułatwia skupienie się tylko na tym co ważne, a więc jedynie na kolejnej czynności, która przybliży nas do celu.
+  W poprzednich podrozdziałach pokazane zostało, w jaki sposób scenariusz zdefiniowany dla danej funkcji determinował kolejne kroki, które musiał podjąć programista zawsze skupiając się na pierwszym nieprzechodzącym kroku i robiąc tylko tyle, ile trzeba aby spełnić jego wymagania. Taki rytm pracy ma dwie ważne zalety: po pierwsze wymaga przemyślenia przyszłych zadań już na etapie pisania testów, po drugie bardzo ułatwia skupienie się tylko na tym, co ważne, a więc jedynie na kolejnej czynności, która przybliży nas do celu.
     
   \subsubsection{Oszczędność czasu i pieniędzy}
   Co prawda na samym początku życia projektu pisanie zestawu testów do każdej nowej funkcjonalności może w istocie wydłużać czas pracy, jednak zmienia się to wraz z dojrzewaniem systemu. Przy dobrym pokryciu kodu testami większość usterek wynikających z modyfikacji zostanie wykryta i naprawiona od razu. Procent ukrytych usterek w przypadku oprogramowania dobrze pokrytego testami również jest znikomy. Tak samo jest w przypadku nowych funkcjonalności - jeśli są dostarczane z odpowiednim zestawem testów oraz nie psują już istniejących. Wszystko to sprawia, że z czasem oszczędność w porównaniu z systemami nie pokrytymi testami zaczyna być widoczna.
   
   \subsubsection{Pewność, że system zawsze działa według specyfikacji}
-  Wynika to z tego, że testy pełnią jednocześnie rolę specyfikacji i testów automatycznych. Każda istotna zmiana w systemie musi zostać opisana testem oraz żadna modyfikacja nie zostanie przyjęta jeśli nie jest dostarczona z pełnym zestawem przechodzących testów. W praktyce oznacza to, że jeśli mamy dobry zestaw testów możemy być spokojni, że nasza aplikacja działa prawidłowo.
+  Wynika to z tego, że testy pełnią jednocześnie rolę specyfikacji i testów automatycznych. Każda istotna zmiana w systemie musi zostać opisana testem oraz żadna modyfikacja nie zostanie przyjęta, jeśli nie jest dostarczona z pełnym zestawem przechodzących testów. W praktyce oznacza to, że jeśli mamy dobry zestaw testów możemy być spokojni, że nasza aplikacja działa prawidłowo.
   
   \subsubsection{Eliminacja czynnika ludzkiego z procesu testowania}
-  Testy automatycznie mogą sprawdzać zarówno szczegóły implementacji, interfejs użytkownika jak i integrację poszczególnych modułów systemu. Czynnik ludzki jest zbędny w procesie testowania - wystarczą istniejące testy automatyczne. Oszczędza to czas, pieniądze oraz redukuje ilość niedopatrzeń i błędów jakie mógłby popełnić człowiek.
+  Testy automatycznie mogą sprawdzać zarówno szczegóły implementacji, interfejs użytkownika, jak i integrację poszczególnych modułów systemu. Czynnik ludzki jest zbędny w procesie testowania - wystarczą istniejące testy automatyczne. Oszczędza to czas, pieniądze oraz redukuje ilość niedopatrzeń i błędów jakie mógłby popełnić człowiek.
     
   \subsection{Czynniki determinujące skuteczność testowo zorientowanych metodyk rozwoju oprogramowania}
-  Mechaniczne dopisywanie testów do każdej nowej linijki kodu nie ma dużego sensu. Istnieje wiele czynników, na które należy zwrócić uwagę jeśli chcemy rozwijać oprogramowanie w oparciu o testy i czerpać z tego maksymalne korzyści. Część z wymienionych przeze mnie poniżej punktów ma ogromne znaczenie dla prawidłowego wdrożenia metod testowania w ogóle, część z nich wpływa na jakość oprogramowania lub komfort jego rozwoju.
+  Mechaniczne dopisywanie testów do każdej nowej linii kodu nie ma dużego sensu. Istnieje wiele czynników, na które należy zwrócić uwagę, jeśli chcemy rozwijać oprogramowanie w oparciu o testy i czerpać z tego maksymalne korzyści. Część z wymienionych przeze mnie poniżej punktów ma ogromne znaczenie dla prawidłowego wdrożenia metod testowania w ogóle, część z nich wpływa na jakość oprogramowania lub komfort jego rozwoju.
   
   \subsubsection{Wybór odpowiednich narzędzi}
   Sposobów na testowanie kodu jest bardzo wiele. Na upartego działanie metody można przetestować nawet wewnątrz jej ciała, a istnieją również języki oraz techniki programowania, które z definicji sprzężone są z pewnymi mechanizmami testowania - przykładem jest język \emph{Eiffel\footnote{\url{http://en.wikipedia.org/wiki/Eiffel_(programming_language)}}}, który natywnie wspiera ideę \emph{Programowania Kontraktowego\footnote{\url{http://en.wikipedia.org/wiki/Design_by_contract}}}.
   
-  Z drugiej strony dla każdego znanego języka programowania istnieją wyspecjalizowane biblioteki i narzędzia, z których możemy skorzystać. W przypadku języka \emph{Ruby} wybór narzędzi jest bardzo duży. Jak więc wybrać najodpowiedniejsze? Odpowiedź na to pytanie nie jest jednoznaczna, często wynika również z indywidualnych upodobań członków zespołu jednak istnieje kilka wskazówek, które mogą pomóc nam podjąć decyzję.
+  Z drugiej strony dla każdego znanego języka programowania istnieją wyspecjalizowane biblioteki i narzędzia, z których możemy skorzystać. W przypadku języka \emph{Ruby} wybór narzędzi jest bardzo duży. Jak więc wybrać najodpowiedniejsze? Odpowiedź na to pytanie nie jest jednoznaczna. Często wynika również z indywidualnych upodobań członków zespołu. Jednak istnieje kilka wskazówek, które mogą pomóc nam podjąć decyzję.
   
-  Narzędzia służące do testowania różnią się od siebie stopniem specjalizacji. Przykładowo biblioteka \emph{Test::Unit} dostarczana standardowo wraz z językiem \emph{Ruby} jest narzędziem bardzo ogólnym, które nadaje się do zastosowania w każdego rodzaju projekcie. Z drugiej strony barykady stoi biblioteka \emph{Cucumber}, która podchodzi do tematu testowania w szczególny sposób, który w założeniach wymaga ścisłego dostosowania stylu prowadzenia projektu do zasad \emph{BDD}. Należy dokładnie przeanalizować sytuację w jakiej się znajdujemy, rodzaj oprogramowania, które rozwijamy i skonfrontować tą informację z charakterem dostępnych narzędzi. 
+  Narzędzia służące do testowania różnią się od siebie stopniem specjalizacji. Przykładowo biblioteka \emph{Test::Unit} dostarczana standardowo wraz z językiem \emph{Ruby} jest narzędziem bardzo ogólnym, które nadaje się do zastosowania w każdego rodzaju projekcie. Z drugiej strony barykady stoi biblioteka \emph{Cucumber}, która podchodzi do tematu testowania w szczególny sposób, który w założeniach wymaga ścisłego dostosowania stylu prowadzenia projektu do zasad \emph{BDD}. Należy dokładnie przeanalizować sytuację w jakiej się znajdujemy, rodzaj oprogramowania, które rozwijamy i skonfrontować tę informację z charakterem dostępnych narzędzi. 
   
-  Przykładowo jeśli pracujemy nad projektem sklepu internetowego dla klienta, który bardzo chętnie włącza się w proces planowania i świetnie współpracuje z programistami a do jest skłonny wziąć na siebie obowiązek specyfikowania funkcjonalności \emph{Cucumber} będzie idealnym rozwiązaniem. Jeśli pracujemy nad projektem wewnętrznym, lub z ludźmi o dużej świadomości technicznej, a chcemy tworzyć system w zgodzie z zasadami \emph{BDD} lepszym rozwiązaniem okaże się \emph{Steak}, który nie wymaga od nas definiowania wzorców językowych. Nic też nie stoi na przeszkodzie aby pozostać w duchu \emph{Test Driven Development} korzystając z jednej z bibliotek wspierających testowanie jednostkowe jak wspomniany wcześniej \emph{Test::Unit}.
+  Przykładowo jeśli pracujemy nad projektem sklepu internetowego dla klienta, który bardzo chętnie włącza się w proces planowania i świetnie współpracuje z programistami a do tego jest skłonny wziąć na siebie obowiązek specyfikowania funkcjonalności \emph{Cucumber} będzie idealnym rozwiązaniem. Jeśli pracujemy nad projektem wewnętrznym, lub z ludźmi o dużej świadomości technicznej, a chcemy tworzyć system w zgodzie z zasadami \emph{BDD} lepszym rozwiązaniem okaże się \emph{Steak}, który nie wymaga od nas definiowania wzorców językowych. Nic też nie stoi na przeszkodzie aby pozostać w duchu \emph{Test Driven Development} korzystając z jednej z bibliotek wspierających testowanie jednostkowe jak wspomniany wcześniej \emph{Test::Unit}.
   
   \subsubsection{}
   Przykładem niezbyt dobrego doboru narzędzi do testowania może być również biblioteka \emph{administer}. \emph{Cucumber} został tutaj użyty jako główne narzędzie służące do specyfikowania i testowania funkcjonalności, jednak po pewnym czasie okazało się, że w przypadku biblioteki \emph{administer} korzyści z użycia scenariuszy \emph{Cucumbera} w porównaniu na przykład ze scenariuszami definiowanymi przy pomocy biblioteki \emph{Steak} są żadne. \emph{Administer} rozwijany jest przez profesjonalnych programistów na ich własne potrzeby, nie ma tutaj osoby klienta, który mógłby wyciągnąć korzyści z istnienia scenariuszy pisanych naturalnym językiem. Adresatami biblioteki również są programiści, którzy mogą wdrożyć go do swoich własnych aplikacji. W tym wypadku dużo lepszym rozwiązaniem byłoby sformułowanie testów behawioralnych przy użyciu bardziej ogólnego narzędzia jak \emph{Steak} lub nawet ograniczenie się jedynie do wykorzystania biblioteki \emph{RSpec} - oszczędziłoby to wysiłku niepotrzebnie zmarnowanego na definiowanie oraz utrzymanie kroków i wzorców językowych.
   
   \subsubsection{Stopień pokrycia kodu testami}
-  Żadne testy nie będą skuteczne, jeśli stopień pokrycia nimi kodu nie będzie wystarczająco wysoki. Jeśli prowadzimy projekt na zasadach \emph{BDD} to należy pisać scenariusze dla każdej kluczowej funkcjonalności systemu oraz testy jednostkowe dla części systemu, których nie da się w prosty sposób opisać scenariuszami, lub z innych przyczyn użycie testów jednostkowych wydaje się bardziej naturalne. Testy jednostkowe piszemy również zawsze wtedy, kiedy szczegóły implementacji danej części systemu są ważne z punktu widzenia końcowego odbiorcy.
+  Żadne testy nie będą skuteczne, jeśli stopień pokrycia nimi kodu nie będzie wystarczająco wysoki. Jeśli prowadzimy projekt na zasadach \emph{BDD}, to należy pisać scenariusze dla każdej kluczowej funkcjonalności systemu oraz testy jednostkowe dla części systemu, których nie da się w prosty sposób opisać scenariuszami, lub z innych przyczyn użycie testów jednostkowych wydaje się bardziej naturalne. Testy jednostkowe piszemy również zawsze wtedy, kiedy szczegóły implementacji danej części systemu są ważne z punktu widzenia końcowego odbiorcy.
   
-  W przypadku projektów, które nie są testowane behawioralnie testy jednostkowe powinny jak najdokładniej pokrywać publiczną część implementacji, do testowania całości systemu oraz symulowania różnych scenariuszy użycia powinniśmy również napisać odpowiednie testy integracyjne.
+  W przypadku projektów, które nie są testowane behawioralnie, testy jednostkowe powinny jak najdokładniej pokrywać publiczną część implementacji. Do testowania całości systemu oraz symulowania różnych scenariuszy użycia powinniśmy również napisać odpowiednie testy integracyjne.
   
-  Wysoki stopień pokrycia kodu testami daje nam pewność, że wyłapią one więcej usterek, które na pewno będą pojawiać się w procesie implementacji, dlatego też bardzo ważne jest aby \textbf{nigdy nie odkładać pisania testów na później} - zawsze należy dostarczać je wraz z testowanym kodem.
+  Wysoki stopień pokrycia kodu testami daje nam pewność, że wykryją one więcej usterek, które na pewno będą pojawiać się w procesie implementacji, dlatego też bardzo ważne jest aby \textbf{nigdy nie odkładać pisania testów na później} - zawsze należy dostarczać je wraz z testowanym kodem.
   
   \subsubsection{Sposób testowania, albo \emph{Pisanie kodu jest łatwe, pisanie testów jest trudne}}
   Pisząc test czy scenariusz musimy przede wszystkim wiedzieć co naprawdę chcemy przetestować. Na tym etapie pojawić się może wiele pytań.
@@ -392,18 +392,18 @@ app/views/layouts/administer.html.haml
     \item A może wykorzystamy imitację obiektów?
   \end{itemize}
   
-  Od tego w jaki sposób przetestujemy kod zależy czy nasze testy będą spełniać prawidłowo swoją funkcję jak również czy będą łatwe w utrzymaniu. Temat ten jest bardzo rozległy a pisanie dobrych testów to trudna sztuka, której programista uczy się wraz z doświadczeniem. W niektórych wypadkach wystarczy, że test sprawdza tylko wartość zwracaną przez metodę. Nawet jeśli jest ona dość skomplikowana, jednak szczegóły implementacji nie są istotne, to taki test spełni swoją rolę. 
+  Od tego w jaki sposób przetestujemy kod zależy czy nasze testy będą spełniać prawidłowo swoją funkcję, jak również czy będą łatwe w utrzymaniu. Temat ten jest bardzo rozległy a pisanie dobrych testów to trudna sztuka, której programista uczy się wraz z doświadczeniem. W niektórych wypadkach wystarczy, że test sprawdza tylko wartość zwracaną przez metodę. Nawet jeśli jest ona dość skomplikowana, a szczegóły implementacji nie są istotne, to taki test spełni swoją rolę. 
   
-  W innym wypadku może okazać się, że nawet najmniejsze szczegóły implementacji są dla nas bardzo ważne i będziemy chcieli je dokładnie przetestować. Takie testy są z reguły trudniejsze w utrzymaniu - będą kończyć się niepowodzeniem nawet po bardzo małych modyfikacjach testowanego kodu sygnalizując jego niezgodność ze specyfikacją.
+  W innym wypadku może okazać się, że nawet najmniejsze szczegóły implementacji są dla nas bardzo ważne i będziemy chcieli je dokładnie przetestować. Takie testy są z reguły trudniejsze w utrzymaniu - będą kończyć się niepowodzeniem nawet po bardzo małych modyfikacjach testowanego kodu, sygnalizując jego niezgodność ze specyfikacją.
   
-  Tego typu decyzję programista podejmuje za każdym razem, kiedy pisze nowy test. Podobnie jest w przypadku pytań o rodzaj danych jakich użyjemy do testów, wykorzystanie rzeczywistych składników systemu, bądź imitacji obiektów itd. Nie ma tutaj niestety żadnej złotej reguły a każdy przypadek należy rozpatrywać osobno. Sekcja ta ma na celu zwrócenie uwagi na to, że przemyślenie wszystkich tych szczegółów jest niezmiernie ważne, zależy od nich czy test będzie dobry, czy nie.
+  Tego typu decyzje programista podejmuje za każdym razem, kiedy pisze nowy test. Podobnie jest w przypadku pytań o rodzaj danych, jakich użyjemy do testów, wykorzystanie rzeczywistych składników systemu, imitacji obiektów itd. Nie ma tutaj niestety żadnej złotej reguły a każdy przypadek należy rozpatrywać osobno. Sekcja ta ma na celu zwrócenie uwagi na konieczność przemyślenia wszystkich tych szczegółów, zależy od nich czy test będzie dobry, czy nie.
   
   \subsubsection{Testuj usterki}
-  Każda wykryta usterka w oprogramowaniu oznacza, że powinna pojawić się odpowiednia modyfikacja w istniejących testach bądź powinien zostać napisany zupełnie nowy test, który ją udokumentuje. Jeśli mamy usterkę w kodzie, której nie wykryły testy oznacza to, że nie są one kompletne i powinniśmy natychmiast je poprawić w taki sposób żeby nie przechodziły przed usunięciem problemu, a przechodziły po jego likwidacji. Da nam to pewność, że jeśli w przyszłości zdarzy się podobny problem zostanie on natychmiast wykryty.
+  Każda wykryta usterka w oprogramowaniu oznacza, że powinna pojawić się odpowiednia modyfikacja w istniejących testach, bądź powinien zostać napisany zupełnie nowy test, który ją udokumentuje. Jeśli istnieje usterka w kodzie, której nie wykryły testy, oznacza to, że nie są one kompletne i powinniśmy natychmiast je poprawić w taki sposób, żeby nie przechodziły przed usunięciem problemu, a przechodziły po jego likwidacji. Da nam to pewność, że jeśli w przyszłości zdarzy się podobny problem to zostanie on natychmiast wykryty.
   
   \subsection{Wnioski}
   
-  Testowanie kodu nie jest dziś opcjonalną praktyką, a koniecznością. Automatyzacja testów pozwala znacząco oszczędzić czas oraz zminimalizować margines błędów oraz niedopatrzeń jakie mógłby popełnić człowiek. Metodyki takie jak \emph{TDD} czy \emph{BDD} pozwalają nie tylko pisać dobre testy, narzucają również sposób w jaki zespół myśli o projekcie oraz w jaki sposób go rozwija. Sprawia to, że odpowiednie stosowanie tych technik ma pozytywny wpływ nie tylko na pokrycie kodu testami ale również na wiele innych aspektów, które na pierwszy rzut oka mogą nie mieć z testowaniem nic wspólnego. Każdy programista powinien testować swój kod ponieważ kod nie przetestowany to kod, któremu nie można ufać. 
+  Testowanie kodu nie jest dziś opcjonalną praktyką, a koniecznością. Automatyzacja testów pozwala znacząco oszczędzić czas jak również zminimalizować margines błędów oraz niedopatrzeń jakie mógłby popełnić człowiek. Metodyki takie jak \emph{TDD} czy \emph{BDD} pozwalają nie tylko pisać dobre testy, narzucają również sposób w jaki zespół myśli o projekcie oraz w jaki sposób go rozwija. Sprawia to, że odpowiednie stosowanie tych technik ma pozytywny wpływ nie tylko na pokrycie kodu testami, ale również na wiele innych aspektów, które na pierwszy rzut oka mogą nie mieć z testowaniem nic wspólnego. Każdy programista powinien testować swój kod, ponieważ kod nie przetestowany to kod, któremu nie można ufać. 
   
-  Opisane w tej pracy metodyki są tak naprawdę zbiorem zasad, narzędzi i dobrych praktyk, których skuteczność została wielokrotnie potwierdzona. Rozpoczynając nowy projekt należy zadać sobie nie pytanie o to, czy je wdrożyć, a raczej czy stać nas na to, aby tego nie zrobić.
+  Opisane w tej pracy metodyki są tak naprawdę zbiorem zasad, narzędzi i dobrych praktyk, których skuteczność została wielokrotnie potwierdzona. Rozpoczynając nowy projekt nie należy zadawać sobie pytania o to, czy je wdrożyć, a raczej czy stać nas na to, aby tego nie zrobić.
   
